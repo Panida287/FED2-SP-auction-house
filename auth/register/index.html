@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script type="module" src="/src/js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+  </head>
+
+  <body class="flex justify-center items-center w-screen h-screen">
+    <div class="register-form bg-gray-400 w-[90%] m-auto">
+      <h1 class="flex justify-center items-center">Register</h1>
+      <form name="register">
+        <div class="p-1">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            required
+            placeholder="@stud.noroff.no"
+          />
+        </div>
+
+        <div class="p-1">
+          <label for="name">Username</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            maxlength="20"
+            pattern="^[\w]+$"
+            required
+          />
+        </div>
+
+        <div class="p-1">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            minlength="8"
+            placeholder="must be at least 8 characters"
+            required
+          />
+        </div>
+
+        <div class="p-1">
+          <label for="repeatPassword">Repeat password</label>
+          <input
+            type="password"
+            name="repeatPassword"
+            id="repeatPassword"
+            minlength="8"
+            required
+          />
+        </div>
+
+        <div class="p-1">
+          <label for="avatar">Avatar</label>
+          <input type="url" name="avatar" id="avatar" placeholder="optional" />
+        </div>
+
+        <div class="p-1">
+          <label for="banner">Banner photo</label>
+          <input type="url" name="banner" id="banner" placeholder="optional" />
+        </div>
+        <div class="error-msg text-red-500"></div>
+        <button type="submit" class="border-black border-2">Register</button>
+      </form>
+      <div>
+        <p>Already a member?</p>
+        <a href="/auth/login/">Login</a>
+      </div>
+    </div>
+    <div
+      class="register-success hidden flex-col absolute z-10 w-[150px] h-[100px] top[50%] left[50%] bg-slate-400"
+    >
+      <h2>Registration successful!</h2>
+      <a href="/auth/login/" class="border-2 border-black">Login</a>
+    </div>
+  </body>
+</html>

@@ -1,31 +1,30 @@
 export default async function router(pathname = window.location.pathname) {
-    switch (pathname) {
-      case "/":
-        await import("./router/views/home.js");
-        break;
-      case "/auth/":
-        await import("./router/views/auth.js");
-        break;
-      case "/auth/login/":
-        await import("./router/views/login.js");
-        break;
-      case "/auth/register/":
-        await import("./router/views/register.js");
-        break;
-      case "/item/":
-        await import("./router/views/item.js");
-        break;
-      case "/item/edit/":
-        await import("./router/views/itemEdit.js");
-        break;
-      case "/item/create/":
-        await import("./router/views/itemCreate.js");
-        break;
-      case "/profile/":
-        await import("./router/views/profile.js");
-        break;
-      default:
-        await import("./router/views/notFound.js");
-    }
+  switch (pathname) {
+    case "/":
+      await import("./views/home.js");
+      break;
+    case "/auth/":
+      await import("./views/auth.js");
+      break;
+    case "/auth/login/":
+      await import("./views/login.js");
+      break;
+    case "/auth/register/":
+      await import("./views/register.js");
+      break;
+    case "/listing/":
+      await import("./views/listing.js");
+      break;
+    case "/listing/edit/":
+      await import("./views/listingEdit.js");
+      break;
+    case "/listing/create/":
+      await import("./views/listingCreate.js");
+      break;
+    case "/profile/":
+      await import("./views/profile.js");
+      break;
+    default:
+      await import("./views/notFound.js");
   }
-  
+}
