@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script type="module" src="/src/js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+
+  <body class="flex justify-center items-center w-screen h-screen">
+    <div class="login-form bg-gray-400 w-[90%] m-auto">
+      <h1 class="flex justify-center items-center">LOGIN</h1>
+      <form name="login">
+        <div class="p-1">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="@stud.noroff.no"
+            required
+          />
+        </div>
+
+        <div class="p-1">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            minlength="8"
+            required
+          />
+        </div>
+        <button type="submit" class="border-black border-2">LOGIN</button>
+      </form>
+      <div>
+        <p>Not registered?</p>
+        <a href="/auth/register/">Register</a>
+      </div>
+    </div>
+  </body>
+</html>
