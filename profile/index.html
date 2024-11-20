@@ -165,43 +165,19 @@
       <a href="#">
         <i class="fa-solid fa-magnifying-glass"></i>
       </a>
-      <a href="#">
+      <button id="create-listing-btn">
         <i class="fa-solid fa-plus"></i>
-      </a>
+      </button>
       <button class="logout-btn">
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </nav>
 
     <!-- Create Listing Modal -->
-    <div
-      class="create-container hidden absolute top-1/2 left-1/2 w-[70%] h-[300px] bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
+    <div id="create-container"
+      class="hidden absolute top-1/2 left-1/2 w-[70%] p-2 bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
     >
       <form id="listing-form" class="flex flex-col gap-4">
-        <!-- Item Name -->
-        <div>
-          <label for="item-name">Item Name</label>
-          <input
-            type="text"
-            id="item-name"
-            name="item-name"
-            required
-            class="border border-gray-300 p-2"
-          />
-        </div>
-
-        <!-- Price -->
-        <div>
-          <label for="item-price">Price</label>
-          <input
-            type="number"
-            id="item-price"
-            name="item-price"
-            required
-            class="border border-gray-300 p-2"
-          />
-        </div>
-
         <!-- Image URL -->
         <div>
           <label for="item-image-url">Image URL</label>
@@ -222,11 +198,89 @@
             />
           </div>
         </div>
+        <!-- Item Name -->
+        <div>
+          <label for="item-name">Item Name</label>
+          <input
+            type="text"
+            id="item-name"
+            name="item-name"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
 
+        <!-- Item Description -->
+        <div>
+          <label for="item-description">Description</label>
+          <input
+            type="text"
+            id="item-description"
+            name="item-description"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
+
+        <!-- Tags -->
+        <div>
+          <label for="item-category">Category</label>
+          <select
+            id="item-category"
+            name="item-category"
+            required
+            class="border border-gray-300 p-2"
+          >
+            <option value="" disabled selected>Select a category</option>
+            <option value="Clothes">Clothes</option>
+            <option value="Games">Games</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Cars">Cars</option>
+            <option value="Travels">Travels</option>
+          </select>
+        </div>
+
+        <!-- Price -->
+        <div>
+          <label for="item-price">Price</label>
+          <input
+            type="number"
+            id="item-price"
+            name="item-price"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
+
+        <!-- Ends at -->
+        <div>
+          <label for="item-ends-at">Auction End Date & Time</label>
+          <input
+            type="datetime-local"
+            id="item-ends-at"
+            name="item-ends-at"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
+        
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
         <!-- Submit Button -->
         <button type="submit" class="bg-blue-500 text-white p-2 rounded">
           Submit
         </button>
+
+        <!-- Cancel Button -->
+        <button
+        type="button"
+        id="cancel-edit-btn"
+        class="bg-red-500 text-white p-2 rounded"
+      >
+        Cancel
+      </button>
+        </div>
+
       </form>
     </div>
 
