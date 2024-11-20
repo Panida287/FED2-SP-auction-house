@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script type="module" src="/src/js/main.js"></script>
+    <script
+      src="https://kit.fontawesome.com/5d32d5fe01.js"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+  </head>
+
+  <body>
+    <!-- Banner Section -->
+    <div class="flex items-center -z-1 w-screen h-[200px] overflow-hidden">
+      <img class="banner" />
+    </div>
+
+    <!-- Profile Section -->
+    <div
+      id="profile-container"
+      class="flex flex-col items-center justify-center w-screen"
+    >
+      <!-- Profile Picture and Edit Button -->
+      <div
+        class="profile-pic-container flex items-center justify-center w-full -mt-[50px]"
+      >
+        <img
+          class="profile-pic object-cover border-[2px] border-white h-[80px] w-[80px] rounded-full"
+        />
+        <button
+          id="edit-btn"
+          class="absolute z-2 translate-x-[60px] translate-y-[30px]"
+        >
+          Edit
+        </button>
+      </div>
+      <!-- User Name -->
+      <div>
+        <h1 class="author"></h1>
+      </div>
+    </div>
+
+    <!-- User Stats Section -->
+    <div class="profile-info flex justify-evenly items-center">
+      <span class="user-credit">
+        Credit:
+        <p class="credit-amount"></p>
+      </span>
+      <span class="user-bids">
+        Bids:
+        <p class="bids-amount"></p>
+      </span>
+      <span class="user-wins">
+        Wins:
+        <p class="win-amount"></p>
+      </span>
+    </div>
+
+    <!-- Filter Buttons Section -->
+    <div class="display-filter-btn flex justify-evenly items-center">
+      <button id="listed">Items listed</button>
+      <button id="bidded">Bidded</button>
+      <button id="wins">Wins</button>
+    </div>
+
+    <!-- Results Section -->
+    <div class="result-container flex justify-center">
+      <!-- Listed Items -->
+      <div
+        class="listed-item-container w-[80%] border-2 border-black p-2 flex flex-col justify-center items-center"
+      >
+        <div class="item-img cover flex flex-col">
+          <h1
+            class="timer relative z-2 w-[100%] flex items-center justify-center translate-y-[10px]"
+          >
+            00:00:00
+          </h1>
+          <img
+            class="-translate-y-[20px] -z-10"
+            src="https://images.unsplash.com/photo-1630448927918-1dbcd8ba439b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          />
+        </div>
+        <button id="listed-item-edit-btn" class="flex justify-end w-[100%]">
+          Edit
+        </button>
+        <h2>Item name</h2>
+        <div class="bidding-info w-full flex justify-evenly items-center">
+          <span class="item-bids">
+            bids:
+            <p class="item-bids-data"></p>
+          </span>
+          <span class="current-price">
+            current price:
+            <p class="price-data"></p>
+          </span>
+        </div>
+      </div>
+
+      <!-- Bidded Items -->
+      <div
+        class="bidded-item-container w-[80%] border-2 border-black p-2 flex flex-col items-center"
+      >
+        <div class="item-img cover flex flex-col">
+          <h1
+            class="timer relative z-2 w-[100%] flex items-center justify-center translate-y-[10px]"
+          >
+            00:00:00
+          </h1>
+          <img
+            class="-translate-y-[20px] -z-10"
+            src="https://images.unsplash.com/photo-1630448927918-1dbcd8ba439b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          />
+        </div>
+        <h2>Item name</h2>
+        <div class="bidding-info w-full flex justify-evenly items-center">
+          <span class="item-bids">
+            bids:
+            <p class="item-bids-data"></p>
+          </span>
+          <span class="current-price">
+            current price:
+            <p class="price-data"></p>
+          </span>
+        </div>
+      </div>
+
+      <!-- Wins -->
+      <div
+        class="win-item-container w-[80%] border-2 border-black p-2 flex flex-col items-center"
+      >
+        <div class="item-img cover flex flex-col">
+          <h1
+            class="timer relative z-2 w-[100%] flex items-center justify-center translate-y-[10px]"
+          >
+            ENDED
+          </h1>
+          <img
+            class="-translate-y-[20px] -z-10"
+            src="https://images.unsplash.com/photo-1630448927918-1dbcd8ba439b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          />
+        </div>
+        <h2>Item name</h2>
+        <div class="bidding-info w-full flex justify-evenly items-center">
+          <span class="item-bids">
+            bids:
+            <p class="item-bids-data"></p>
+          </span>
+          <span class="current-price">
+            current price:
+            <p class="price-data"></p>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav
+      class="fixed bottom-0 left-1/2 transform -translate-x-1/2 mobile-nav flex justify-evenly items-center w-[80%] p-2 bg-white shadow-md"
+    >
+      <a href="#">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <a href="#">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+      <a href="#">
+        <i class="fa-solid fa-plus"></i>
+      </a>
+      <button class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </nav>
+
+    <!-- Create Listing Modal -->
+    <div
+      class="create-container hidden absolute top-1/2 left-1/2 w-[70%] h-[300px] bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
+    >
+      <form id="listing-form" class="flex flex-col gap-4">
+        <!-- Item Name -->
+        <div>
+          <label for="item-name">Item Name</label>
+          <input
+            type="text"
+            id="item-name"
+            name="item-name"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
+
+        <!-- Price -->
+        <div>
+          <label for="item-price">Price</label>
+          <input
+            type="number"
+            id="item-price"
+            name="item-price"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
+
+        <!-- Image URL -->
+        <div>
+          <label for="item-image-url">Image URL</label>
+          <input
+            type="url"
+            id="item-image-url"
+            name="item-image-url"
+            placeholder="Enter image URL"
+            class="border border-gray-300 p-2"
+          />
+          <!-- Image Preview -->
+          <div id="image-preview" class="mt-4">
+            <img
+              id="preview-image"
+              src=""
+              alt="Item preview"
+              class="hidden w-full h-48 object-cover border border-gray-300"
+            />
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div
+      id="edit-profile-container"
+      class="edit-profile-container hidden absolute top-1/2 left-1/2 w-[70%] h-[400px] bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2 p-4"
+    >
+      <form id="edit-profile-form" class="flex flex-col gap-4">
+        <!-- Avatar URL -->
+        <div>
+          <label for="avatar-url">Avatar URL</label>
+          <input
+            type="url"
+            id="avatar-url"
+            name="avatar-url"
+            placeholder="Enter avatar URL"
+            class="border border-gray-300 p-2"
+          />
+          <div id="avatar-preview" class="mt-4">
+            <img
+              id="preview-avatar"
+              src=""
+              alt="Avatar Preview"
+              class="hidden w-full h-48 object-cover border border-gray-300"
+            />
+          </div>
+        </div>
+
+        <!-- Banner URL -->
+        <div>
+          <label for="banner-url">Banner URL</label>
+          <input
+            type="url"
+            id="banner-url"
+            name="banner-url"
+            placeholder="Enter banner URL"
+            class="border border-gray-300 p-2"
+          />
+          <div id="banner-preview" class="mt-4">
+            <img
+              id="preview-banner"
+              src=""
+              alt="Banner Preview"
+              class="hidden w-full h-48 object-cover border border-gray-300"
+            />
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
+          <button
+            type="button"
+            id="cancel-edit-btn"
+            class="bg-red-500 text-white p-2 rounded"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            id="submit-edit-btn"
+            class="bg-blue-500 text-white p-2 rounded"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

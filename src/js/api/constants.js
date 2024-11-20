@@ -16,6 +16,10 @@ export const API_AUCTION_LISTING = `${API_AUCTION}/listings`;
 
 export const API_PROFILES = `${API_AUCTION}/profiles`;
 
+// Constants for fallback URLs
+export const FALLBACK_AVATAR = "https://via.placeholder.com/100";
+export const FALLBACK_BANNER = "https://via.placeholder.com/200x100";
+
 // username PanidaPae
 // ID: panida@stud.noroff.no
 // Password: panida1234

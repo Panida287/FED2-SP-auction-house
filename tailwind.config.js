@@ -1,11 +1,25 @@
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: [
     "./index.html",
-    "./src/**/*.{html,js,jsx,ts,tsx}",
-    "./auth/**/*.html", // Add this if your auth pages are outside src
+    "./*/index.html",
+    "./*/**/index.html",
+    "./src/**/*.{js,ts,jsx,tsx,html}"
   ],
   theme: {
-    extend: {},
+    screens: {
+      ph: '480px',
+      sm: '500px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px'
+    },
+    extend: {
+      fontFamily: {
+        h: ['Poppins', 'sans-serif'],
+        p: ['Roboto', 'sans-serif']
+      }
+    }
   },
   plugins: [],
 };
