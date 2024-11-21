@@ -12,9 +12,10 @@ export const API_AUTH_KEY = `${API_AUTH}/create-api-key`;
 
 export const API_AUCTION = `${API_BASE}/auction`;
 
+export const API_PROFILES = `${API_AUCTION}/profiles`;
+
 export const API_AUCTION_LISTING = `${API_AUCTION}/listings`;
 
-export const API_PROFILES = `${API_AUCTION}/profiles`;
 
 // Constants for fallback URLs
 export const FALLBACK_AVATAR = "https://via.placeholder.com/100";

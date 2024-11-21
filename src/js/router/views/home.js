@@ -1,5 +1,47 @@
-import { authGuard } from "../../utilities/authGuard";
 import { setLogoutListener } from '../../ui/global/logout';
+import { renderListings } from '../../ui/listing/display';
+import { renderProfile } from '../../ui/profile/renderProfile';
 
-authGuard();
-setLogoutListener(); 
+setLogoutListener();
+renderListings();
+renderProfile();
+
+
+// Add event listeners to category buttons
+const categoryButtons = document.querySelectorAll(".category-btn");
+const categoryHeading = document.querySelector(".category-heading");
+
+categoryButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.category;
+
+    // Update the category heading
+    categoryHeading.textContent = category || "All Listings";
+    renderListings(category); // Fetch filtered listings
+  });
+});
+
+// Sort by Trending (highest bids)
+const sortByBidsButton = document.getElementById("sort-by-bids");
+
+sortByBidsButton.addEventListener("click", async () => {
+  categoryHeading.textContent = "Trending Now";
+  await renderListings(null, 1, 12, true); // Fetch listings sorted by bids
+});
+
+// Search functionality
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+
+  if (query.length === 0) {
+    // Show all listings if the search is cleared
+    categoryHeading.textContent = "All Listings";
+    renderListings();
+  } else {
+    // Update the category heading and search listings
+    categoryHeading.textContent = `Results for "${query}"`;
+    renderListings(null, 1, 12, false, query);
+  }
+});
