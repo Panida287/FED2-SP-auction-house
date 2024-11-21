@@ -1,14 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link href="/src/style.css" rel="stylesheet">
-    <script type="module" src="/src/js/main.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auction House</title>
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="/src/js/main.js"></script>
+  <script
+  src="https://kit.fontawesome.com/5d32d5fe01.js"
+  crossorigin="anonymous"
+></script>
+  <title>Homepage</title>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md">
+    <!-- Credit and Profile -->
+    <div class="flex justify-between items-center px-4 py-4">
+      <span class="text-lg font-medium">Credit: <span class="credit-amount text-blue-500"></span> NOK</span>
+      <a href="/profile/">
+        <img
+        src=""
+        alt="Profile"
+        class="profile-pic object-contain w-10 h-10 rounded-full border-2 border-gray-300 cursor-pointer"
+        id="profile-link"
+      />
+      </a>
+    </div>
+    <!-- Search Bar -->
+    <div class="px-4 py-2">
+      <input
+        type="text"
+        id="search-input"
+        class="w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Search items..."
+      />
+    </div>
+  </header>
+
+<!-- Categories Section -->
+<section class="grid grid-cols-3 gap-4 px-4 py-6">
+  <button class="category-btn bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600" data-category="Clothes">Clothes</button>
+  <button class="category-btn bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600" data-category="Games">Games</button>
+  <button class="category-btn bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600" data-category="Electronics">Electronics</button>
+  <button class="category-btn bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600" data-category="Cars">Cars</button>
+  <button id="sort-by-bids" class="bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600">Trending</button>
+  <button class="category-btn bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600" data-category="">All Listings</button>
+</section>
+
+  <!-- Items Section -->
+  <h1 class="category-heading text-xl font-bold mb-4">All Listing</h1>
+  <div class="message-container text-center text-red-500 mb-4"></div>
+  <div class="items-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  <div class="pagination flex justify-center items-center mt-4 pb-[60px]">
+    <button class="prev-btn bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2" disabled>Previous</button>
+    <p class="page-info text-gray-700">Page 1 of 1</p>
+    <button class="next-btn bg-gray-300 text-gray-800 px-4 py-2 rounded ml-2" disabled>Next</button>
+  </div>  
+
+    <!-- Navigation Bar -->
+    <nav
+      class="fixed bottom-0 left-1/2 transform -translate-x-1/2 mobile-nav flex justify-evenly items-center w-[80%] p-2 bg-white shadow-md"
+    >
+      <a href="#">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <a href="#">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+      <button id="create-listing-btn">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <button class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </nav>
+</body>
 </html>
