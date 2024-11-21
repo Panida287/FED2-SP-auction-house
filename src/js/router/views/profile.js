@@ -2,6 +2,14 @@ import { editProfile } from "../../ui/profile/update";
 import { setLogoutListener } from "../../ui/global/logout";
 import { onCreate } from "../../ui/listing/create";
 import { renderProfile } from "../../ui/profile/renderProfile";
+import { renderListingsByUser } from "../../ui/listing/display";
+import { readAllBidsByUser, readAllWinsByUser } from "../../api/listing/read";
+
+// Retrieve the username from local storage
+const username = localStorage.getItem("userName");
+if (!username) {
+  console.error("No username found in local storage.");
+}
 
 // Initialize logout button functionality
 setLogoutListener();
@@ -15,16 +23,15 @@ renderProfile();
 // Initialize create listing functionality
 setupCreateListing();
 
-/**
- * Toggles the visibility of the edit profile container.
- *
- * This function adds event listeners to the "Edit" button, which, when clicked,
- * displays the `editProfileContainer` by removing the `hidden` class and adding
- * the `flex` class.
- *
- * @function setupEditProfile
- * @returns {void}
- */
+
+// Render the user's listings on page load
+if (username) {
+  renderListingsByUser(username);
+} else {
+  console.error("Unable to fetch user listings: No username provided.");
+}
+
+// Handle edit profile container toggle
 const editBtn = document.getElementById("edit-btn");
 const editProfileContainer = document.getElementById("edit-profile-container");
 
@@ -35,13 +42,7 @@ if (editBtn && editProfileContainer) {
   });
 }
 
-/**
- * Sets up the Create Listing form by adding the `onCreate` event listener.
- * Also handles the Cancel button functionality to hide the container and reset the form.
- *
- * @function setupCreateListing
- * @returns {void}
- */
+// Handle create listing functionality
 function setupCreateListing() {
   const createListingBtn = document.getElementById("create-listing-btn");
   const createListingContainer = document.getElementById("create-container");
@@ -50,19 +51,19 @@ function setupCreateListing() {
   const previewImage = document.getElementById("preview-image");
   const mediaUrlInput = document.getElementById("item-image-url");
 
-    /**
+  /**
    * Updates the image preview when the user enters a URL.
    */
-    mediaUrlInput.addEventListener("input", () => {
-      const url = mediaUrlInput.value;
-      if (url) {
-        previewImage.src = url;
-        previewImage.alt = "Image Preview";
-        previewImage.classList.remove("hidden");
-      } else {
-        previewImage.classList.add("hidden");
-      }
-    });
+  mediaUrlInput.addEventListener("input", () => {
+    const url = mediaUrlInput.value;
+    if (url) {
+      previewImage.src = url;
+      previewImage.alt = "Image Preview";
+      previewImage.classList.remove("hidden");
+    } else {
+      previewImage.classList.add("hidden");
+    }
+  });
 
   if (createListingBtn && createListingContainer) {
     createListingBtn.addEventListener("click", () => {
@@ -85,3 +86,84 @@ function setupCreateListing() {
     console.error("Listing form not found.");
   }
 }
+
+// Add event listeners for filter buttons
+  const listedButton = document.getElementById("listed");
+  const biddedButton = document.getElementById("bidded");
+  const winsButton = document.getElementById("wins");
+  const resultContainer = document.querySelector(".result-container");
+
+  // Show user's listings by default
+  if (username) {
+    listedButton.classList.add("active");
+    renderListingsByUser(username);
+  } else {
+    resultContainer.innerHTML = `<p class="text-red-500">Unable to load user listings. Please log in.</p>`;
+  }
+
+  // Handle "Items Listed" button
+  listedButton.addEventListener("click", async () => {
+    clearActiveButton();
+    listedButton.classList.add("active");
+    resultContainer.innerHTML = `<p>Loading your listings...</p>`;
+    await renderListingsByUser(username);
+  });
+
+  // Handle "Bidded" button
+  biddedButton.addEventListener("click", async () => {
+    clearActiveButton();
+    biddedButton.classList.add("active");
+    resultContainer.innerHTML = `<p>Loading your bids...</p>`;
+    try {
+      const response = await readAllBidsByUser(12, 1, username);
+      renderBidWins(response.data, "Bids");
+    } catch (error) {
+      console.error("Error fetching bids:", error);
+      resultContainer.innerHTML = `<p class="text-red-500">Failed to load your bids.</p>`;
+    }
+  });
+
+  // Handle "Wins" button
+  winsButton.addEventListener("click", async () => {
+    clearActiveButton();
+    winsButton.classList.add("active");
+    resultContainer.innerHTML = `<p>Loading your wins...</p>`;
+    try {
+      const response = await readAllWinsByUser(12, 1, username);
+      renderBidWins(response.data, "Wins");
+    } catch (error) {
+      console.error("Error fetching wins:", error);
+      resultContainer.innerHTML = `<p class="text-red-500">Failed to load your wins.</p>`;
+    }
+  });
+
+  // Helper function to clear active button state
+  function clearActiveButton() {
+    document.querySelectorAll(".display-filter-btn button").forEach((button) => {
+      button.classList.remove("active");
+    });
+  }
+;
+
+// Render bids or wins data
+function renderBidWins(data, type) {
+  const resultContainer = document.querySelector(".result-container");
+  resultContainer.innerHTML = ""; // Clear the container
+
+  if (!data || data.length === 0) {
+    resultContainer.innerHTML = `<p>No ${type.toLowerCase()} found for this user.</p>`;
+    return;
+  }
+
+  data.forEach((item) => {
+    const itemElement = document.createElement("div");
+    itemElement.className = "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
+    itemElement.innerHTML = `
+      <h3 class="text-lg font-semibold">${item.title || "Unnamed Item"}</h3>
+      <p class="text-gray-500">Amount: ${item.amount || "N/A"} NOK</p>
+    `;
+    resultContainer.appendChild(itemElement);
+  });
+}
+
+

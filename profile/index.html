@@ -49,8 +49,8 @@
         <p class="credit-amount"></p>
       </span>
       <span class="user-bids">
-        Bids:
-        <p class="bids-amount"></p>
+        Listings:
+        <p class="listings-amount"></p>
       </span>
       <span class="user-wins">
         Wins:
@@ -66,94 +66,10 @@
     </div>
 
     <!-- Results Section -->
-    <div class="result-container flex justify-center">
-      <!-- Listed Items -->
-      <div
-        class="listed-item-container w-[80%] border-2 border-black p-2 flex flex-col justify-center items-center"
-      >
-        <div class="item-img cover flex flex-col">
-          <h1
-            class="timer relative z-2 w-[100%] flex items-center justify-center translate-y-[10px]"
-          >
-            00:00:00
-          </h1>
-          <img
-            class="-translate-y-[20px] -z-10"
-            src="https://images.unsplash.com/photo-1630448927918-1dbcd8ba439b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          />
-        </div>
-        <button id="listed-item-edit-btn" class="flex justify-end w-[100%]">
-          Edit
-        </button>
-        <h2>Item name</h2>
-        <div class="bidding-info w-full flex justify-evenly items-center">
-          <span class="item-bids">
-            bids:
-            <p class="item-bids-data"></p>
-          </span>
-          <span class="current-price">
-            current price:
-            <p class="price-data"></p>
-          </span>
-        </div>
-      </div>
+    <div class="result-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-      <!-- Bidded Items -->
-      <div
-        class="bidded-item-container w-[80%] border-2 border-black p-2 flex flex-col items-center"
-      >
-        <div class="item-img cover flex flex-col">
-          <h1
-            class="timer relative z-2 w-[100%] flex items-center justify-center translate-y-[10px]"
-          >
-            00:00:00
-          </h1>
-          <img
-            class="-translate-y-[20px] -z-10"
-            src="https://images.unsplash.com/photo-1630448927918-1dbcd8ba439b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          />
-        </div>
-        <h2>Item name</h2>
-        <div class="bidding-info w-full flex justify-evenly items-center">
-          <span class="item-bids">
-            bids:
-            <p class="item-bids-data"></p>
-          </span>
-          <span class="current-price">
-            current price:
-            <p class="price-data"></p>
-          </span>
-        </div>
-      </div>
-
-      <!-- Wins -->
-      <div
-        class="win-item-container w-[80%] border-2 border-black p-2 flex flex-col items-center"
-      >
-        <div class="item-img cover flex flex-col">
-          <h1
-            class="timer relative z-2 w-[100%] flex items-center justify-center translate-y-[10px]"
-          >
-            ENDED
-          </h1>
-          <img
-            class="-translate-y-[20px] -z-10"
-            src="https://images.unsplash.com/photo-1630448927918-1dbcd8ba439b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          />
-        </div>
-        <h2>Item name</h2>
-        <div class="bidding-info w-full flex justify-evenly items-center">
-          <span class="item-bids">
-            bids:
-            <p class="item-bids-data"></p>
-          </span>
-          <span class="current-price">
-            current price:
-            <p class="price-data"></p>
-          </span>
-        </div>
-      </div>
-    </div>
+    <!-- Error msg -->
+     <div class="message-container text-red-500"></div>
 
     <!-- Navigation Bar -->
     <nav

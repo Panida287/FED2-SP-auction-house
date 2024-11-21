@@ -1,5 +1,5 @@
 import { headers } from "../headers";
-import { API_AUCTION_LISTING } from "../constants";
+import { API_AUCTION_LISTING, API_PROFILES } from "../constants";
 
 /**
  * Fetches a list of auction listings with optional filtering by tag and pagination support.
@@ -104,7 +104,7 @@ export async function readListingsByUser(limit = 12, page = 1, username) {
   const myHeaders = await headers();
 
   try {
-    const response = await fetch(`${API_AUCTION_LISTING}/${username}/listings`, {
+    const response = await fetch(`${API_PROFILES}/${username}/listings`, {
       method: "GET",
       headers: myHeaders,
     });
@@ -137,7 +137,7 @@ export async function readAllBidsByUser(limit = 12, page = 1, username) {
   const myHeaders = await headers();
 
   try {
-    const response = await fetch(`${API_AUCTION_LISTING}/${username}/bids`, {
+    const response = await fetch(`${API_PROFILES}/${username}/bids`, {
       method: "GET",
       headers: myHeaders,
     });
@@ -170,7 +170,7 @@ export async function readAllWinsByUser(limit = 12, page = 1, username) {
   const myHeaders = await headers();
 
   try {
-    const response = await fetch(`${API_AUCTION_LISTING}/${username}/wins`, {
+    const response = await fetch(`${API_PROFILES}/${username}/wins`, {
       method: "GET",
       headers: myHeaders,
     });
