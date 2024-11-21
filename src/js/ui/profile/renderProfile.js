@@ -31,7 +31,7 @@ export async function renderProfile() {
     const banner = document.querySelector(".banner");
     const author = document.querySelector(".author");
     const creditAmount = document.querySelector(".credit-amount");
-    const bidsAmount = document.querySelector(".bids-amount");
+    const listingsAmount = document.querySelector(".listings-amount");
     const winAmount = document.querySelector(".win-amount");
 
     // Update author name
@@ -53,7 +53,7 @@ export async function renderProfile() {
 
     // Populate stats: credits, bids, and wins
     if (creditAmount) creditAmount.textContent = profile.data.credits || 0;
-    if (bidsAmount) bidsAmount.textContent = profile.data._count?.listings || 0;
+    if (listingsAmount) listingsAmount.textContent = profile.data._count?.listings || 0;
     if (winAmount) winAmount.textContent = profile.data._count?.wins || 0;
   } catch (error) {
     console.error("Error fetching profile or posts:", error);
