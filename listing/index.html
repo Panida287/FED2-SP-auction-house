@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/js/main.js"></script>
+    <script
+      src="https://kit.fontawesome.com/5d32d5fe01.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Product Page</title>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- Back Button and Image -->
+    <header class="relative w-full h-[300px] bg-gray-200">
+      <button
+        id="back-btn"
+        class="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <img
+        id="product-image"
+        src=""
+        alt="Product Image"
+        class="object-cover w-full h-full"
+      />
+      <!-- Profile -->
+      <a href="/profile/">
+        <img
+          src=""
+          alt="Profile"
+          class="profile-pic absolute top-4 right-4 object-contain w-10 h-10 rounded-full border-2 border-gray-300 cursor-pointer"
+          id="profile-link"
+        />
+      </a>
+    </header>
+
+    <!-- Product Stats -->
+    <section class="flex justify-evenly items-center bg-white shadow-md py-4">
+      <div>
+        <p class="text-gray-600 text-sm">Biddings</p>
+        <p id="biddings-count" class="text-lg font-bold">0</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Price</p>
+        <p id="price" class="text-lg font-bold">0 NOK</p>
+      </div>
+      <div>
+        <p class="text-gray-600 text-sm">Countdown</p>
+        <p id="countdown-timer" class="text-lg font-bold">00:00:00</p>
+      </div>
+    </section>
+
+    <!-- Product Info -->
+    <section class="p-4">
+      <h1 id="product-title" class="text-xl font-bold">Product Title</h1>
+      <p id="product-category" class="text-gray-600 text-sm">
+        Category: <span class="font-medium">Clothes</span>
+      </p>
+      <p id="product-seller" class="text-gray-600 text-sm">
+        Seller: <span class="font-medium">John Doe</span>
+      </p>
+      <p id="product-description" class="mt-4 text-gray-700">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+        gravida.
+      </p>
+    </section>
+
+    <!-- Credit and Bid Form -->
+    <section class="bg-white shadow-md py-4 px-4">
+      <span class="user-credit flex text-blue-600 font-bold">
+        <p>Credit:</p>
+        <p class="credit-amount text-black font-light"></p>
+      </span>
+      <form id="bid-form" class="mt-4 flex gap-4">
+        <input
+          type="number"
+          id="bid-amount"
+          name="bid-amount"
+          placeholder="Bid amount"
+          class="border border-gray-300 p-2 rounded-lg flex-1"
+          required
+          min="2"
+        />
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md"
+        >
+          Place Bid
+        </button>
+      </form>
+    </section>
+
+    <!-- Last Bids -->
+    <section class="p-4">
+      <h2 class="text-lg font-bold mb-2">Last Bids</h2>
+      <div id="last-bids" class="space-y-4">
+        <!-- Example Bid -->
+        <div
+          class="flex justify-between items-center border-b border-gray-300 pb-2"
+        >
+          <p class="text-gray-600 font-medium">Name</p>
+          <p class="text-gray-400 text-sm">At: 00:00</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Bar -->
+    <nav
+      class="fixed bottom-0 left-1/2 transform -translate-x-1/2 mobile-nav flex justify-evenly items-center w-[80%] p-2 bg-white shadow-md"
+    >
+      <a href="#">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <a href="#">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+      <button id="create-listing-btn">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+      <button class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </nav>
+  </body>
+</html>

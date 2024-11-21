@@ -1,5 +1,6 @@
 import { headers } from "../headers";
 import { API_AUCTION_LISTING, API_PROFILES } from "../constants";
+import { getIDFromURL } from "../../utilities/urlIDUtils";
 
 /**
  * Fetches a list of auction listings with optional filtering by tag and pagination support.
