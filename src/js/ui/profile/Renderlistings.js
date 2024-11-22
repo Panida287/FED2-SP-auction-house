@@ -2,7 +2,7 @@ import { readUserBidsWins,readListingsByUser } from "../../api/listing/read";
 import { renderListingsToContainer } from "../listing/display";
 
 export async function renderListingsByUser(username, page = 1, limit = 12) {
-    const resultContainer = document.querySelector(".result-container");
+    const container = document.querySelector(".result-container");
     const messageContainer = document.querySelector(".message-container");
     const paginationInfo = document.querySelector(".page-info");
     const prevBtn = document.querySelector(".prev-btn");
@@ -19,7 +19,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
       }
       messageContainer.textContent = "";
   
-      renderListingsToContainer(listings, resultContainer);
+      renderListingsToContainer(listings, container);
   
       paginationInfo.textContent = `Page ${meta.currentPage} of ${meta.pageCount}`;
       prevBtn.disabled = !meta.previousPage;
@@ -29,13 +29,13 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
       nextBtn.onclick = () => renderListingsByUser(username, page + 1, limit);
     } catch (error) {
       console.error("Error rendering user listings:", error);
-      resultContainer.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
+      container.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
     }
   }
 
 
   export async function renderUserBidsListings(username, limit = 12, page = 1) {
-    const resultContainer = document.querySelector(".result-container");
+    const container = document.querySelector(".result-container");
     const messageContainer = document.querySelector(".message-container");
     const paginationInfo = document.querySelector(".page-info");
     const prevBtn = document.querySelector(".prev-btn");
@@ -48,14 +48,14 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
   
       if (!bidData || bidData.length === 0) {
         messageContainer.textContent = "You havn't bid on anything :(";
-        resultContainer.innerHTML = ""; // Clear any previous content
+        container.innerHTML = ""; // Clear any previous content
         return;
       }
   
       messageContainer.textContent = "";
   
       // Clear the container
-      resultContainer.innerHTML = "";
+      container.innerHTML = "";
   
       // Render each bid with its associated listing
       bidData.forEach((bid) => {
@@ -98,7 +98,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
             </div>
         `;
 
-        resultContainer.appendChild(listingElement);
+        container.appendChild(listingElement);
       });
   
       // Update pagination information
@@ -112,12 +112,12 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
       nextBtn.onclick = () => renderUserBidsListings(username, limit, page + 1);
     } catch (error) {
       console.error("Error fetching bids with listings:", error);
-      resultContainer.innerHTML = `<p class="text-red-500">Failed to load your bids.</p>`;
+      container.innerHTML = `<p class="text-red-500">Failed to load your bids.</p>`;
     }
   }
 
   export async function renderUserWinsListings(username, limit = 12, page = 1) {
-    const resultContainer = document.querySelector(".result-container");
+    const container = document.querySelector(".result-container");
     const messageContainer = document.querySelector(".message-container");
     const paginationInfo = document.querySelector(".page-info");
     const prevBtn = document.querySelector(".prev-btn");
@@ -130,12 +130,12 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
   
       if (!winData || winData.length === 0) {
         messageContainer.textContent = "You havn't won anything! Keep bidding!";
-        resultContainer.innerHTML = ""; // Clear any previous content
+        container.innerHTML = ""; // Clear any previous content
         return;
       }
   
       messageContainer.textContent = "";
-      resultContainer.innerHTML = ""; // Clear previous content
+      container.innerHTML = ""; // Clear previous content
   
       // Render each win listing
       winData.forEach((listing) => {
@@ -176,7 +176,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
           </div>
         `;
   
-        resultContainer.appendChild(listingElement);
+        container.appendChild(listingElement);
       });
   
       // Update pagination information
@@ -190,7 +190,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
       nextBtn.onclick = () => renderUserWinsListings(username, limit, page + 1);
     } catch (error) {
       console.error("Error fetching wins:", error);
-      resultContainer.innerHTML = `<p class="text-red-500">Failed to load your wins.</p>`;
+      container.innerHTML = `<p class="text-red-500">Failed to load your wins.</p>`;
     }
   }
   

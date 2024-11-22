@@ -86,6 +86,10 @@ export async function renderListings(tag = null, page = 1, limit = 12, sortByBid
   const nextBtn = document.querySelector(".next-btn");
 
   try {
+    // Clear the container and message at the start
+    itemsSection.innerHTML = "";
+    messageContainer.textContent = "";
+
     let response;
 
     if (query) {
@@ -101,14 +105,16 @@ export async function renderListings(tag = null, page = 1, limit = 12, sortByBid
       messageContainer.textContent = `No listings found.`;
       return;
     }
-    messageContainer.textContent = "";
 
+    // Render listings into the container
     renderListingsToContainer(listings, itemsSection);
 
+    // Update pagination information
     paginationInfo.textContent = `Page ${meta.currentPage} of ${meta.pageCount}`;
     prevBtn.disabled = !meta.previousPage;
     nextBtn.disabled = !meta.nextPage;
 
+    // Pagination button handlers
     prevBtn.onclick = () => renderListings(tag, page - 1, limit, sortByBids, query);
     nextBtn.onclick = () => renderListings(tag, page + 1, limit, sortByBids, query);
   } catch (error) {
@@ -116,6 +122,7 @@ export async function renderListings(tag = null, page = 1, limit = 12, sortByBid
     itemsSection.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
   }
 }
+
 
 
 
