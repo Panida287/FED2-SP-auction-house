@@ -2,10 +2,10 @@ import {
   readListings,
   readListing,
   searchListings,
-  readListingsByUser,
 } from "../../api/listing/read";
 
 import { FALLBACK_AVATAR } from "../../api/constants";
+import { updateCountdown } from "../../utilities/updateCountdown";
 
 /**
  * Renders a list of listings into a given container.
@@ -21,7 +21,7 @@ export function renderListingsToContainer(listings, container) {
     const endDate = new Date(listing.endsAt);
     const isEnded = now > endDate;
 
-    const media = listing.media[0]?.url
+    const media = listing.media[0].url
       ? `<div class="relative">
            <img src="${listing.media[0].url}" alt="${listing.media[0].alt || "Item image"}" class="w-24 h-24 object-cover rounded-lg"/>
            ${
@@ -47,7 +47,6 @@ export function renderListingsToContainer(listings, container) {
     listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
     listingElement.className =
       "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
-
     listingElement.innerHTML = `
       ${media}
       <div class="item-details ml-4">
@@ -57,7 +56,7 @@ export function renderListingsToContainer(listings, container) {
         }</p>
         <div class="flex justify-between items-center mt-2">
           <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
-            listing._count.bids
+            listing._count?.bids
           }</span></p>
           <p class="text-gray-700 text-sm">Current bid: <span class="font-bold">${
             lastBidAmount
@@ -118,39 +117,6 @@ export async function renderListings(tag = null, page = 1, limit = 12, sortByBid
   }
 }
 
-
-
-export async function renderListingsByUser(username, page = 1, limit = 12) {
-  const resultContainer = document.querySelector(".result-container");
-  const messageContainer = document.querySelector(".message-container");
-  const paginationInfo = document.querySelector(".page-info");
-  const prevBtn = document.querySelector(".prev-btn");
-  const nextBtn = document.querySelector(".next-btn");
-
-  try {
-    const response = await readListingsByUser(limit, page, username);
-    const listings = response.data;
-    const meta = response.meta;
-
-    if (listings.length === 0) {
-      messageContainer.textContent = `No listings found for user: ${username}`;
-      return;
-    }
-    messageContainer.textContent = "";
-
-    renderListingsToContainer(listings, resultContainer);
-
-    paginationInfo.textContent = `Page ${meta.currentPage} of ${meta.pageCount}`;
-    prevBtn.disabled = !meta.previousPage;
-    nextBtn.disabled = !meta.nextPage;
-
-    prevBtn.onclick = () => renderListingsByUser(username, page - 1, limit);
-    nextBtn.onclick = () => renderListingsByUser(username, page + 1, limit);
-  } catch (error) {
-    console.error("Error rendering user listings:", error);
-    resultContainer.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
-  }
-}
 
 
 /**
