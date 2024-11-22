@@ -1,18 +1,11 @@
 import { createListing } from "../../api/listing/create";
+import { setupPreview } from "../../utilities/preview";
 
 /**
- * Handles the Create Listing functionality, including image preview, validation, and form submission.
- *
- * This function allows users to create a new auction listing by filling out the form.
- * Users can preview the image as they input the URL, and the data is sent to the API
- * via a POST request. Required fields include title, description, image URL (media), and end date.
+ * Handles the Create Listing functionality, including image preview and form submission.
  *
  * @function onCreate
  * @async
- *
- * @requires createListing - The API function to create a new listing.
- *
- * @throws Will alert the user and prevent submission if required fields are missing.
  *
  * @param {Event} event - The form submission event.
  */
@@ -27,54 +20,23 @@ export async function onCreate(event) {
   const endsAtInput = document.getElementById("item-ends-at");
   const previewImage = document.getElementById("preview-image");
 
-  // Validate required fields
-  const title = titleInput?.value.trim();
-  const description = descriptionInput?.value.trim();
-  const mediaUrl = mediaUrlInput?.value.trim();
-  const endsAt = endsAtInput?.value;
+  // Dynamically update the image preview
+  setupPreview(mediaUrlInput, previewImage, titleInput?.value.trim());
 
-  if (!title) {
-    alert("Title is required.");
-    return;
-  }
-  if (!description) {
-    alert("Description is required.");
-    return;
-  }
-  if (!mediaUrl) {
-    alert("Image URL is required.");
-    return;
-  }
-  if (!endsAt) {
-    alert("Auction end date and time are required.");
-    return;
-  }
-
-  // Update the image preview dynamically
-  mediaUrlInput.addEventListener("input", () => {
-    if (mediaUrlInput.value) {
-      previewImage.src = mediaUrlInput.value;
-      previewImage.alt = title || "Image Preview";
-      previewImage.classList.remove("hidden");
-    } else {
-      previewImage.classList.add("hidden");
-    }
-  });
-
-  // Collect category tags from the selected options
+  // Collect selected category tags
   const tags = Array.from(categorySelect?.selectedOptions).map((option) => option.value);
 
-  // Construct media array with title as the alt text
-  const media = [{ url: mediaUrl, alt: title }];
+  // Construct media array with title as alt text
+  const media = [{ url: mediaUrlInput?.value.trim(), alt: titleInput?.value.trim() }];
 
   try {
     // Call the API to create the listing
     await createListing({
-      title,
-      description,
+      title: titleInput?.value.trim(),
+      description: descriptionInput?.value.trim(),
       tags,
       media,
-      endsAt: new Date(endsAt).toISOString(),
+      endsAt: new Date(endsAtInput?.value).toISOString(),
     });
 
     // Handle success
@@ -85,5 +47,45 @@ export async function onCreate(event) {
     // Handle errors
     console.error("Error creating listing:", error);
     alert("Failed to create listing. Please try again.");
+  }
+}
+
+export function setupCreateListing() {
+  const createListingBtn = document.getElementById("create-listing-btn");
+  const createListingContainer = document.getElementById("create-container");
+  const listingForm = document.getElementById("listing-form");
+  const cancelBtn = document.getElementById("cancel-edit-btn");
+  const previewImage = document.getElementById("preview-image");
+  const mediaUrlInput = document.getElementById("item-image-url");
+
+  // Initialize media preview
+  setupPreview(mediaUrlInput, previewImage);
+
+  if (createListingBtn) {
+    createListingBtn.addEventListener("click", () => {
+      toggleContainer(createListingContainer, true);
+    });
+  }
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      toggleContainer(createListingContainer, false);
+      listingForm?.reset();
+    });
+  }
+
+  listingForm?.addEventListener("submit", onCreate);
+}
+
+/**
+ * Toggles visibility of a container.
+ *
+ * @param {HTMLElement} container - The container to toggle.
+ * @param {boolean} show - Whether to show or hide the container.
+ */
+function toggleContainer(container, show) {
+  if (container) {
+    container.classList.toggle("hidden", !show);
+    container.classList.toggle("flex", show);
   }
 }

@@ -124,70 +124,49 @@ export async function readListingsByUser(limit = 12, page = 1, username) {
 }
 
 /**
- * Fetches all bids made by a specific user.
+ * Fetches all bids or wins made by a specific user.
  *
  * @async
- * @function readAllBidsByUser
- * @param {number} [limit=12] - The number of bids to fetch per page.
+ * @function readUserBidsWins
+ * @param {string} type - The type of data to fetch (`bids` or `wins`).
+ * @param {number} [limit=12] - The number of items to fetch per page.
  * @param {number} [page=1] - The page number to fetch.
- * @param {string} username - The username of the user whose bids are to be fetched.
- * @returns {Promise<Object>} A promise that resolves with the fetched bids data.
+ * @param {string} username - The username of the user whose data is to be fetched.
+ * @returns {Promise<Object>} A promise that resolves with the fetched data.
  * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
  */
-export async function readAllBidsByUser(limit = 12, page = 1, username) {
+export async function readUserBidsWins(type, limit = 12, page = 1, username) {
   const myHeaders = await headers();
 
+  const params = new URLSearchParams({
+    limit: limit.toString(),
+    page: page.toString(),
+    _listings: "true", // Add the `_listings=true` flag
+  });
+
   try {
-    const response = await fetch(`${API_PROFILES}/${username}/bids`, {
-      method: "GET",
-      headers: myHeaders,
-    });
+    const response = await fetch(
+      `${API_PROFILES}/${username}/${type}?${params.toString()}`,
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    );
+
     const result = await response.json();
 
     if (response.ok) {
       return result;
     } else {
       console.error(result);
-      throw new Error(`Failed to fetch bids: ${result.message}`);
+      throw new Error(`Failed to fetch ${type}: ${result.message}`);
     }
   } catch (error) {
-    console.error("Error fetching bids:", error);
+    console.error(`Error fetching ${type}:`, error);
     throw error;
   }
 }
 
-/**
- * Fetches all auction wins by a specific user.
- *
- * @async
- * @function readAllWinsByUser
- * @param {number} [limit=12] - The number of wins to fetch per page.
- * @param {number} [page=1] - The page number to fetch.
- * @param {string} username - The username of the user whose wins are to be fetched.
- * @returns {Promise<Object>} A promise that resolves with the fetched wins data.
- * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
- */
-export async function readAllWinsByUser(limit = 12, page = 1, username) {
-  const myHeaders = await headers();
-
-  try {
-    const response = await fetch(`${API_PROFILES}/${username}/wins`, {
-      method: "GET",
-      headers: myHeaders,
-    });
-    const result = await response.json();
-
-    if (response.ok) {
-      return result;
-    } else {
-      console.error(result);
-      throw new Error(`Failed to fetch wins: ${result.message}`);
-    }
-  } catch (error) {
-    console.error("Error fetching wins:", error);
-    throw error;
-  }
-}
 
 
 /**
