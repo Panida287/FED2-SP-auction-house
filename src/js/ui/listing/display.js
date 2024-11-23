@@ -21,56 +21,45 @@ export function renderListingsToContainer(listings, container) {
     const endDate = new Date(listing.endsAt);
     const isEnded = now > endDate;
 
-    const media = listing.media[0].url
-      ? `<div class="relative">
-           <img src="${listing.media[0].url}" alt="${listing.media[0].alt || "Item image"}" class="w-24 h-24 object-cover rounded-lg"/>
-           ${
-             isEnded
-               ? `<div class="absolute h-[full] w-[full] top-1/2 -translate-y-1/2 bg-white/70 flex justify-center items-center text-red-500 font-bold">
-                    Auction Ended
-                  </div>`
-               : ""
-           }
-         </div>`
-      : `<div class="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center">No Image</div>`;
-
-    const lastBidAmount = listing.bids && listing.bids.length > 0
+    const lastBidAmount = listing.bids?.length
       ? listing.bids[listing.bids.length - 1].amount
       : "0";
 
     const winner =
-      isEnded && listing.bids && listing.bids.length > 0
+      isEnded && listing.bids?.length
         ? listing.bids[listing.bids.length - 1].bidder.name || "Unknown"
         : null;
-
     const listingElement = document.createElement("a");
     listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
-    listingElement.className =
-      "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
+    listingElement.className = "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
+
     listingElement.innerHTML = `
-      ${media}
+      <div class="relative">
+        <img src="${listing.media?.[0]?.url || "default-image.jpg"}" alt="${listing.media?.[0]?.alt || "Item image"}" class="w-24 h-24 object-cover rounded-lg"/>
+        ${
+          isEnded
+            ? `<div class="absolute h-full w-full top-1/2 -translate-y-1/2 bg-white/70 flex justify-center items-center text-red-500 font-bold">
+                 Auction Ended
+               </div>`
+            : ""
+        }
+      </div>
       <div class="item-details ml-4">
         <h3 class="text-lg font-semibold">${listing.title}</h3>
-        <p class="text-gray-500 text-sm">Seller: ${
-          listing.seller?.name || "Me"
-        }</p>
+        <p class="text-gray-500 text-sm">Seller: ${listing.seller?.name || "Me"}</p>
         <div class="flex justify-between items-center mt-2">
-          <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
-            listing._count?.bids
-          }</span></p>
-          <p class="text-gray-700 text-sm">Current bid: <span class="font-bold">${
-            lastBidAmount
-          } NOK</span></p>
+          <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${listing._count?.bids}</span></p>
+          <p class="text-gray-700 text-sm">Current bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
         </div>
         ${
           isEnded
             ? `<p class="text-sm text-gray-400">Ended: <span class="font-bold">${endDate.toLocaleString()}</span></p>
-               <p class="text-gray-700 text-sm">Win: <span class="font-bold">${winner || "No bids"}</span></p>
-               <p class="text-gray-700 text-sm">Price: <span class="font-bold">${lastBidAmount} NOK</span></p>`
+               <p class="text-gray-700 text-sm">Win: <span class="font-bold">${winner || "No bids"}</span></p>`
             : `<p class="mt-2 text-sm text-gray-400">Ends in: <span class="font-bold">${endDate.toLocaleString()}</span></p>`
         }
       </div>
-    `;
+    `
+    ;
 
     container.appendChild(listingElement);
   });
@@ -184,6 +173,18 @@ export async function renderListingById() {
     productDescription.textContent =
       listing.description || "No description available.";
 
+
+    // Add edit and delete button if seller name match logged-in user
+    const loggedInUser = localStorage.getItem("userName");
+    console.log(listing)
+      if (loggedInUser === listing.seller?.name && now < endDate) {
+        const editBtn = document.createElement("button");
+
+        editBtn.className = "border-2 border-black rounded-md";
+        editBtn.textContent = "Edit";
+        productTitle.appendChild(editBtn);
+      }  
+
     // Set product stats
     const lastBidAmount = listing.bids && listing.bids.length > 0
       ? listing.bids[listing.bids.length - 1].amount
@@ -217,6 +218,20 @@ export async function renderListingById() {
     // Set bid amount placeholder and minimum bid
     bidInput.placeholder = `Enter more than ${lastBidAmount} NOK`;
     bidInput.min = lastBidAmount;
+
+
+    // set to hide bidding section from own listing 
+    const bidForm = document.getElementById('bid-form');
+    const bidContainer = document.querySelector('.bid-container');
+    if (loggedInUser === listing.seller?.name){
+      const bidNotAllowed = document.createElement('h2');
+      bidNotAllowed.classList = "text-red-500";
+      bidNotAllowed.textContent = "You cannot bid on your own listing"
+      
+      bidForm.classList = "hidden";
+
+      bidContainer.appendChild(bidNotAllowed);
+    }
 
     // Add Back button functionality
     backButton.addEventListener("click", () => {
