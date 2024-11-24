@@ -148,7 +148,7 @@ export async function renderListingById() {
     const listing = await readListing();
 
     // Set the product image
-    productImage.src = listing.media?.[0]?.url || "default-image.jpg";
+    productImage.src = listing.media?.[0]?.url;
     productImage.alt = listing.media?.[0]?.alt || "Product Image";
 
     // Add auction ended overlay if auction has ended
@@ -174,16 +174,18 @@ export async function renderListingById() {
       listing.description || "No description available.";
 
 
-    // Add edit and delete button if seller name match logged-in user
+    // Logic for the edit button visibility
     const loggedInUser = localStorage.getItem("userName");
-    console.log(listing)
-      if (loggedInUser === listing.seller?.name && now < endDate) {
-        const editBtn = document.createElement("button");
-
-        editBtn.className = "border-2 border-black rounded-md";
-        editBtn.textContent = "Edit";
-        productTitle.appendChild(editBtn);
-      }  
+    const editBtn = document.getElementById('edit-listing-btn');
+    if (loggedInUser === listing.seller?.name && now < endDate) {
+      // Show the edit button
+      editBtn.classList.remove("hidden");
+      editBtn.classList.add("flex");
+    } else {
+      // Hide the edit button
+      editBtn.classList.remove("flex");
+      editBtn.classList.add("hidden");
+    }
 
     // Set product stats
     const lastBidAmount = listing.bids && listing.bids.length > 0
