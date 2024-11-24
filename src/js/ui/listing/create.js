@@ -1,5 +1,6 @@
 import { createListing } from "../../api/listing/create";
 import { setupPreview } from "../../utilities/preview";
+import { toggleContainer } from "../../utilities/toggleContainer";
 
 /**
  * Handles the Create Listing functionality, including image preview and form submission.
@@ -12,7 +13,6 @@ import { setupPreview } from "../../utilities/preview";
 export async function onCreate(event) {
   event.preventDefault(); // Prevent default form submission
 
-  const form = event.target;
   const titleInput = document.getElementById("item-name");
   const descriptionInput = document.getElementById("item-description");
   const categorySelect = document.getElementById("item-category");
@@ -41,8 +41,7 @@ export async function onCreate(event) {
 
     // Handle success
     alert("Listing created successfully!");
-    form.reset(); // Clear the form
-    if (previewImage) previewImage.classList.add("hidden"); // Hide the preview after submission
+    location.reload();
   } catch (error) {
     // Handle errors
     console.error("Error creating listing:", error);
@@ -54,7 +53,7 @@ export function setupCreateListing() {
   const createListingBtn = document.getElementById("create-listing-btn");
   const createListingContainer = document.getElementById("create-container");
   const listingForm = document.getElementById("listing-form");
-  const cancelBtn = document.getElementById("cancel-edit-btn");
+  const cancelBtn = document.getElementById("cancel-create-btn");
   const previewImage = document.getElementById("preview-image");
   const mediaUrlInput = document.getElementById("item-image-url");
 
@@ -77,15 +76,4 @@ export function setupCreateListing() {
   listingForm?.addEventListener("submit", onCreate);
 }
 
-/**
- * Toggles visibility of a container.
- *
- * @param {HTMLElement} container - The container to toggle.
- * @param {boolean} show - Whether to show or hide the container.
- */
-function toggleContainer(container, show) {
-  if (container) {
-    container.classList.toggle("hidden", !show);
-    container.classList.toggle("flex", show);
-  }
-}
+

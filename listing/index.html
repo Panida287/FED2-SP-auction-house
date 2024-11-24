@@ -55,6 +55,7 @@
     <!-- Product Info -->
     <section class="p-4">
       <h1 id="product-title" class="text-xl font-bold">Product Title</h1>
+      <button id="edit-listing-btn" class="flex h-20 w-20">Edit here</button>
       <p id="product-category" class="text-gray-600 text-sm">
         Category: <span class="font-medium">Clothes</span>
       </p>
@@ -109,11 +110,99 @@
       </div>
     </section>
 
+    <!-- Edit Listing Modal -->
+
+    <div
+      id="edit-listing-container"
+      class="hidden absolute top-1/2 left-1/2 w-[70%] p-2 bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
+    >
+      <form id="edit-listing-form" class="flex flex-col gap-4">
+        <!-- Image URL -->
+        <div>
+          <label for="item-image-url">Image URL</label>
+          <input
+            type="url"
+            id="item-image-url"
+            name="item-image-url"
+            placeholder="Enter image URL"
+            class="border border-gray-300 p-2"
+          />
+          <!-- Image Preview -->
+          <div id="image-preview" class="mt-4">
+            <img
+              id="preview-image"
+              src=""
+              alt="Item preview"
+              class="hidden w-full h-48 object-cover border border-gray-300"
+            />
+          </div>
+        </div>
+        <!-- Item Name -->
+        <div>
+          <label for="item-name">Item Name</label>
+          <input
+            type="text"
+            id="item-name"
+            name="item-name"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
+
+        <!-- Item Description -->
+        <div>
+          <label for="item-description">Description</label>
+          <input
+            type="text"
+            id="item-description"
+            name="item-description"
+            required
+            class="border border-gray-300 p-2"
+          />
+        </div>
+
+        <!-- Tags -->
+        <div>
+          <label for="item-category">Category</label>
+          <select
+            id="item-category"
+            name="item-category"
+            required
+            class="border border-gray-300 p-2"
+          >
+            <option value="" disabled selected>Select a category</option>
+            <option value="clothes">Clothes</option>
+            <option value="games">Games</option>
+            <option value="electronics">Electronics</option>
+            <option value="cars">Cars</option>
+            <option value="travels">Travels</option>
+          </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
+          <!-- Submit Button -->
+          <button type="submit" class="bg-blue-500 text-white p-2 rounded">
+            Confirm
+          </button>
+
+          <!-- Cancel Button -->
+          <button
+            type="button"
+            id="cancel-edit-btn"
+            class="bg-red-500 text-white p-2 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
     <!-- Navigation Bar -->
     <nav
       class="fixed bottom-0 left-1/2 transform -translate-x-1/2 mobile-nav flex justify-evenly items-center w-[80%] p-2 bg-white shadow-md"
     >
-      <a href="#">
+      <a href="/">
         <i class="fa-solid fa-house"></i>
       </a>
       <a href="#">

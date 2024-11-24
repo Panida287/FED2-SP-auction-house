@@ -36,6 +36,7 @@ export async function createListing({ title, description, tags, media, endsAt })
     }
 
     return await response.json();
+    
   } catch (error) {
     console.error("Error creating listing:", error);
     throw error;
