@@ -5,13 +5,15 @@ import { readListing } from "../../api/listing/read";
 import { setupPreview } from "../../utilities/preview";
 import { toggleContainer } from "../../utilities/toggleContainer";
 import { onUpdate } from "../../ui/listing/update";
+import { onDelete } from "../../ui/listing/delete";
 
 renderListingById();
 renderProfile();
 setupBidForm();
 setupUpdateListing();
+deleteListing();
 
-export async function populateUpdateForm() {
+async function populateUpdateForm() {
     try {
       const listing = await readListing(); // Fetch the listing data
       if (!listing) {
@@ -88,4 +90,28 @@ export async function populateUpdateForm() {
     // Handle form submission
     listingForm?.addEventListener("submit", onUpdate);
   }
-  
+
+function deleteListing() {
+  const deleteBtn = document.getElementById("delete-btn");
+  const deleteModal = document.getElementById("delete-modal");
+  const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+  const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
+
+  if (deleteBtn, deleteModal) {
+    deleteBtn.addEventListener("click", () => {
+      if (deleteModal.classList.contains("hidden")) {
+        toggleContainer(deleteModal, true);
+      }
+    });
+  }
+   if (cancelDeleteBtn) {
+    cancelDeleteBtn.addEventListener("click", ()=> {
+      toggleContainer(deleteModal, false);
+    });
+   }
+
+   confirmDeleteBtn.addEventListener("click", ()=> {
+    onDelete();
+   })
+
+}
