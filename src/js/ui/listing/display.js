@@ -4,7 +4,7 @@ import {
   searchListings,
 } from "../../api/listing/read";
 
-import { FALLBACK_AVATAR } from "../../api/constants";
+import { FALLBACK_AVATAR, FALLBACK_IMG } from "../../api/constants";
 import { updateCountdown } from "../../utilities/updateCountdown";
 
 /**
@@ -31,11 +31,17 @@ export function renderListingsToContainer(listings, container) {
         : null;
     const listingElement = document.createElement("a");
     listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
-    listingElement.className = "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
+    listingElement.className =
+      "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
 
     listingElement.innerHTML = `
       <div class="relative">
-        <img src="${listing.media?.[0]?.url || "default-image.jpg"}" alt="${listing.media?.[0]?.alt || "Item image"}" class="w-24 h-24 object-cover rounded-lg"/>
+          <img 
+          src="${listing.media?.[0]?.url || FALLBACK_IMG}" 
+          alt="${listing.media?.[0]?.alt || "Item image"}" 
+          class="w-24 h-24 object-cover rounded-lg"
+          onerror="this.src='${FALLBACK_IMG}'"
+        />
         ${
           isEnded
             ? `<div class="absolute h-full w-full top-1/2 -translate-y-1/2 bg-white/70 flex justify-center items-center text-red-500 font-bold">
@@ -46,28 +52,38 @@ export function renderListingsToContainer(listings, container) {
       </div>
       <div class="item-details ml-4">
         <h3 class="text-lg font-semibold">${listing.title}</h3>
-        <p class="text-gray-500 text-sm">Seller: ${listing.seller?.name || "Me"}</p>
+        <p class="text-gray-500 text-sm">Seller: ${
+          listing.seller?.name || "Me"
+        }</p>
         <div class="flex justify-between items-center mt-2">
-          <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${listing._count?.bids}</span></p>
+          <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
+            listing._count?.bids
+          }</span></p>
           <p class="text-gray-700 text-sm">Current bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
         </div>
         ${
           isEnded
             ? `<p class="text-sm text-gray-400">Ended: <span class="font-bold">${endDate.toLocaleString()}</span></p>
-               <p class="text-gray-700 text-sm">Win: <span class="font-bold">${winner || "No bids"}</span></p>`
+               <p class="text-gray-700 text-sm">Win: <span class="font-bold">${
+                 winner || "No bids"
+               }</span></p>`
             : `<p class="mt-2 text-sm text-gray-400">Ends in: <span class="font-bold">${endDate.toLocaleString()}</span></p>`
         }
       </div>
-    `
-    ;
+    `;
 
     container.appendChild(listingElement);
   });
 }
 
-
-
-export async function renderListings(tag = null, page = 1, limit = 12, sortByBids = false, query = null) {
+export async function renderListings(
+  tag = null,
+  page = 1,
+  limit = 12,
+  sortByBids = false,
+  sortByEnding = false,
+  query = null
+) {
   const itemsSection = document.querySelector(".items-section");
   const messageContainer = document.querySelector(".message-container");
   const paginationInfo = document.querySelector(".page-info");
@@ -82,38 +98,44 @@ export async function renderListings(tag = null, page = 1, limit = 12, sortByBid
     let response;
 
     if (query) {
-      response = await searchListings(query, limit, page);
+      response = await searchListings(query);
     } else {
-      response = await readListings(limit, page, tag, sortByBids);
+      response = await readListings(tag, sortByBids, sortByEnding);
     }
 
     const listings = response.data;
-    const meta = response.meta;
+
+    // Update pagination information
+    const totalPages = Math.ceil(listings.length / limit);
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const paginatedListings = listings.slice(start, end);
+
+    // Render listings into the container
+    renderListingsToContainer(paginatedListings, itemsSection);
 
     if (listings.length === 0) {
       messageContainer.textContent = `No listings found.`;
+      paginationInfo.textContent = "";
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
       return;
     }
 
-    // Render listings into the container
-    renderListingsToContainer(listings, itemsSection);
-
-    // Update pagination information
-    paginationInfo.textContent = `Page ${meta.currentPage} of ${meta.pageCount}`;
-    prevBtn.disabled = !meta.previousPage;
-    nextBtn.disabled = !meta.nextPage;
+    paginationInfo.textContent = `Page ${page} of ${totalPages}`;
+    prevBtn.disabled = page <= 1;
+    nextBtn.disabled = page >= totalPages;
 
     // Pagination button handlers
-    prevBtn.onclick = () => renderListings(tag, page - 1, limit, sortByBids, query);
-    nextBtn.onclick = () => renderListings(tag, page + 1, limit, sortByBids, query);
+    prevBtn.onclick = () =>
+      renderListings(tag, page - 1, limit, sortByBids, query);
+    nextBtn.onclick = () =>
+      renderListings(tag, page + 1, limit, sortByBids, query);
   } catch (error) {
     console.error("Error rendering listings:", error);
     itemsSection.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
   }
 }
-
-
-
 
 /**
  * Renders a single auction listing based on its ID from the URL.
@@ -148,8 +170,13 @@ export async function renderListingById() {
     const listing = await readListing();
 
     // Set the product image
-    productImage.src = listing.media?.[0]?.url;
+    productImage.src = listing.media?.[0]?.url || `${FALLBACK_IMG}`;
     productImage.alt = listing.media?.[0]?.alt || "Product Image";
+
+    // Fallback to default if the image fails to load
+    productImage.onerror = () => {
+      productImage.src = FALLBACK_IMG;
+    };
 
     // Add auction ended overlay if auction has ended
     const now = new Date();
@@ -168,15 +195,16 @@ export async function renderListingById() {
     productSeller.innerHTML = `Seller: <span class="font-medium">${
       listing.seller?.name || "Unknown"
     }</span>`;
-    startPrice.innerHTML = `Start price: <span class="font-medium">${listing.bids?.[0]?.amount || "0"} NOK</span>`;
+    startPrice.innerHTML = `Start price: <span class="font-medium">${
+      listing.bids?.[0]?.amount || "0"
+    } NOK</span>`;
 
     productDescription.textContent =
       listing.description || "No description available.";
 
-
     // Logic for the edit button visibility
     const loggedInUser = localStorage.getItem("userName");
-    const editBtn = document.getElementById('edit-listing-btn');
+    const editBtn = document.getElementById("edit-listing-btn");
     if (loggedInUser === listing.seller?.name && now < endDate) {
       // Show the edit button
       editBtn.classList.remove("hidden");
@@ -188,9 +216,10 @@ export async function renderListingById() {
     }
 
     // Set product stats
-    const lastBidAmount = listing.bids && listing.bids.length > 0
-      ? listing.bids[listing.bids.length - 1].amount
-      : "0";
+    const lastBidAmount =
+      listing.bids && listing.bids.length > 0
+        ? listing.bids[listing.bids.length - 1].amount
+        : "0";
 
     price.textContent = `${lastBidAmount || "0"} NOK`;
     biddingsCount.textContent = listing._count.bids || "0";
@@ -205,8 +234,11 @@ export async function renderListingById() {
 
     // Display win details if auction ended
     if (now > endDate && listing.bids && listing.bids.length > 0) {
-      const winner = listing.bids[listing.bids.length - 1].bidder.name || "Unknown";
-      const winnerAvatar = listing.bids[listing.bids.length - 1].bidder.avatar?.url || `${FALLBACK_AVATAR}`;
+      const winner =
+        listing.bids[listing.bids.length - 1].bidder.name || "Unknown";
+      const winnerAvatar =
+        listing.bids[listing.bids.length - 1].bidder.avatar?.url ||
+        `${FALLBACK_AVATAR}`;
       const endedPrice = listing.bids[listing.bids.length - 1].amount || "0";
       const winDetails = document.createElement("div");
       winDetails.className = "flex justify-center mt-4 w-[full] text-gray-800";
@@ -221,15 +253,14 @@ export async function renderListingById() {
     bidInput.placeholder = `Enter more than ${lastBidAmount} NOK`;
     bidInput.min = lastBidAmount;
 
-
-    // set to hide bidding section from own listing 
-    const bidForm = document.getElementById('bid-form');
-    const bidContainer = document.querySelector('.bid-container');
-    if (loggedInUser === listing.seller?.name){
-      const bidNotAllowed = document.createElement('h2');
+    // set to hide bidding section from own listing
+    const bidForm = document.getElementById("bid-form");
+    const bidContainer = document.querySelector(".bid-container");
+    if (loggedInUser === listing.seller?.name) {
+      const bidNotAllowed = document.createElement("h2");
       bidNotAllowed.classList = "text-red-500";
-      bidNotAllowed.textContent = "You cannot bid on your own listing"
-      
+      bidNotAllowed.textContent = "You cannot bid on your own listing";
+
       bidForm.classList = "hidden";
 
       bidContainer.appendChild(bidNotAllowed);
@@ -299,7 +330,6 @@ export async function renderListingById() {
   }
 }
 
-
 /**
  * Renders paginated bids in the "Last Bids" section.
  *
@@ -312,7 +342,9 @@ function renderPaginatedBids(bids, page, perPage, container) {
   container.innerHTML = ""; // Clear existing bids
 
   // Sort bids by created date (most recent first)
-  const sortedBids = [...bids].sort((a, b) => new Date(b.created) - new Date(a.created));
+  const sortedBids = [...bids].sort(
+    (a, b) => new Date(b.created) - new Date(a.created)
+  );
 
   // Paginate the sorted bids
   const start = (page - 1) * perPage;
@@ -330,15 +362,20 @@ function renderPaginatedBids(bids, page, perPage, container) {
     bidElement.className = "flex border-b border-gray-300 pb-2";
     bidElement.innerHTML = `
       <div class="flex justify-start items-center gap-2 w-full">
-        <img class="h-8 w-8 rounded-full" src="${bid?.bidder?.avatar?.url || "default-avatar.jpg"}" alt="${bid?.bidder?.avatar?.alt || "Avatar"}">
-        <p class="text-gray-600 font-medium">${bid?.bidder?.name || "Anonymous"}</p>
+        <img class="h-8 w-8 rounded-full" src="${
+          bid?.bidder?.avatar?.url || "default-avatar.jpg"
+        }" alt="${bid?.bidder?.avatar?.alt || "Avatar"}">
+        <p class="text-gray-600 font-medium">${
+          bid?.bidder?.name || "Anonymous"
+        }</p>
       </div>
       <div class="flex flex-col justify-between items-end">
         <p class="text-gray-600 font-medium">Bidded ${bid?.amount} NOK</p>
-        <p class="text-gray-400 text-sm">At: ${new Date(bid.created).toLocaleString()}</p>
+        <p class="text-gray-400 text-sm">At: ${new Date(
+          bid.created
+        ).toLocaleString()}</p>
       </div>
     `;
     container.appendChild(bidElement);
   });
 }
-

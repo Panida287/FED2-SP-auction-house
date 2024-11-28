@@ -20,6 +20,7 @@ export const API_AUCTION_LISTING = `${API_AUCTION}/listings`;
 // Constants for fallback URLs
 export const FALLBACK_AVATAR = "https://via.placeholder.com/100";
 export const FALLBACK_BANNER = "https://via.placeholder.com/200x100";
+export const FALLBACK_IMG = "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
 
 // username PanidaPae
 // ID: panida@stud.noroff.no
