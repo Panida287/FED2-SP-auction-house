@@ -13,11 +13,9 @@ import { getIDFromURL } from "../../utilities/urlIDUtils";
  * @returns {Promise<Object>} A promise that resolves with the fetched listings data.
  * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
  */
-export async function readListings(limit = 12, page = 1, tag = null, sortByBids = false) {
+export async function readListings(tag = null, sortByBids = false, sortByEnding = false) {
   const myHeaders = await headers();
   const params = new URLSearchParams({
-    limit: limit.toString(),
-    page: page.toString(),
     _seller: "true",
     _bids: "true",
     _active: "true", // Always fetch active listings
@@ -39,9 +37,15 @@ export async function readListings(limit = 12, page = 1, tag = null, sortByBids 
 
     const result = await response.json();
 
-    // Sort by bids if the flag is set
     if (sortByBids) {
+      // Sort by number of bids (descending)
       result.data.sort((a, b) => b._count.bids - a._count.bids);
+    } else if (sortByEnding) {
+      // Sort by ending date (end soon first)
+      result.data.sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt));
+    } else {
+      // Sort by creation date (newest first)
+      result.data.sort((a, b) => new Date(b.created) - new Date(a.created));
     }
 
     return result;
@@ -178,12 +182,10 @@ export async function readUserBidsWins(type, limit = 12, page = 1, username) {
  * @param {number} [page=1] - The page number to fetch.
  * @returns {Promise<Object>} The API response containing the listings and meta data.
  */
-export async function searchListings(query, limit = 12, page = 1) {
+export async function searchListings(query) {
   const myHeaders = await headers();
   const params = new URLSearchParams({
     q: query,
-    limit: limit.toString(),
-    page: page.toString(),
   });
 
   try {
