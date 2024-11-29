@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -67,16 +66,28 @@
     </div>
 
     <!-- Results Section -->
-    <div class="result-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div
+      class="result-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    ></div>
     <!-- Pagination -->
-    <div class="pagination flex justify-center items-center mt-4 pb-[60px]">
-      <button class="prev-btn bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2" disabled>Previous</button>
+    <div class="pagination hidden justify-center items-center mt-4 pb-[60px]">
+      <button
+        class="prev-btn bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2"
+        disabled
+      >
+        Previous
+      </button>
       <p class="page-info text-gray-700">Page 1 of 1</p>
-      <button class="next-btn bg-gray-300 text-gray-800 px-4 py-2 rounded ml-2" disabled>Next</button>
-    </div>  
+      <button
+        class="next-btn bg-gray-300 text-gray-800 px-4 py-2 rounded ml-2"
+        disabled
+      >
+        Next
+      </button>
+    </div>
 
     <!-- Error msg -->
-     <div class="message-container text-red-500"></div>
+    <div class="message-container text-red-500"></div>
 
     <!-- Navigation Bar -->
     <nav
@@ -97,7 +108,8 @@
     </nav>
 
     <!-- Create Listing Modal -->
-    <div id="create-container"
+    <div
+      id="create-container"
       class="hidden absolute top-1/2 left-1/2 w-[70%] p-2 bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
     >
       <form id="listing-form" class="flex flex-col gap-4">
@@ -156,10 +168,11 @@
           >
             <option value="" disabled selected>Select a category</option>
             <option value="clothes">Clothes</option>
-            <option value="games">Games</option>
+            <option value="arts">Arts</option>
             <option value="electronics">Electronics</option>
-            <option value="cars">Cars</option>
+            <option value="vehicles">Vehicles</option>
             <option value="travels">Travels</option>
+            <option value="properties">Properties</option>
           </select>
         </div>
 
@@ -175,35 +188,37 @@
           />
         </div>
 
-        <!-- Ends at -->
+        <!-- Auction Duration -->
         <div>
-          <label for="item-ends-at">Auction End Date & Time</label>
+          <label for="auction-duration">Auction Duration (Days)</label>
           <input
-            type="datetime-local"
-            id="item-ends-at"
-            name="item-ends-at"
+            type="number"
+            id="auction-duration"
+            name="auction-duration"
+            placeholder="Enter number of days (1-365)"
             required
             class="border border-gray-300 p-2"
+            min="1"
+            max="365"
           />
         </div>
-        
+
         <!-- Buttons -->
         <div class="flex justify-between mt-4">
-        <!-- Submit Button -->
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded">
-          Submit
-        </button>
+          <!-- Submit Button -->
+          <button type="submit" class="bg-blue-500 text-white p-2 rounded">
+            Submit
+          </button>
 
-        <!-- Cancel Button -->
-        <button
-        type="button"
-        id="cancel-create-btn"
-        class="bg-red-500 text-white p-2 rounded"
-      >
-        Cancel
-      </button>
+          <!-- Cancel Button -->
+          <button
+            type="button"
+            id="cancel-create-btn"
+            class="bg-red-500 text-white p-2 rounded"
+          >
+            Cancel
+          </button>
         </div>
-
       </form>
     </div>
 

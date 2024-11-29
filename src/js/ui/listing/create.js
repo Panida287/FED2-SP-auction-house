@@ -7,7 +7,6 @@ import { toggleContainer } from "../../utilities/toggleContainer";
  *
  * @function onCreate
  * @async
- *
  * @param {Event} event - The form submission event.
  */
 export async function onCreate(event) {
@@ -17,11 +16,22 @@ export async function onCreate(event) {
   const descriptionInput = document.getElementById("item-description");
   const categorySelect = document.getElementById("item-category");
   const mediaUrlInput = document.getElementById("item-image-url");
-  const endsAtInput = document.getElementById("item-ends-at");
+  const durationInput = document.getElementById("auction-duration");
   const previewImage = document.getElementById("preview-image");
 
   // Dynamically update the image preview
   setupPreview(mediaUrlInput, previewImage, titleInput?.value.trim());
+
+  // Validate duration input
+  const duration = parseInt(durationInput?.value.trim());
+  if (isNaN(duration) || duration < 1 || duration > 365) {
+    alert("Please enter a valid auction duration between 1 and 365 days.");
+    return;
+  }
+
+  // Calculate the auction's end date
+  const currentDate = new Date();
+  const endsAt = new Date(currentDate.getTime() + duration * 24 * 60 * 60 * 1000); // Add duration in milliseconds
 
   // Collect selected category tags
   const tags = Array.from(categorySelect?.selectedOptions).map((option) => option.value);
@@ -36,12 +46,12 @@ export async function onCreate(event) {
       description: descriptionInput?.value.trim(),
       tags,
       media,
-      endsAt: new Date(endsAtInput?.value).toISOString(),
+      endsAt: endsAt.toISOString(), // Convert to ISO format
     });
 
     // Handle success
     alert("Listing created successfully!");
-    location.reload();
+    location.reload(); // Reload the page after successful listing creation
   } catch (error) {
     // Handle errors
     console.error("Error creating listing:", error);
@@ -49,6 +59,9 @@ export async function onCreate(event) {
   }
 }
 
+/**
+ * Sets up the Create Listing functionality, including toggling visibility and event listeners.
+ */
 export function setupCreateListing() {
   const createListingBtn = document.getElementById("create-listing-btn");
   const createListingContainer = document.getElementById("create-container");
@@ -75,5 +88,3 @@ export function setupCreateListing() {
 
   listingForm?.addEventListener("submit", onCreate);
 }
-
-
