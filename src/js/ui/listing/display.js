@@ -20,6 +20,7 @@ export function renderListingsToContainer(listings, container) {
     const now = new Date();
     const endDate = new Date(listing.endsAt);
     const isEnded = now > endDate;
+    const createdDate = new Date(listing.created); // Parse the created date
 
     const lastBidAmount = listing.bids?.length
       ? listing.bids[listing.bids.length - 1].amount
@@ -29,6 +30,7 @@ export function renderListingsToContainer(listings, container) {
       isEnded && listing.bids?.length
         ? listing.bids[listing.bids.length - 1].bidder.name || "Unknown"
         : null;
+
     const listingElement = document.createElement("a");
     listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
     listingElement.className =
@@ -55,6 +57,7 @@ export function renderListingsToContainer(listings, container) {
         <p class="text-gray-500 text-sm">Seller: ${
           listing.seller?.name || "Me"
         }</p>
+        <p class="text-gray-500 text-sm">Created: ${createdDate.toLocaleString()}</p>
         <div class="flex justify-between items-center mt-2">
           <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
             listing._count?.bids
@@ -75,6 +78,7 @@ export function renderListingsToContainer(listings, container) {
     container.appendChild(listingElement);
   });
 }
+
 
 export async function renderListings(
   tag = null,
@@ -106,6 +110,7 @@ export async function renderListings(
     }
 
     const listings = response.data;
+    console.log(listings);
 
     // Update pagination information
     const totalPages = Math.ceil(listings.length / limit);
