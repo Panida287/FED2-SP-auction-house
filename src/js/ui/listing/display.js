@@ -172,6 +172,7 @@ export async function renderListingById() {
   try {
     // Fetch the listing data
     const listing = await readListing();
+    console.log(listing)
 
     // Set the product image
     productImage.src = listing.media?.[0]?.url || `${FALLBACK_IMG}`;
