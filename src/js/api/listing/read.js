@@ -173,23 +173,15 @@ export async function readUserBidsWins(type, limit = 12, page = 1, username) {
 
 
 
-/**
- * Searches listings by title or description.
- *
- * @async
- * @param {string} query - The search query.
- * @param {number} [limit=12] - The number of listings to fetch per page.
- * @param {number} [page=1] - The page number to fetch.
- * @returns {Promise<Object>} The API response containing the listings and meta data.
- */
 export async function searchListings(query) {
   const myHeaders = await headers();
   const params = new URLSearchParams({
-    q: query,
+    _bids: "true",
+    _seller: "true",
   });
 
   try {
-    const response = await fetch(`${API_AUCTION_LISTING}/search?${params.toString()}`, {
+    const response = await fetch(`${API_AUCTION_LISTING}?${params.toString()}`, {
       method: "GET",
       headers: myHeaders,
     });
@@ -198,9 +190,22 @@ export async function searchListings(query) {
       throw new Error(`Failed to search listings: ${response.statusText}`);
     }
 
-    return await response.json();
+    const result = await response.json();
+
+    // Create a regex to match the exact word "car"
+    const regex = new RegExp(`\\b${query}\\b`, "i"); // \b ensures word boundaries
+
+    // Filter results based on title or description and exclude ended listings
+    const filteredData = result.data.filter(
+      (listing) =>
+        (regex.test(listing.title) || regex.test(listing.description)) &&
+        new Date(listing.endsAt) > new Date() // Exclude ended listings
+    );
+
+    return { data: filteredData };
   } catch (error) {
     console.error("Error searching listings:", error);
     throw error;
   }
 }
+

@@ -99,6 +99,8 @@ export async function renderListings(
 
     if (query) {
       response = await searchListings(query);
+      sortByBids = false;
+      sortByEnding = false;
     } else {
       response = await readListings(tag, sortByBids, sortByEnding);
     }
@@ -120,6 +122,8 @@ export async function renderListings(
       prevBtn.disabled = true;
       nextBtn.disabled = true;
       return;
+    } else {
+      messageContainer.textContent = "";
     }
 
     paginationInfo.textContent = `Page ${page} of ${totalPages}`;
