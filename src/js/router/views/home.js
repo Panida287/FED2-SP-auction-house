@@ -54,4 +54,24 @@ searchInput.addEventListener("keydown", async (event) => {
   }
 });
 
+const profileBtn = document.querySelector(".profile-btn");
+const profileMenu = document.querySelector(".profile-menu");
+
+profileBtn.addEventListener("click", (event) => {
+  // Toggle the visibility of the menu
+  profileMenu.classList.toggle("hidden");
+  profileMenu.classList.toggle("block");
+
+  // Stop the click event from propagating to the document
+  event.stopPropagation();
+});
+
+// Hide the menu when clicking anywhere else on the page
+document.addEventListener("click", () => {
+  if (!profileMenu.classList.contains("hidden")) {
+    profileMenu.classList.add("hidden");
+    profileMenu.classList.remove("block");
+  }
+});
+
 
