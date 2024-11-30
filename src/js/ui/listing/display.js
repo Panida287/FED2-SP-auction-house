@@ -20,8 +20,6 @@ export function renderListingsToContainer(listings, container) {
     const now = new Date();
     const endDate = new Date(listing.endsAt);
     const isEnded = now > endDate;
-    const createdDate = new Date(listing.created); // Parse the created date
-
     const lastBidAmount = listing.bids?.length
       ? listing.bids[listing.bids.length - 1].amount
       : "0";
@@ -34,35 +32,54 @@ export function renderListingsToContainer(listings, container) {
     const listingElement = document.createElement("a");
     listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
     listingElement.className =
-      "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
+      "item-card bg-white border border-gray-300 rounded-lg p-4 mx-4 flex flex-col items-center shadow-md";
+
+    const countdownTimerId = `countdown-${listing.id}`; // Unique ID for each timer
 
     listingElement.innerHTML = `
-      <div class="relative">
+    
+      <div class="flex w-full justify-between items-center mb-4">
+        <div class="seller flex items-center">
           <img 
+          class="w-10 h-10 rounded-full object-cover" 
+          src="${listing.seller?.avatar?.url || FALLBACK_AVATAR}" 
+          onerror="this.src='${FALLBACK_AVATAR}'" 
+          />
+          <div class="flex flex-col pl-2">
+            <p class="text-gray-500 text-sm flex items-center">
+            Selling by
+            </p>
+            <p>
+            ${listing.seller?.name || "Me"}
+            </p>
+          </div>
+        </div>
+        <button id="fav-btn">
+         <i class="fa-regular fa-heart"></i>
+        </button>
+      </div>
+      <div class="relative">
+        <img 
           src="${listing.media?.[0]?.url || FALLBACK_IMG}" 
           alt="${listing.media?.[0]?.alt || "Item image"}" 
-          class="w-24 h-24 object-cover rounded-lg"
+          class="w-full object-cover rounded-lg"
           onerror="this.src='${FALLBACK_IMG}'"
         />
         ${
           isEnded
             ? `<div class="absolute h-full w-full top-1/2 -translate-y-1/2 bg-white/70 flex justify-center items-center text-red-500 font-bold">
-                 Auction Ended
-               </div>`
+                Auction Ended
+              </div>`
             : ""
         }
       </div>
-      <div class="item-details ml-4">
+      <div class="item-details flex flex-col w-full m-2 mt-4">
         <h3 class="text-lg font-semibold">${listing.title}</h3>
-        <p class="text-gray-500 text-sm">Seller: ${
-          listing.seller?.name || "Me"
-        }</p>
-        <p class="text-gray-500 text-sm">Created: ${createdDate.toLocaleString()}</p>
         <div class="flex justify-between items-center mt-2">
           <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
             listing._count?.bids
           }</span></p>
-          <p class="text-gray-700 text-sm">Current bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
+          <p class="text-gray-700 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
         </div>
         ${
           isEnded
@@ -70,15 +87,22 @@ export function renderListingsToContainer(listings, container) {
                <p class="text-gray-700 text-sm">Win: <span class="font-bold">${
                  winner || "No bids"
                }</span></p>`
-            : `<p class="mt-2 text-sm text-gray-400">Ends in: <span class="font-bold">${endDate.toLocaleString()}</span></p>`
+            : `<p class="mt-2 text-lg text-text"> 
+                <span id="${countdownTimerId}" class="font-bold"></span>
+               </p>`
         }
       </div>
     `;
 
     container.appendChild(listingElement);
+
+    // Initialize countdown timer if the auction hasn't ended
+    if (!isEnded) {
+      const timerElement = document.getElementById(countdownTimerId);
+      updateCountdown(endDate, timerElement);
+    }
   });
 }
-
 
 export async function renderListings(
   tag = null,
@@ -177,7 +201,7 @@ export async function renderListingById() {
   try {
     // Fetch the listing data
     const listing = await readListing();
-    console.log(listing)
+    console.log(listing);
 
     // Set the product image
     productImage.src = listing.media?.[0]?.url || `${FALLBACK_IMG}`;
