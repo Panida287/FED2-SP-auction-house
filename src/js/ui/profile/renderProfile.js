@@ -36,7 +36,7 @@ export async function renderProfile() {
 
     // Update author name
     if (author) {
-      author.textContent = profile.data.name || "No Name Provided";
+      author.textContent = profile.data.name;
     }
 
     // Update all avatar images
