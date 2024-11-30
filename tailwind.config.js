@@ -18,6 +18,17 @@ export default {
       fontFamily: {
         h: ['Poppins', 'sans-serif'],
         p: ['Roboto', 'sans-serif']
+      },
+      colors: {
+        primary: '#121212',
+        text: '#EAEAEA',
+        error: '#FF4D4D',
+        accent: '#6A0DAD',
+        'secondary-text': '#A1A1A1', 
+        'highlight-text': '#E3C8FF',
+        'secondary-accent': '#8A2BE2',
+        'text-accent': '#B28DFF',
+        border: '#333333',
       }
     }
   },
