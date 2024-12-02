@@ -22,10 +22,10 @@ export default {
       colors: {
         bg: '#EFD7FF',
         secondary: '#B28DFF',
+        accent: '#ff4081',
         primary: '#6A0DAD',
         text: '#121212',
         error: '#FF4D4D',
-        accent: '#6A0DAD',
         border: '#A1A1A1',
       }
     }

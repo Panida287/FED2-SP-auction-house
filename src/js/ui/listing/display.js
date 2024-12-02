@@ -103,6 +103,8 @@ export async function renderListings(
   const paginationInfo = document.querySelector(".page-info");
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
+  const firstPageBtn = document.querySelector(".first-page-btn");
+  const lastPageBtn = document.querySelector(".last-page-btn");
 
   try {
     // Clear the container and message at the start
@@ -120,7 +122,6 @@ export async function renderListings(
     }
 
     const listings = response.data;
-    console.log(listings);
 
     // Update pagination information
     const totalPages = Math.ceil(listings.length / limit);
@@ -136,25 +137,53 @@ export async function renderListings(
       paginationInfo.textContent = "";
       prevBtn.disabled = true;
       nextBtn.disabled = true;
+      firstPageBtn.disabled = true;
+      lastPageBtn.disabled = true;
       return;
     } else {
       messageContainer.textContent = "";
+      firstPageBtn.disabled = false;
+      lastPageBtn.disabled = false;
     }
 
-    paginationInfo.textContent = `Page ${page} of ${totalPages}`;
+    paginationInfo.textContent = `${page} / ${totalPages}`;
+
+    // Disable prev and first-page buttons if on the first page
     prevBtn.disabled = page <= 1;
+    firstPageBtn.disabled = page <= 1;
+
+    // Disable next and last-page buttons if on the last page
     nextBtn.disabled = page >= totalPages;
+    lastPageBtn.disabled = page >= totalPages;
 
     // Pagination button handlers
-    prevBtn.onclick = () =>
-      renderListings(tag, page - 1, limit, sortByBids, query);
-    nextBtn.onclick = () =>
-      renderListings(tag, page + 1, limit, sortByBids, query);
+    prevBtn.onclick = () => {
+      if (page > 1) renderListings(tag, page - 1, limit, sortByBids, query);
+    };
+
+    nextBtn.onclick = () => {
+      if (page < totalPages)
+        renderListings(tag, page + 1, limit, sortByBids, query);
+    };
+
+    // First Page button: Redirect to the first page
+    firstPageBtn.onclick = () => {
+      if (page > 1) renderListings(tag, 1, limit, sortByBids, query);
+    };
+
+    // Last Page button: Redirect to the last page
+    lastPageBtn.onclick = () => {
+      if (page < totalPages)
+        renderListings(tag, totalPages, limit, sortByBids, query);
+    };
   } catch (error) {
     console.error("Error rendering listings:", error);
     itemsSection.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
   }
 }
+
+
+
 
 /**
  * Renders a single auction listing based on its ID from the URL.
