@@ -24,56 +24,51 @@ export function renderListingsToContainer(listings, container) {
       ? listing.bids[listing.bids.length - 1].amount
       : "0";
 
-    const winner =
-      isEnded && listing.bids?.length
-        ? listing.bids[listing.bids.length - 1].bidder.name || "Unknown"
-        : null;
-
     const listingElement = document.createElement("a");
     listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
     listingElement.className =
-      "item-card bg-white border border-gray-300 rounded-lg p-4 mx-4 flex flex-col items-center shadow-md";
+      "item-card bg-white border border-gray-300 rounded-lg p-4 mx-4 flex flex-col items-center shadow-md relative";
 
     const countdownTimerId = `countdown-${listing.id}`; // Unique ID for each timer
 
     listingElement.innerHTML = `
-    
       <div class="flex w-full justify-between items-center mb-4">
         <div class="seller flex items-center">
           <img 
-          class="w-10 h-10 rounded-full object-cover" 
-          src="${listing.seller?.avatar?.url || FALLBACK_AVATAR}" 
-          onerror="this.src='${FALLBACK_AVATAR}'" 
+            class="w-10 h-10 rounded-full object-cover" 
+            src="${listing.seller?.avatar?.url || FALLBACK_AVATAR}" 
+            onerror="this.src='${FALLBACK_AVATAR}'" 
           />
           <div class="flex flex-col pl-2">
             <p class="text-gray-500 text-sm flex items-center">
-            Selling by
+              Selling by
             </p>
-            <p>
-            ${listing.seller?.name || "Me"}
+            <p class="text-sm font-semibold">
+              ${listing.seller?.name || "Me"}
             </p>
           </div>
         </div>
-        <button id="fav-btn">
-         <i class="fa-regular fa-heart"></i>
+        <button id="fav-btn" class="text-gray-500 hover:text-red-500">
+          <i class="fa-regular fa-heart"></i>
         </button>
       </div>
-      <div class="relative">
+      <div class="relative w-full">
         <img 
           src="${listing.media?.[0]?.url || FALLBACK_IMG}" 
           alt="${listing.media?.[0]?.alt || "Item image"}" 
-          class="w-full object-cover rounded-lg"
+          class="w-full h-[200px] object-cover rounded-lg"
           onerror="this.src='${FALLBACK_IMG}'"
         />
+        <div id="${countdownTimerId}" class="absolute bottom-2 left-1/2 transform -translate-x-1/2"></div>
         ${
           isEnded
-            ? `<div class="absolute h-full w-full top-1/2 -translate-y-1/2 bg-white/70 flex justify-center items-center text-red-500 font-bold">
+            ? `<div class="absolute h-full w-full top-0 left-0 bg-black/50 flex justify-center items-center text-red-500 font-bold text-lg">
                 Auction Ended
               </div>`
             : ""
         }
       </div>
-      <div class="item-details flex flex-col w-full m-2 mt-4">
+      <div class="item-details flex flex-col w-full mt-4">
         <h3 class="text-lg font-semibold">${listing.title}</h3>
         <div class="flex justify-between items-center mt-2">
           <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
@@ -81,16 +76,6 @@ export function renderListingsToContainer(listings, container) {
           }</span></p>
           <p class="text-gray-700 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
         </div>
-        ${
-          isEnded
-            ? `<p class="text-sm text-gray-400">Ended: <span class="font-bold">${endDate.toLocaleString()}</span></p>
-               <p class="text-gray-700 text-sm">Win: <span class="font-bold">${
-                 winner || "No bids"
-               }</span></p>`
-            : `<p class="mt-2 text-lg text-text"> 
-                <span id="${countdownTimerId}" class="font-bold"></span>
-               </p>`
-        }
       </div>
     `;
 
@@ -103,6 +88,7 @@ export function renderListingsToContainer(listings, container) {
     }
   });
 }
+
 
 export async function renderListings(
   tag = null,
