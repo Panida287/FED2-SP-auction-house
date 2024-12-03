@@ -1,10 +1,10 @@
 import { setLogoutListener } from '../../ui/global/logout';
 import { renderListings } from '../../ui/listing/display';
-import { renderProfile } from '../../ui/profile/renderProfile';
+import { authGuard } from '../../utilities/authGuard';
 
+authGuard();
 setLogoutListener();
 renderListings();
-renderProfile();
 
 
 // Add event listeners to category buttons

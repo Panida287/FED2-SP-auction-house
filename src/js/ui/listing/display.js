@@ -70,12 +70,13 @@ export function renderListingsToContainer(listings, container) {
   listings.forEach((listing) => {
     const now = new Date();
     const endDate = new Date(listing.endsAt);
+    const listingCreated = new Date(listing.created);
     const isEnded = now > endDate;
     const countdownTimerId = `countdown-${listing.id}`; // Unique ID for each timer
 
     const listingElement = document.createElement("div");
     listingElement.className =
-      "item-card bg-white/50 backdrop-blur-sm rounded-lg p-4 mx-50 flex flex-col items-center shadow-md relative";
+      "item-card bg-white/60 backdrop-blur-sm rounded-lg p-4 mx-50 flex flex-col items-center shadow-md relative";
 
     const biddersContainer = document.createElement("div");
     biddersContainer.className = "flex items-center justify-start mt-2";
@@ -124,11 +125,17 @@ export function renderListingsToContainer(listings, container) {
       </a>
       <div class="item-details flex flex-col w-full mt-4">
         <h3 class="text-lg font-semibold">${listing.title}</h3>
+        <p class="text-sm font-light text-gray-700 bg-white/20 rounded-md p-4 mt-2">
+        ${listing.description}
+        </p>
         <div class="flex flex-col items-start">
           <div class="flex w-full justify-between items-center mt-2">
             <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
               listing._count?.bids
             }</span></p>
+            <p class="text-gray-700 text-sm">Created: <span class="font-bold">
+            ${listingCreated.toLocaleDateString()}</span>
+            </p>
             <p class="text-gray-700 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
           </div>
         </div>
@@ -136,8 +143,9 @@ export function renderListingsToContainer(listings, container) {
         <div class="bidder-container flex flex-row-reverse justify-between items-center mt-2">
             <a 
             href="/listing/?listingID=${listing.id}&_seller=true&_bids=true"
-            class="pink-buttons mt-2 w-[30%]">
+            class="pink-buttons mt-2 w-[50%]">
               Bid now
+              <i class="fa-solid fa-coins pl-1ss"></i>
             </a>
         </div>
       </div>
@@ -158,9 +166,6 @@ export function renderListingsToContainer(listings, container) {
     }
   });
 }
-
-
-
 
 export async function renderListings(
   tag = null,

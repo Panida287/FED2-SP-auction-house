@@ -10,7 +10,7 @@ import { API_KEY } from "./constants";
  * @function headers
  * @returns {Promise<Headers>} A promise that resolves to a Headers object with appropriate API headers.
  */
-export async function headers() {
+export async function loggedInHeaders() {
   const token = await getKey();
 
   const headers = new Headers();
@@ -22,6 +22,17 @@ export async function headers() {
 
   if (token) {
     headers.append("Authorization", `Bearer ${token}`);
+  }
+  
+  return headers;
+}
+export async function headers() {
+
+  const headers = new Headers();
+  
+  if (API_KEY) {
+    headers.append("X-Noroff-API-Key", API_KEY);
+    headers.append("Content-Type", "application/json");
   }
   
   return headers;

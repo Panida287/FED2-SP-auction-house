@@ -1,4 +1,4 @@
-import { headers } from "../headers";
+import { headers, loggedInHeaders } from "../headers";
 import { API_AUCTION_LISTING, API_PROFILES } from "../constants";
 import { getIDFromURL } from "../../utilities/urlIDUtils";
 
@@ -106,7 +106,7 @@ export async function readListing() {
  * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
  */
 export async function readListingsByUser(limit = 12, page = 1, username) {
-  const myHeaders = await headers();
+  const myHeaders = await loggedInHeaders();
 
   try {
     const response = await fetch(`${API_PROFILES}/${username}/listings`, {
@@ -140,7 +140,7 @@ export async function readListingsByUser(limit = 12, page = 1, username) {
  * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
  */
 export async function readUserBidsWins(type, limit = 12, page = 1, username) {
-  const myHeaders = await headers();
+  const myHeaders = await loggedInHeaders();
 
   const params = new URLSearchParams({
     limit: limit.toString(),
