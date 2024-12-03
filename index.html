@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:image" content="assets/favicon_io"/>
+    <link rel="icon" type="image/png" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png"/>
     <script type="module" src="/src/js/main.js"></script>
     <script
       src="https://kit.fontawesome.com/5d32d5fe01.js"
       crossorigin="anonymous"
     ></script>
-    <title>Homepage</title>
+    <title>Auction house</title>
   </head>
   <body>
     <!-- Header -->
@@ -19,11 +23,11 @@
         >Credit:
         <span class="credit-amount text-accent "></span> NOK</span
       >
-        <button class="profile-btn flex flex-col justify-center items-end">
+        <button class="profile-btn flex flex-col justify-center items-center md:pointer-events-none">
           <img
             src=""
             alt="Profile"
-            class="profile-pic object-contain h-[60px] w-[60px] rounded-full cursor-pointer mb-2 shadow-md"
+            class="profile-pic object-cover h-[60px] w-[60px] rounded-full cursor-pointer mb-2 shadow-md"
             id="profile-link"
           />
           <span class="author text-sm text-white font-light"></span>
