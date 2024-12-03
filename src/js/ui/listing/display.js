@@ -8,6 +8,57 @@ import { FALLBACK_AVATAR, FALLBACK_IMG } from "../../api/constants";
 import { updateCountdown } from "../../utilities/updateCountdown";
 
 /**
+ * Generates stacked avatars for bidders and appends them to a container.
+ *
+ * @param {Array} bids - Array of bid objects.
+ * @param {HTMLElement} container - The DOM element to render the avatars into.
+ */
+function renderBiddersAvatars(bids, container) {
+  container.innerHTML = ""; // Clear existing content
+
+  const maxAvatars = 3; // Maximum number of avatars to display
+  const uniqueBidders = [
+    ...new Map(bids.map((bid) => [bid.bidder?.email, bid.bidder])).values(),
+  ]; // Ensure unique bidders
+
+  // Slice the array to display only the first maxAvatars
+  const displayedBidders = uniqueBidders.slice(0, maxAvatars);
+
+  // Render each avatar
+  displayedBidders.forEach((bidder, index) => {
+    const avatarElement = document.createElement("img");
+    avatarElement.className =
+      "h-8 w-8 rounded-full border-2 border-white object-cover shadow-sm";
+    avatarElement.src = bidder?.avatar?.url || FALLBACK_AVATAR;
+    avatarElement.alt = bidder?.avatar?.alt || "Bidder Avatar";
+
+    // Add overlapping margin for stacking effect
+    avatarElement.style.position = "relative";
+    avatarElement.style.left = `${index * -10}px`;
+
+    container.appendChild(avatarElement);
+  });
+
+  // Add a "+X" indicator if there are more bidders than maxAvatars
+  if (uniqueBidders.length > maxAvatars) {
+    const remainingCount = uniqueBidders.length - maxAvatars;
+    const moreIndicator = document.createElement("div");
+    moreIndicator.className =
+      "h-8 w-8 rounded-full bg-gray-500 text-white text-xs flex items-center justify-center border-2 border-white shadow-sm";
+    moreIndicator.style.position = "relative";
+    moreIndicator.style.left = `${maxAvatars * -10}px`;
+    moreIndicator.textContent = `+${remainingCount}`;
+
+    container.appendChild(moreIndicator);
+  }
+
+  // Set container style to ensure proper alignment
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.position = "relative";
+}
+
+/**
  * Renders a list of listings into a given container.
  *
  * @param {Array} listings - Array of listing objects to render.
@@ -20,16 +71,21 @@ export function renderListingsToContainer(listings, container) {
     const now = new Date();
     const endDate = new Date(listing.endsAt);
     const isEnded = now > endDate;
+    const countdownTimerId = `countdown-${listing.id}`; // Unique ID for each timer
+
+    const listingElement = document.createElement("div");
+    listingElement.className =
+      "item-card bg-white/50 backdrop-blur-sm rounded-lg p-4 mx-50 flex flex-col items-center shadow-md relative";
+
+    const biddersContainer = document.createElement("div");
+    biddersContainer.className = "flex items-center justify-start mt-2";
+
+    // Call the renderBiddersAvatars function
+    renderBiddersAvatars(listing.bids || [], biddersContainer);
+
     const lastBidAmount = listing.bids?.length
       ? listing.bids[listing.bids.length - 1].amount
       : "0";
-
-    const listingElement = document.createElement("a");
-    listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
-    listingElement.className =
-      "item-card bg-white border border-gray-300 rounded-lg p-4 mx-4 flex flex-col items-center shadow-md relative";
-
-    const countdownTimerId = `countdown-${listing.id}`; // Unique ID for each timer
 
     listingElement.innerHTML = `
       <div class="flex w-full justify-between items-center mb-4">
@@ -40,7 +96,7 @@ export function renderListingsToContainer(listings, container) {
             onerror="this.src='${FALLBACK_AVATAR}'" 
           />
           <div class="flex flex-col pl-2">
-            <p class="text-gray-500 text-sm flex items-center">
+            <p class="text-white text-sm flex items-center">
               Selling by
             </p>
             <p class="text-sm font-semibold">
@@ -48,15 +104,13 @@ export function renderListingsToContainer(listings, container) {
             </p>
           </div>
         </div>
-        <button id="fav-btn" class="text-gray-500 hover:text-red-500">
-          <i class="fa-regular fa-heart"></i>
-        </button>
       </div>
-      <div class="relative w-full">
+      <a class="relative w-full"
+      href="/listing/?listingID=${listing.id}&_seller=true&_bids=true">
         <img 
           src="${listing.media?.[0]?.url || FALLBACK_IMG}" 
           alt="${listing.media?.[0]?.alt || "Item image"}" 
-          class="w-full h-[200px] object-cover rounded-lg"
+          class="w-full h-[300px] object-cover rounded-lg"
           onerror="this.src='${FALLBACK_IMG}'"
         />
         <div id="${countdownTimerId}" class="absolute bottom-2 left-1/2 transform -translate-x-1/2"></div>
@@ -67,17 +121,33 @@ export function renderListingsToContainer(listings, container) {
               </div>`
             : ""
         }
-      </div>
+      </a>
       <div class="item-details flex flex-col w-full mt-4">
         <h3 class="text-lg font-semibold">${listing.title}</h3>
-        <div class="flex justify-between items-center mt-2">
-          <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
-            listing._count?.bids
-          }</span></p>
-          <p class="text-gray-700 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
+        <div class="flex flex-col items-start">
+          <div class="flex w-full justify-between items-center mt-2">
+            <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
+              listing._count?.bids
+            }</span></p>
+            <p class="text-gray-700 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
+          </div>
+        </div>
+        <!-- Insert the bidder container here -->
+        <div class="bidder-container flex flex-row-reverse justify-between items-center mt-2">
+            <a 
+            href="/listing/?listingID=${listing.id}&_seller=true&_bids=true"
+            class="pink-buttons mt-2 w-[30%]">
+              Bid now
+            </a>
         </div>
       </div>
     `;
+
+    // Insert the biddersContainer into the specific location
+    const detailsContainer = listingElement.querySelector(
+      ".item-details .bidder-container"
+    );
+    detailsContainer.appendChild(biddersContainer);
 
     container.appendChild(listingElement);
 
@@ -88,6 +158,8 @@ export function renderListingsToContainer(listings, container) {
     }
   });
 }
+
+
 
 
 export async function renderListings(

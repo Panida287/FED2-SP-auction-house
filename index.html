@@ -3,32 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:image" content="assets/favicon_io"/>
+    <link rel="icon" type="image/png" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png"/>
     <script type="module" src="/src/js/main.js"></script>
     <script
       src="https://kit.fontawesome.com/5d32d5fe01.js"
       crossorigin="anonymous"
     ></script>
-    <title>Homepage</title>
+    <title>Auction house</title>
   </head>
-  <body class="bg-bg font-sans">
+  <body>
     <!-- Header -->
-    <header class="bg-bg">
+    <header>
       <div class="flex justify-between items-start px-4 py-4">
         <img class="h-20" src="assets/logo.png" />
-        <button class="profile-btn flex flex-col justify-center items-end">
+        <span class="text-sm text-white font-light"
+        >Credit:
+        <span class="credit-amount text-accent "></span> NOK</span
+      >
+        <button class="profile-btn flex flex-col justify-center items-center md:pointer-events-none">
           <img
             src=""
             alt="Profile"
-            class="profile-pic object-contain h-[60px] w-[60px] rounded-full cursor-pointer mb-2 shadow-md"
+            class="profile-pic object-cover h-[60px] w-[60px] rounded-full cursor-pointer mb-2 shadow-md"
             id="profile-link"
           />
-          <span class="text-sm text-text font-light"
-            >Credit:
-            <span class="credit-amount text-primary font-se"></span> NOK</span
-          >
+          <span class="author text-sm text-white font-light"></span>
+
         </button>
         <ul
-          class="profile-menu hidden absolute right-4 top-20 py-3 px-3 pr-10 rounded-lg shadow-md bg-white text-text"
+          class="profile-menu dropdown-hidden backdrop-blur-md z-10 absolute right-4 top-[110px] py-3 px-3 pr-10 rounded-lg shadow-md bg-white/50 text-text text-sm"
         >
           <a href="/profile/" class="hover:text-primary"><li>Profile</li></a>
           <a href="#" class="hover:text-primary"><li>Inbox</li></a>
@@ -37,22 +43,22 @@
           </li>
         </ul>
       </div>
-      <!-- Search Bar -->
-      <div class="px-4 py-2 max-w-[700px] m-auto">
-        <input
-          type="text"
-          id="search-input"
-          class="w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Search items..."
-        />
-      </div>
+      <!-- Nav bar -->
+      <nav
+        class="hidden w-full justify-center gap-10 py-4 font-light bg-white/40 backdrop-blur-sm text-text md:flex"
+      >
+        <a href="#">Home</a>
+        <a href="#">Inbox</a>
+        <a href="#">Notification</a>
+        <a href="/profile/">My profile</a>
+      </nav>
     </header>
 
     <!-- Categories Section -->
     <section class="grid grid-cols-3 gap-4 px-4 py-6 max-w-[700px] m-auto">
       <!-- clothings button -->
       <button
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
         data-category="clothings"
       >
         <svg
@@ -69,7 +75,7 @@
 
       <!-- arts button -->
       <button
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
         data-category="arts"
       >
         <svg
@@ -94,7 +100,7 @@
 
       <!-- electronics button -->
       <button
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
         data-category="electronics"
       >
         <svg
@@ -130,7 +136,7 @@
 
       <!-- travel button -->
       <button
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
         data-category="travel"
       >
         <svg
@@ -157,7 +163,7 @@
 
       <!-- properties button -->
       <button
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
         data-category="properties"
       >
         <svg
@@ -185,7 +191,7 @@
 
       <!-- vehicles button -->
       <button
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
         data-category="vehicles"
       >
         <svg
@@ -212,7 +218,7 @@
       <!-- Ending Soon Button -->
       <button
         id="end-soon-btn"
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
       >
         <svg
           viewBox="-6.4 -6.4 44.80 44.80"
@@ -261,7 +267,7 @@
       <!-- Trending Button -->
       <button
         id="sort-by-bids-btn"
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
       >
         <svg
           viewBox="-4.8 -4.8 33.60 33.60"
@@ -287,7 +293,7 @@
 
       <!-- All Listings Button -->
       <button
-        class="category-btn h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary border-[1px]"
+        class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
       >
         <svg
           fill="#6A0DAD"
@@ -320,32 +326,43 @@
       </button>
     </section>
 
+    <!-- Search Bar -->
+    <div class="px-4 py-2 max-w-[700px] my-3 mx-auto">
+      <input
+        type="text"
+        id="search-input"
+        class="w-full border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Search items..."
+      />
+    </div>
+
     <!-- Items Section -->
     <h1
-      class="category-heading text-xl flex justify-center items-center font-bold mb-4"
+      class="category-heading text-xl text-white flex justify-center items-center font-bold mb-4"
     >
-      All Listing
+      All Listings
     </h1>
     <div class="message-container text-center text-error mb-4"></div>
     <div
-      class="items-section grid grid-cols-1 bg-bg md:grid-cols-2 lg:grid-cols-3 gap-6"
+      class="items-section grid grid-cols-1 gap-4 mx-4 md:max-w-[700px] md:mx-auto"
     ></div>
+    <div class="loading-spinner hidden">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+    </div>
+
+
 
     <!-- pagination -->
     <div class="pagination flex justify-center items-center mt-4 pb-[70px]">
       <button class="first-page-btn text-accent mr-3">
         <i class="fa-solid fa-backward"></i>
       </button>
-      <button
-        class="prev-btn pink-buttons"
-      >
-      <i class="fa-solid fa-arrow-left"></i>
+      <button class="prev-btn pink-buttons">
+        <i class="fa-solid fa-arrow-left"></i>
       </button>
       <p class="page-info text-text m-2">1/1</p>
-      <button
-        class="next-btn pink-buttons"
-      >
-      <i class="fa-solid fa-arrow-right"></i>
+      <button class="next-btn pink-buttons">
+        <i class="fa-solid fa-arrow-right"></i>
       </button>
       <button class="last-page-btn text-accent ml-3">
         <i class="fa-solid fa-forward"></i>
@@ -354,7 +371,7 @@
 
     <!-- Navigation Bar -->
     <nav
-      class="mobile-nav fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-3 m-2 bg-white/90 text-primary rounded-full shadow-md"
+      class="mobile-nav fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-3 m-2 bg-white/90 text-primary rounded-full shadow-md md:hidden"
     >
       <a href="#">
         <i class="fa-solid fa-house"></i>

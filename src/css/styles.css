@@ -18,7 +18,9 @@ body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  background: url(https://img.freepik.com/free-photo/abstract-background-with-flowing-waves_1048-14437.jpg?t=st=1733215754~exp=1733219354~hmac=6fbf2b82f012b1e12ae5f977ffe317b8859f1442c2bbc368bd9c25bb97db1a1c&w=1060) no-repeat center/cover;
 }
+
 
 /* Styles for the tab buttons */
 .tab-buttons {
@@ -64,3 +66,57 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.dropdown-display {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.4); /* Semi-transparent background */
+  backdrop-filter: blur(5px); /* Blur effect */
+  padding: 1rem;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none; /* Remove default underline */
+  transition: color 0.3s ease; /* Smooth text color transition */
+}
+
+.nav-link:hover {
+  color: #6a0dad;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  border-radius: 20%;
+  bottom: -4px; /* Adjust distance from text */
+  left: 0;
+  width: 0;
+  height: 2px; /* Thickness of the underline */
+  background-color: #6a0dad; /* Underline color */
+  transition: width 0.3s ease-in-out; /* Smooth animation */
+}
+
+.nav-link:hover::after {
+  width: 100%; /* Full underline width on hover */
+}
+
+.hidden {
+  display: none;
+}
+

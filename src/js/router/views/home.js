@@ -59,8 +59,8 @@ const profileMenu = document.querySelector(".profile-menu");
 
 profileBtn.addEventListener("click", (event) => {
   // Toggle the visibility of the menu
-  profileMenu.classList.toggle("hidden");
-  profileMenu.classList.toggle("block");
+  profileMenu.classList.toggle("dropdown-hidden");
+  profileMenu.classList.toggle("dropdown-display");
 
   // Stop the click event from propagating to the document
   event.stopPropagation();
@@ -68,9 +68,9 @@ profileBtn.addEventListener("click", (event) => {
 
 // Hide the menu when clicking anywhere else on the page
 document.addEventListener("click", () => {
-  if (!profileMenu.classList.contains("hidden")) {
-    profileMenu.classList.add("hidden");
-    profileMenu.classList.remove("block");
+  if (!profileMenu.classList.contains("dropdown-hidden")) {
+    profileMenu.classList.add("dropdown-hidden");
+    profileMenu.classList.remove("dropdown-display");
   }
 });
 
