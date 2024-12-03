@@ -8,6 +8,57 @@ import { FALLBACK_AVATAR, FALLBACK_IMG } from "../../api/constants";
 import { updateCountdown } from "../../utilities/updateCountdown";
 
 /**
+ * Generates stacked avatars for bidders and appends them to a container.
+ *
+ * @param {Array} bids - Array of bid objects.
+ * @param {HTMLElement} container - The DOM element to render the avatars into.
+ */
+function renderBiddersAvatars(bids, container) {
+  container.innerHTML = ""; // Clear existing content
+
+  const maxAvatars = 3; // Maximum number of avatars to display
+  const uniqueBidders = [
+    ...new Map(bids.map((bid) => [bid.bidder?.email, bid.bidder])).values(),
+  ]; // Ensure unique bidders
+
+  // Slice the array to display only the first maxAvatars
+  const displayedBidders = uniqueBidders.slice(0, maxAvatars);
+
+  // Render each avatar
+  displayedBidders.forEach((bidder, index) => {
+    const avatarElement = document.createElement("img");
+    avatarElement.className =
+      "h-8 w-8 rounded-full border-2 border-white object-cover shadow-sm";
+    avatarElement.src = bidder?.avatar?.url || FALLBACK_AVATAR;
+    avatarElement.alt = bidder?.avatar?.alt || "Bidder Avatar";
+
+    // Add overlapping margin for stacking effect
+    avatarElement.style.position = "relative";
+    avatarElement.style.left = `${index * -10}px`;
+
+    container.appendChild(avatarElement);
+  });
+
+  // Add a "+X" indicator if there are more bidders than maxAvatars
+  if (uniqueBidders.length > maxAvatars) {
+    const remainingCount = uniqueBidders.length - maxAvatars;
+    const moreIndicator = document.createElement("div");
+    moreIndicator.className =
+      "h-8 w-8 rounded-full bg-gray-500 text-white text-xs flex items-center justify-center border-2 border-white shadow-sm";
+    moreIndicator.style.position = "relative";
+    moreIndicator.style.left = `${maxAvatars * -10}px`;
+    moreIndicator.textContent = `+${remainingCount}`;
+
+    container.appendChild(moreIndicator);
+  }
+
+  // Set container style to ensure proper alignment
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.position = "relative";
+}
+
+/**
  * Renders a list of listings into a given container.
  *
  * @param {Array} listings - Array of listing objects to render.
@@ -20,64 +71,95 @@ export function renderListingsToContainer(listings, container) {
     const now = new Date();
     const endDate = new Date(listing.endsAt);
     const isEnded = now > endDate;
-    const createdDate = new Date(listing.created); // Parse the created date
+    const countdownTimerId = `countdown-${listing.id}`; // Unique ID for each timer
+
+    const listingElement = document.createElement("div");
+    listingElement.className =
+      "item-card bg-white/50 backdrop-blur-sm rounded-lg p-4 mx-50 flex flex-col items-center shadow-md relative";
+
+    const biddersContainer = document.createElement("div");
+    biddersContainer.className = "flex items-center justify-start mt-2";
+
+    // Call the renderBiddersAvatars function
+    renderBiddersAvatars(listing.bids || [], biddersContainer);
 
     const lastBidAmount = listing.bids?.length
       ? listing.bids[listing.bids.length - 1].amount
       : "0";
 
-    const winner =
-      isEnded && listing.bids?.length
-        ? listing.bids[listing.bids.length - 1].bidder.name || "Unknown"
-        : null;
-
-    const listingElement = document.createElement("a");
-    listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
-    listingElement.className =
-      "item-card bg-white border border-gray-300 rounded-lg p-4 flex items-center shadow-md";
-
     listingElement.innerHTML = `
-      <div class="relative">
+      <div class="flex w-full justify-between items-center mb-4">
+        <div class="seller flex items-center">
           <img 
+            class="w-10 h-10 rounded-full object-cover" 
+            src="${listing.seller?.avatar?.url || FALLBACK_AVATAR}" 
+            onerror="this.src='${FALLBACK_AVATAR}'" 
+          />
+          <div class="flex flex-col pl-2">
+            <p class="text-white text-sm flex items-center">
+              Selling by
+            </p>
+            <p class="text-sm font-semibold">
+              ${listing.seller?.name || "Me"}
+            </p>
+          </div>
+        </div>
+      </div>
+      <a class="relative w-full"
+      href="/listing/?listingID=${listing.id}&_seller=true&_bids=true">
+        <img 
           src="${listing.media?.[0]?.url || FALLBACK_IMG}" 
           alt="${listing.media?.[0]?.alt || "Item image"}" 
-          class="w-24 h-24 object-cover rounded-lg"
+          class="w-full h-[300px] object-cover rounded-lg"
           onerror="this.src='${FALLBACK_IMG}'"
         />
+        <div id="${countdownTimerId}" class="absolute bottom-2 left-1/2 transform -translate-x-1/2"></div>
         ${
           isEnded
-            ? `<div class="absolute h-full w-full top-1/2 -translate-y-1/2 bg-white/70 flex justify-center items-center text-red-500 font-bold">
-                 Auction Ended
-               </div>`
+            ? `<div class="absolute h-full w-full top-0 left-0 bg-black/50 flex justify-center items-center text-red-500 font-bold text-lg">
+                Auction Ended
+              </div>`
             : ""
         }
-      </div>
-      <div class="item-details ml-4">
+      </a>
+      <div class="item-details flex flex-col w-full mt-4">
         <h3 class="text-lg font-semibold">${listing.title}</h3>
-        <p class="text-gray-500 text-sm">Seller: ${
-          listing.seller?.name || "Me"
-        }</p>
-        <p class="text-gray-500 text-sm">Created: ${createdDate.toLocaleString()}</p>
-        <div class="flex justify-between items-center mt-2">
-          <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
-            listing._count?.bids
-          }</span></p>
-          <p class="text-gray-700 text-sm">Current bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
+        <div class="flex flex-col items-start">
+          <div class="flex w-full justify-between items-center mt-2">
+            <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
+              listing._count?.bids
+            }</span></p>
+            <p class="text-gray-700 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
+          </div>
         </div>
-        ${
-          isEnded
-            ? `<p class="text-sm text-gray-400">Ended: <span class="font-bold">${endDate.toLocaleString()}</span></p>
-               <p class="text-gray-700 text-sm">Win: <span class="font-bold">${
-                 winner || "No bids"
-               }</span></p>`
-            : `<p class="mt-2 text-sm text-gray-400">Ends in: <span class="font-bold">${endDate.toLocaleString()}</span></p>`
-        }
+        <!-- Insert the bidder container here -->
+        <div class="bidder-container flex flex-row-reverse justify-between items-center mt-2">
+            <a 
+            href="/listing/?listingID=${listing.id}&_seller=true&_bids=true"
+            class="pink-buttons mt-2 w-[30%]">
+              Bid now
+            </a>
+        </div>
       </div>
     `;
 
+    // Insert the biddersContainer into the specific location
+    const detailsContainer = listingElement.querySelector(
+      ".item-details .bidder-container"
+    );
+    detailsContainer.appendChild(biddersContainer);
+
     container.appendChild(listingElement);
+
+    // Initialize countdown timer if the auction hasn't ended
+    if (!isEnded) {
+      const timerElement = document.getElementById(countdownTimerId);
+      updateCountdown(endDate, timerElement);
+    }
   });
 }
+
+
 
 
 export async function renderListings(
@@ -93,6 +175,8 @@ export async function renderListings(
   const paginationInfo = document.querySelector(".page-info");
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
+  const firstPageBtn = document.querySelector(".first-page-btn");
+  const lastPageBtn = document.querySelector(".last-page-btn");
 
   try {
     // Clear the container and message at the start
@@ -110,7 +194,6 @@ export async function renderListings(
     }
 
     const listings = response.data;
-    console.log(listings);
 
     // Update pagination information
     const totalPages = Math.ceil(listings.length / limit);
@@ -126,25 +209,53 @@ export async function renderListings(
       paginationInfo.textContent = "";
       prevBtn.disabled = true;
       nextBtn.disabled = true;
+      firstPageBtn.disabled = true;
+      lastPageBtn.disabled = true;
       return;
     } else {
       messageContainer.textContent = "";
+      firstPageBtn.disabled = false;
+      lastPageBtn.disabled = false;
     }
 
-    paginationInfo.textContent = `Page ${page} of ${totalPages}`;
+    paginationInfo.textContent = `${page} / ${totalPages}`;
+
+    // Disable prev and first-page buttons if on the first page
     prevBtn.disabled = page <= 1;
+    firstPageBtn.disabled = page <= 1;
+
+    // Disable next and last-page buttons if on the last page
     nextBtn.disabled = page >= totalPages;
+    lastPageBtn.disabled = page >= totalPages;
 
     // Pagination button handlers
-    prevBtn.onclick = () =>
-      renderListings(tag, page - 1, limit, sortByBids, query);
-    nextBtn.onclick = () =>
-      renderListings(tag, page + 1, limit, sortByBids, query);
+    prevBtn.onclick = () => {
+      if (page > 1) renderListings(tag, page - 1, limit, sortByBids, query);
+    };
+
+    nextBtn.onclick = () => {
+      if (page < totalPages)
+        renderListings(tag, page + 1, limit, sortByBids, query);
+    };
+
+    // First Page button: Redirect to the first page
+    firstPageBtn.onclick = () => {
+      if (page > 1) renderListings(tag, 1, limit, sortByBids, query);
+    };
+
+    // Last Page button: Redirect to the last page
+    lastPageBtn.onclick = () => {
+      if (page < totalPages)
+        renderListings(tag, totalPages, limit, sortByBids, query);
+    };
   } catch (error) {
     console.error("Error rendering listings:", error);
     itemsSection.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
   }
 }
+
+
+
 
 /**
  * Renders a single auction listing based on its ID from the URL.
@@ -177,7 +288,7 @@ export async function renderListingById() {
   try {
     // Fetch the listing data
     const listing = await readListing();
-    console.log(listing)
+    console.log(listing);
 
     // Set the product image
     productImage.src = listing.media?.[0]?.url || `${FALLBACK_IMG}`;
