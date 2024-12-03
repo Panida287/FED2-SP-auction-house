@@ -17,11 +17,11 @@
   <body>
     <!-- Header -->
     <header>
-      <div class="flex justify-between items-start px-4 py-4">
+      <div class="header-elements flex justify-between items-start px-4 py-4">
         <img class="h-20" src="assets/logo.png" />
-        <span class="text-sm text-white font-light"
+        <span class="credit text-sm text-white font-light"
         >Credit:
-        <span class="credit-amount text-accent "></span> NOK</span
+        <span class="credit credit-amount text-accent "></span> NOK</span
       >
         <button class="profile-btn flex flex-col justify-center items-center md:pointer-events-none">
           <img
@@ -45,7 +45,7 @@
       </div>
       <!-- Nav bar -->
       <nav
-        class="hidden w-full justify-center gap-10 py-4 font-light bg-white/40 backdrop-blur-sm text-text md:flex"
+        class="nav-bar hidden w-full justify-center gap-10 py-4 font-light bg-white/40 backdrop-blur-sm text-text md:flex"
       >
         <a href="#">Home</a>
         <a href="#">Inbox</a>
@@ -55,7 +55,7 @@
     </header>
 
     <!-- Categories Section -->
-    <section class="grid grid-cols-3 gap-4 px-4 py-6 max-w-[700px] m-auto">
+    <section class="grid grid-cols-3 gap-4 px-4 py-6 max-w-[600px] m-auto">
       <!-- clothings button -->
       <button
         class="category-btn backdrop-blur-sm h-[100px] flex flex-col justify-center items-center bg-white/40 text-text py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
@@ -327,7 +327,7 @@
     </section>
 
     <!-- Search Bar -->
-    <div class="px-4 py-2 max-w-[700px] my-3 mx-auto">
+    <div class="px-4 py-2 max-w-[600px] my-3 mx-auto">
       <input
         type="text"
         id="search-input"
@@ -344,7 +344,7 @@
     </h1>
     <div class="message-container text-center text-error mb-4"></div>
     <div
-      class="items-section grid grid-cols-1 gap-4 mx-4 md:max-w-[700px] md:mx-auto"
+      class="items-section flex flex-col gap-4 px-4 py-6 max-w-[600px] m-auto"
     ></div>
     <div class="loading-spinner hidden">
       <i class="fa-solid fa-spinner fa-spin"></i>
