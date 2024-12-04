@@ -76,7 +76,7 @@ export function renderListingsToContainer(listings, container) {
 
     const listingElement = document.createElement("div");
     listingElement.className =
-      "item-card bg-white/60 backdrop-blur-sm rounded-lg p-4 mx-50 flex flex-col items-center shadow-md relative";
+      "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-50 mb-10 flex flex-col items-center shadow-md w-[358px] sm:w-[470px]";
 
     const biddersContainer = document.createElement("div");
     biddersContainer.className = "flex items-center justify-start mt-2";
@@ -100,7 +100,7 @@ export function renderListingsToContainer(listings, container) {
             <p class="text-white text-sm flex items-center">
               Selling by
             </p>
-            <p class="text-sm font-semibold">
+            <p class="text-sm text-gray-400 font-semibold">
               ${listing.seller?.name || "Me"}
             </p>
           </div>
@@ -124,19 +124,19 @@ export function renderListingsToContainer(listings, container) {
         }
       </a>
       <div class="item-details flex flex-col w-full mt-4">
-        <h3 class="text-lg font-semibold">${listing.title}</h3>
-        <p class="text-sm font-light text-gray-700 bg-white/20 rounded-md p-4 mt-2">
+        <h3 class="text-lg text-white font-semibold">${listing.title}</h3>
+        <p class="text-sm font-light text-white bg-white/20 rounded-md p-4 mt-2">
         ${listing.description}
         </p>
         <div class="flex flex-col items-start">
           <div class="flex w-full justify-between items-center mt-2">
-            <p class="text-gray-700 text-sm">Bids: <span class="font-bold">${
+            <p class="text-gray-400 text-sm">Bids: <span class="font-bold">${
               listing._count?.bids
             }</span></p>
-            <p class="text-gray-700 text-sm">Created: <span class="font-bold">
+            <p class="text-gray-400 text-sm">Created: <span class="font-bold">
             ${listingCreated.toLocaleDateString()}</span>
             </p>
-            <p class="text-gray-700 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
+            <p class="text-gray-400 text-sm">Last bid: <span class="font-bold">${lastBidAmount} NOK</span></p>
           </div>
         </div>
         <!-- Insert the bidder container here -->
