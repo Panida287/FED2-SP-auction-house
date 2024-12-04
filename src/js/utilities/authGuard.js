@@ -1,3 +1,5 @@
+import { renderProfile } from "../ui/profile/renderProfile";
+
 export function authGuard() {
      const profileBtn = document.querySelector(".profile-btn");
      const credits = document.querySelectorAll(".credit");
