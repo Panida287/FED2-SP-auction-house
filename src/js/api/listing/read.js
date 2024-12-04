@@ -105,9 +105,10 @@ export async function readListing() {
  * @returns {Promise<Object>} A promise that resolves with the fetched listings data.
  * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
  */
+/* eslint-disable no-unused-vars */
 export async function readListingsByUser(limit = 12, page = 1, username) {
-  const myHeaders = await loggedInHeaders();
-
+  const myHeaders = await headers();
+/* eslint-enable no-unused-vars */
   try {
     const response = await fetch(`${API_PROFILES}/${username}/listings`, {
       method: "GET",

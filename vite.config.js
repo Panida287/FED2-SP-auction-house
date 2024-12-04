@@ -1,5 +1,10 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import { fileURLToPath } from "url";
+
+// Convert import.meta.url to __dirname equivalent
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = resolve(__filename, "..");
 
 export default defineConfig({
   appType: "mpa",
