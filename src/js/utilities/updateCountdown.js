@@ -21,20 +21,20 @@ export function updateCountdown(endDate, timerElement) {
     const seconds = Math.floor((timeLeft / 1000) % 60);
 
     timerElement.innerHTML = `
-      <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 backdrop-blur-lg  bg-black/50 p-2 rounded-md flex gap-2 text-white text-xs">
-        <div class="flex flex-col items-center justify-center bg-accent/50 rounded-md px-2 py-1">
+      <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 backdrop-blur-sm  bg-black/50 p-2 rounded-md flex gap-2 text-white text-xs">
+        <div class="flex flex-col items-center justify-center bg-accent/80 rounded-md px-2 py-1">
           <span class="font-bold">${days}</span>
           <span class="uppercase text-gray-300 text-[10px]">Days</span>
         </div>
-        <div class="flex flex-col items-center justify-center bg-accent/50 rounded-md px-2 py-1">
+        <div class="flex flex-col items-center justify-center bg-accent/80 rounded-md px-2 py-1">
           <span class="font-bold">${hours.toString().padStart(2, '0')}</span>
           <span class="uppercase text-gray-300 text-[10px]">Hours</span>
         </div>
-        <div class="flex flex-col items-center justify-center bg-accent/50 rounded-md px-2 py-1">
+        <div class="flex flex-col items-center justify-center bg-accent/80 rounded-md px-2 py-1">
           <span class="font-bold">${minutes.toString().padStart(2, '0')}</span>
           <span class="uppercase text-gray-300 text-[10px]">Minutes</span>
         </div>
-        <div class="flex flex-col items-center justify-center bg-accent/50 rounded-md px-2 py-1">
+        <div class="flex flex-col items-center justify-center bg-accent/80 rounded-md px-2 py-1">
           <span class="font-bold">${seconds.toString().padStart(2, '0')}</span>
           <span class="uppercase text-gray-300 text-[10px]">Seconds</span>
         </div>

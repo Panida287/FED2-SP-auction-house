@@ -33,7 +33,7 @@ export function authGuard() {
    
        // Dynamically create and append an <a> tag with a link to /login/
        const loginLink = document.createElement("a");
-       loginLink.href = "/login/"; // Set the href to the login page
+       loginLink.href = "auth/login/"; // Set the href to the login page
        loginLink.className = "pink-buttons"; // Add the class
        loginLink.textContent = "Login"; // Add text content
    
