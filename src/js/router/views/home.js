@@ -1,11 +1,13 @@
 import { setLogoutListener } from '../../ui/global/logout';
-import { renderListings } from '../../ui/listing/display';
+import { renderListings, renderCarousel } from '../../ui/listing/display';
 import { authGuard } from '../../utilities/authGuard';
+import { initCarousel } from '../../utilities/initCarousel';
 
+initCarousel();
 authGuard();
 setLogoutListener();
 renderListings();
-
+renderCarousel();
 
 // Add event listeners to category buttons
 const categoryButtons = document.querySelectorAll(".category-btn");
@@ -73,5 +75,3 @@ document.addEventListener("click", () => {
     profileMenu.classList.remove("dropdown-display");
   }
 });
-
-

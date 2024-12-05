@@ -3,7 +3,6 @@ import {
   readListing,
   searchListings,
 } from "../../api/listing/read";
-
 import { FALLBACK_AVATAR, FALLBACK_IMG } from "../../api/constants";
 import { updateCountdown } from "../../utilities/updateCountdown";
 
@@ -505,3 +504,66 @@ function renderPaginatedBids(bids, page, perPage, container) {
     container.appendChild(bidElement);
   });
 }
+
+/**
+ * Fetches listings and populates the existing carousel HTML structure.
+ */
+export async function renderCarousel() {
+  const carouselItems = document.querySelectorAll(".carousel-item");
+
+  try {
+    // Fetch the listings
+    const response = await readListings();
+    const listings = response.data;
+
+    // Get the 5 latest listings
+    const latestListings = listings
+      .sort((a, b) => new Date(b.created) - new Date(a.created))
+      .slice(0, 5);
+
+    // Update each carousel item with listing data
+    carouselItems.forEach((item, index) => {
+      const listing = latestListings[index % latestListings.length]; // Loop listings if more items than data
+      const now = new Date();
+      const endDate = new Date(listing.endsAt);
+      const isEnded = now > endDate;
+
+      // Clear existing content in the item
+      item.innerHTML = "";
+
+      // Add content for the current listing
+      item.innerHTML = `
+        <div class="block relative">
+        <h3 class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-lg text-white font-semibold bg-black/50 p-3 rounded-lg">${listing.title}</h3>
+        <button class="absolute pink-buttons right-3 top-3">Bid now</button>
+          <a>
+            <img
+            src="${listing.media?.[0]?.url || FALLBACK_IMG}"
+            alt="${listing.media?.[0]?.alt || "Item image"}"
+            class="w-full h-[300px] object-cover rounded-lg"
+            onerror="this.src='${FALLBACK_IMG}'"
+            />
+          </a>
+        </div>
+      `;
+
+      // Add countdown if applicable
+      if (!isEnded) {
+        const countdown = document.createElement("div");
+        countdown.id = `countdown-carousel-${listing.id}`;
+        countdown.className =
+          "absolute bottom-2 left-1/2 transform -translate-x-1/2 text-white";
+        item.querySelector("a").appendChild(countdown);
+        updateCountdown(endDate, countdown);
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching or rendering carousel listings:", error);
+
+    // Display an error message for each carousel item
+    carouselItems.forEach((item) => {
+      item.innerHTML = `<p class="text-red-500 text-center mt-4">Failed to load data.</p>`;
+    });
+  }
+}
+
