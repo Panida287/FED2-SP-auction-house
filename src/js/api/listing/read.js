@@ -56,8 +56,6 @@ export async function readListings(tag = null, sortByBids = false, sortByEnding 
 }
 
 
-
-
 /**
  * Fetches a single auction listing based on its ID from the URL.
  *
