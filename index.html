@@ -3,10 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:image" content="assets/favicon_io"/>
-    <link rel="icon" type="image/png" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png"/>
+    <meta property="og:image" content="assets/favicon_io" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="180x180"
+      href="assets/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/favicon_io/favicon-16x16.png"
+    />
     <script type="module" src="/src/js/main.js"></script>
     <script
       src="https://kit.fontawesome.com/5d32d5fe01.js"
@@ -20,10 +35,12 @@
       <div class="header-elements flex justify-between items-start px-4 py-4">
         <img class="h-20" src="assets/logo.png" />
         <span class="credit text-sm text-white font-light"
-        >Credit:
-        <span class="credit credit-amount text-accent "></span> NOK</span
-      >
-        <button class="profile-btn flex flex-col justify-center items-center md:pointer-events-none">
+          >Credit:
+          <span class="credit credit-amount text-accent"></span> NOK</span
+        >
+        <button
+          class="profile-btn flex flex-col justify-center items-center md:pointer-events-none"
+        >
           <img
             src=""
             alt="Profile"
@@ -31,7 +48,6 @@
             id="profile-link"
           />
           <span class="author text-sm text-white font-light"></span>
-
         </button>
         <ul
           class="profile-menu dropdown-hidden backdrop-blur-md z-10 absolute right-4 top-[110px] py-3 px-3 pr-10 rounded-lg shadow-md bg-white/50 text-text text-sm"
@@ -45,29 +61,60 @@
       </div>
       <!-- Nav bar -->
       <nav
-        class="nav-bar hidden w-full justify-center gap-10 py-4 font-light bg-white/40 backdrop-blur-sm text-text md:flex"
+        class="nav-bar hidden w-full justify-center items-center gap-10 py-4 font-light bg-white/40 backdrop-blur-sm text-text md:flex"
       >
-        <a href="#">Home</a>
-        <a href="#">Inbox</a>
-        <a href="#">Notification</a>
-        <a href="/profile/">My profile</a>
+        <a class="nav-focused bg-primary p-2 rounded-full text-white" href="#">Home</a>
+        <a class="nav-link" href="#">Inbox</a>
+        <a class="nav-link" href="#">Notification</a>
+        <a class="nav-link" href="/profile/">My profile</a>
       </nav>
     </header>
 
     <!-- Carousel Section -->
-    <section class="carousel">
-      <div class="carousel-container backdrop-blur-xl">
-        <div class="carousel-item carousel-item-1 bg-white" data-index="1"></div>
-        <div class="carousel-item carousel-item-2 bg-white" data-index="2"></div>
-        <div class="carousel-item carousel-item-3 bg-white" data-index="3"></div>
-        <div class="carousel-item carousel-item-4 bg-white" data-index="4"></div>
-        <div class="carousel-item carousel-item-5 bg-white" data-index="5"></div>
+    <section
+      class="carousel flex flex-col min-h-[550px] pb-20 items-center bg-gradient-mask md:flex-row md:px-5 lg:px-10"
+    >
+      <div class="advert-container flex justify-center items-center mb-10 md:mb-0">
+        <div
+          class="advert-wrapper flex flex-col justify-center items-center p-4 mt-3 gap-4 text-white w-ful md:items-start"
+        >
+          <h3 class="advert-title text-3xl font-extrabold">WELCOME</h3>
+          <h2 class="advert-secondary-title text-gray-500">Start your bidding journey</h2>
+          <button class="pink-buttons">Sign up</button>
+        </div>
       </div>
-      <div class="carousel-controls"></div>
+      <div class="carousel-container w-full max-w-[1000px]">
+        <h2 class="absolute top-0 left-1/2 -translate-x-1/2 text-gray-300 font-thin">Newly listed items</h2>
+        <div
+          class="carousel-item carousel-item-1 bg-white"
+          data-index="1"
+        ></div>
+        <div
+          class="carousel-item carousel-item-2 bg-white"
+          data-index="2"
+        ></div>
+        <div
+          class="carousel-item carousel-item-3 bg-white"
+          data-index="3"
+        ></div>
+        <div
+          class="carousel-item carousel-item-4 bg-white"
+          data-index="4"
+        ></div>
+        <div
+          class="carousel-item carousel-item-5 bg-white"
+          data-index="5"
+        ></div>
+        <div
+          class="carousel-controls relative z-20 translate-y-[250px] flex justify-center w-full pb-3"
+        ></div>
+      </div>
     </section>
 
     <!-- Categories Section -->
-    <section class="relative grid grid-cols-3 gap-4 px-4 py-6 max-w-[600px] m-auto">
+    <section
+      class="relative grid grid-cols-3 gap-4 px-4 py-6 max-w-[600px] m-auto"
+    >
       <!-- clothings button -->
       <button
         class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-primary hover:border-[1px]"
@@ -354,25 +401,25 @@
     >
       All Listings
     </h1>
-    <div class="message-container text-center text-white font-medium text-2xl mb-4"></div>
     <div
-      class="items-section grid place-items-center items-start gap-4 px-4 py-6 mx-auto lg:grid-cols-2"
+      class="message-container text-center text-white font-medium text-2xl mb-4"
+    ></div>
+    <div
+      class="items-section grid place-items-center items-start gap-4 px-4 py-6 mx-auto lg:grid-cols-2 lg:w-[1000px]"
     ></div>
     <div class="loading-spinner hidden">
       <i class="fa-solid fa-spinner fa-spin"></i>
     </div>
 
-
-
     <!-- pagination -->
-    <div class="pagination flex justify-center items-center mt-4 pb-[70px]">
+    <div class="pagination flex justify-center items-center mt-4 pb-[100px]">
       <button class="first-page-btn text-accent mr-3">
         <i class="fa-solid fa-backward"></i>
       </button>
       <button class="prev-btn pink-buttons">
         <i class="fa-solid fa-arrow-left"></i>
       </button>
-      <p class="page-info text-text m-2">1/1</p>
+      <p class="page-info text-white m-2">1/1</p>
       <button class="next-btn pink-buttons">
         <i class="fa-solid fa-arrow-right"></i>
       </button>
@@ -383,18 +430,18 @@
 
     <!-- Navigation Bar -->
     <nav
-      class="mobile-nav fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-3 m-2 bg-white/90 text-primary rounded-full shadow-md md:hidden"
+      class="mobile-nav fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-4 m-2 bg-white/20 backdrop-blur-md text-white rounded-full shadow-md md:hidden"
     >
-      <a href="#">
+      <a href="#" class="bg-primary px-3 py-2 rounded-full">
         <i class="fa-solid fa-house"></i>
       </a>
-      <a href="#">
+      <a href="#" class="px-3 py-2 rounded-full">
         <i class="fa-solid fa-message"></i>
       </a>
-      <a href="#">
+      <a href="#" class="px-3 py-2 rounded-full">
         <i class="fa-solid fa-bell"></i>
       </a>
-      <a href="/profile/">
+      <a href="/profile/" class="px-3 py-2 rounded-full">
         <i class="fa-solid fa-user"></i>
       </a>
     </nav>

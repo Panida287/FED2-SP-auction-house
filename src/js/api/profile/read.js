@@ -1,5 +1,5 @@
 import { API_PROFILES} from "../constants";
-import { headers } from "../headers";
+import { loggedInHeaders } from "../headers";
 
 /**
  * Fetch a specific user's profile by username.
@@ -14,7 +14,7 @@ import { headers } from "../headers";
  */
 
 export async function readProfile(userName) {
-    const myHeaders = await headers();
+    const myHeaders = await loggedInHeaders();
 
     try {
         const response = await fetch(`${API_PROFILES}/${userName}`, {

@@ -534,16 +534,14 @@ export async function renderCarousel() {
       // Add content for the current listing
       item.innerHTML = `
         <div class="block relative">
-        <h3 class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-lg text-white font-semibold bg-black/50 p-3 rounded-lg">${listing.title}</h3>
-        <button class="absolute pink-buttons right-3 top-3">Bid now</button>
-          <a>
-            <img
-            src="${listing.media?.[0]?.url || FALLBACK_IMG}"
-            alt="${listing.media?.[0]?.alt || "Item image"}"
-            class="w-full h-[300px] object-cover rounded-lg"
-            onerror="this.src='${FALLBACK_IMG}'"
-            />
-          </a>
+            <a href="/listing/?listingID=${listing.id}&_seller=true&_bids=true">
+              <img
+              src="${listing.media?.[0]?.url || FALLBACK_IMG}"
+              alt="${listing.media?.[0]?.alt || "Item image"}"
+              class="h-[300px] w-full object-cover rounded-lg"
+              onerror="this.src='${FALLBACK_IMG}'"
+              />
+            </a>
         </div>
       `;
 

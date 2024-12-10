@@ -27,7 +27,10 @@ export default {
         text: '#121212',
         error: '#FF4D4D',
         border: '#A1A1A1',
-      }
+      },
+      backgroundImage: {
+        'gradient-mask': 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 29.53%, rgba(0, 0, 0, 1) 76%, rgba(0, 0, 0, 0) 100%)',
+      },
     }
   },
   plugins: [],
