@@ -1,4 +1,4 @@
-import { renderListingById } from "../../ui/listing/display";
+import { renderListingById, renderPaginatedBids } from "../../ui/listing/display";
 import { renderProfile } from "../../ui/profile/renderProfile";
 import { setupBidForm } from "../../ui/listing/placeBid";
 import { readListing } from "../../api/listing/read";
@@ -6,12 +6,90 @@ import { setupPreview } from "../../utilities/preview";
 import { toggleContainer } from "../../utilities/toggleContainer";
 import { onUpdate } from "../../ui/listing/update";
 import { onDelete } from "../../ui/listing/delete";
+import { setLogoutListener } from "../../ui/global/logout";
+import { authGuard } from "../../utilities/authGuard";
 
+authGuard();
+setLogoutListener();
 renderListingById();
 renderProfile();
 setupBidForm();
 setupUpdateListing();
 deleteListing();
+initializeBids();
+
+function setupPaginationButtons(bids, container, perPage) {
+  const prevButton = document.querySelector(".prev-btn");
+  const nextButton = document.querySelector(".next-btn");
+  const firstPageButton = document.querySelector(".first-page-btn");
+  const lastPageButton = document.querySelector(".last-page-btn");
+  const pageInfo = document.querySelector(".page-info");
+
+  let currentPage = 1; // Default page
+
+  const totalPages = Math.ceil(bids.length / perPage);
+
+  function updatePagination() {
+    // Update page info
+    pageInfo.textContent = `${currentPage} / ${totalPages}`;
+
+    // Disable or enable buttons based on the current page
+    prevButton.disabled = currentPage <= 1;
+    firstPageButton.disabled = currentPage <= 1;
+    nextButton.disabled = currentPage >= totalPages;
+    lastPageButton.disabled = currentPage >= totalPages;
+
+    // Render the current page of bids
+    renderPaginatedBids(bids, currentPage, perPage, container);
+  }
+
+  // Add event listeners to the buttons
+  prevButton.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      updatePagination();
+    }
+  });
+
+  nextButton.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      updatePagination();
+    }
+  });
+
+  firstPageButton.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage = 1;
+      updatePagination();
+    }
+  });
+
+  lastPageButton.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage = totalPages;
+      updatePagination();
+    }
+  });
+
+  // Initialize the pagination
+  updatePagination();
+}
+
+async function initializeBids() {
+  const container = document.getElementById("last-bids");
+  const bidsPerPage = 10;
+
+  try {
+    const listing = await readListing(); // Fetch listing details
+    const bids = listing.bids || []; // Get bids from the listing
+
+    setupPaginationButtons(bids, container, bidsPerPage);
+  } catch (error) {
+    console.error("Error initializing bids:", error);
+  }
+}
+
 
 async function populateUpdateForm() {
     try {
@@ -57,7 +135,6 @@ async function populateUpdateForm() {
       console.error("Error populating update form:", error);
     }
   }
-  
   
   function setupUpdateListing() {
     const editBtn = document.getElementById("edit-listing-btn"); // Edit button
@@ -114,4 +191,39 @@ function deleteListing() {
     onDelete();
    })
 
+}
+
+const profileBtn = document.querySelector(".profile-btn");
+const profileMenu = document.querySelector(".profile-menu");
+
+profileBtn.addEventListener("click", (event) => {
+  // Toggle the visibility of the menu
+  profileMenu.classList.toggle("dropdown-hidden");
+  profileMenu.classList.toggle("dropdown-display");
+
+  // Stop the click event from propagating to the document
+  event.stopPropagation();
+});
+
+// Hide the menu when clicking anywhere else on the page
+document.addEventListener("click", () => {
+  if (!profileMenu.classList.contains("dropdown-hidden")) {
+    profileMenu.classList.add("dropdown-hidden");
+    profileMenu.classList.remove("dropdown-display");
+  }
+});
+
+// Back Button Handling
+const backButton = document.getElementById("back-btn");
+
+if (backButton) {
+  backButton.addEventListener("click", () => {
+    if (document.referrer) {
+      // Go back to the previous page in the history stack
+      history.back();
+    } else {
+      // Fallback to a default page if there's no referrer
+      window.location.href = "/";
+    }
+  });
 }

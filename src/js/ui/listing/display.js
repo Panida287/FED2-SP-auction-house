@@ -258,9 +258,6 @@ export async function renderListings(
   }
 }
 
-
-
-
 /**
  * Renders a single auction listing based on its ID from the URL.
  *
@@ -277,22 +274,17 @@ export async function renderListingById() {
   const price = document.getElementById("price");
   const biddingsCount = document.getElementById("biddings-count");
   const countdownTimer = document.getElementById("countdown-timer");
-  const lastBidsContainer = document.getElementById("last-bids");
-  const backButton = document.getElementById("back-btn");
   const startPrice = document.getElementById("start-price");
   const bidInput = document.getElementById("bid-amount");
+  const dateCreatedElement = document.getElementById("date-created");
 
   const auctionEndedOverlay = document.createElement("div"); // Overlay for auction ended
   auctionEndedOverlay.className =
     "absolute top-1/2 left-0 w-full h-[35px] bg-white/70 flex justify-center items-center text-red-500 font-bold transform -rotate-12";
 
-  let currentPage = 1; // Default page for bids
-  const bidsPerPage = 10; // Show 10 bids per page
-
   try {
     // Fetch the listing data
     const listing = await readListing();
-    console.log(listing);
 
     // Set the product image
     productImage.src = listing.media?.[0]?.url || `${FALLBACK_IMG}`;
@@ -311,6 +303,10 @@ export async function renderListingById() {
       productImage.parentElement.style.position = "relative";
       productImage.parentElement.appendChild(auctionEndedOverlay);
     }
+
+    // Set the date created
+    const dateCreated = new Date(listing.created); // Use the 'created' field from the listing
+    dateCreatedElement.textContent = `${dateCreated.toLocaleDateString()}`;
 
     // Set product details
     productTitle.textContent = listing.title;
@@ -378,7 +374,7 @@ export async function renderListingById() {
     bidInput.placeholder = `Enter more than ${lastBidAmount} NOK`;
     bidInput.min = lastBidAmount;
 
-    // set to hide bidding section from own listing
+    // Hide bidding section for own listing
     const bidForm = document.getElementById("bid-form");
     const bidContainer = document.querySelector(".bid-container");
     if (loggedInUser === listing.seller?.name) {
@@ -391,69 +387,12 @@ export async function renderListingById() {
       bidContainer.appendChild(bidNotAllowed);
     }
 
-    // Add Back button functionality
-    backButton.addEventListener("click", () => {
-      window.history.back();
-    });
-
-    // Render paginated bids
-    renderPaginatedBids(
-      listing.bids || [],
-      currentPage,
-      bidsPerPage,
-      lastBidsContainer
-    );
-
-    // Add pagination buttons
-    const paginationButtons = document.createElement("div");
-    paginationButtons.className = "flex justify-between mt-4 pb-10";
-
-    const prevButton = document.createElement("button");
-    prevButton.className = "bg-gray-300 text-gray-800 px-4 py-2 rounded";
-    prevButton.textContent = "Previous";
-    prevButton.disabled = currentPage === 1;
-
-    const nextButton = document.createElement("button");
-    nextButton.className = "bg-gray-300 text-gray-800 px-4 py-2 rounded";
-    nextButton.textContent = "Next";
-    nextButton.disabled = listing.bids.length <= bidsPerPage;
-
-    prevButton.addEventListener("click", () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderPaginatedBids(
-          listing.bids,
-          currentPage,
-          bidsPerPage,
-          lastBidsContainer
-        );
-        prevButton.disabled = currentPage === 1;
-        nextButton.disabled = currentPage * bidsPerPage >= listing.bids.length;
-      }
-    });
-
-    nextButton.addEventListener("click", () => {
-      if (currentPage * bidsPerPage < listing.bids.length) {
-        currentPage++;
-        renderPaginatedBids(
-          listing.bids,
-          currentPage,
-          bidsPerPage,
-          lastBidsContainer
-        );
-        prevButton.disabled = currentPage === 1;
-        nextButton.disabled = currentPage * bidsPerPage >= listing.bids.length;
-      }
-    });
-
-    paginationButtons.appendChild(prevButton);
-    paginationButtons.appendChild(nextButton);
-    lastBidsContainer.parentElement.appendChild(paginationButtons);
   } catch (error) {
     console.error("Error rendering listing:", error);
     document.body.innerHTML = `<p class="text-red-500 text-center mt-4">Failed to load listing. Please try again later.</p>`;
   }
 }
+
 
 /**
  * Renders paginated bids in the "Last Bids" section.
@@ -463,7 +402,7 @@ export async function renderListingById() {
  * @param {number} perPage - The number of bids to display per page.
  * @param {HTMLElement} container - The DOM element to render the bids into.
  */
-function renderPaginatedBids(bids, page, perPage, container) {
+export function renderPaginatedBids(bids, page, perPage, container) {
   container.innerHTML = ""; // Clear existing bids
 
   // Sort bids by created date (most recent first)
@@ -487,15 +426,18 @@ function renderPaginatedBids(bids, page, perPage, container) {
     bidElement.className = "flex border-b border-gray-300 pb-2";
     bidElement.innerHTML = `
       <div class="flex justify-start items-center gap-2 w-full">
-        <img class="h-8 w-8 rounded-full" src="${
-          bid?.bidder?.avatar?.url || "default-avatar.jpg"
-        }" alt="${bid?.bidder?.avatar?.alt || "Avatar"}">
-        <p class="text-gray-600 font-medium">${
+        <img 
+          class="h-8 w-8 rounded-full" 
+          src="${bid?.bidder?.avatar?.url || FALLBACK_AVATAR}"
+          alt="${bid?.bidder?.avatar?.alt || "Avatar"}"
+          onerror="this.src='${FALLBACK_AVATAR}'"
+        >
+        <p class="text-gray-300 font-medium">${
           bid?.bidder?.name || "Anonymous"
         }</p>
       </div>
-      <div class="flex flex-col justify-between items-end">
-        <p class="text-gray-600 font-medium">Bidded ${bid?.amount} NOK</p>
+      <div class="w-full flex flex-col justify-center items-end">
+        <p class="text-gray-300 font-medium">Bidded ${bid?.amount} NOK</p>
         <p class="text-gray-400 text-sm">At: ${new Date(
           bid.created
         ).toLocaleString()}</p>
@@ -504,6 +446,8 @@ function renderPaginatedBids(bids, page, perPage, container) {
     container.appendChild(bidElement);
   });
 }
+
+
 
 /**
  * Fetches listings and populates the existing carousel HTML structure.
