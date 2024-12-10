@@ -18,7 +18,6 @@ export async function renderProfile() {
   try {
     const userName = localStorage.getItem("userName"); // Get the logged-in user's username
     if (!userName) {
-      console.error("User not logged in");
       return;
     }
 
