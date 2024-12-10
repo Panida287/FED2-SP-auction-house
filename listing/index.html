@@ -3,79 +3,118 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:image" content="assets/favicon_io" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="180x180"
+      href="assets/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/favicon_io/favicon-16x16.png"
+    />
     <script type="module" src="/src/js/main.js"></script>
     <script
       src="https://kit.fontawesome.com/5d32d5fe01.js"
       crossorigin="anonymous"
     ></script>
-    <title>Product Page</title>
+    <title>Item</title>
   </head>
-  <body class="bg-gray-100 font-sans">
+  <body>
     <!-- Back Button and Image -->
-    <header class="relative w-full h-[300px] bg-gray-200">
+    <header class="realtive h-auto w-full flex justify-between items-center">
       <button
         id="back-btn"
-        class="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md"
+        class="z-10 relative bg-white h-10 w-10 rounded-full shadow-md cursor-pointer m-3"
       >
         <i class="fa-solid fa-arrow-left"></i>
       </button>
+      <!-- Profile -->
+      <button
+        class="profile-btn h-full items-center z-20 cursor-pointer m-3"
+      >
+        <img
+          src=""
+          alt="Profile"
+          class="profile-pic object-cover h-[60px] w-[60px] rounded-full shadow-md"
+          id="profile-link"
+        />
+      </button>
+      <ul
+        class="profile-menu dropdown-hidden backdrop-blur-md z-20 absolute right-4 top-[80px] py-3 px-3 pr-10 rounded-lg shadow-md bg-white/50 text-text text-sm"
+      >
+        <a href="/profile/" class="hover:text-primary"><li>Profile</li></a>
+        <a href="#" class="hover:text-primary"><li>Inbox</li></a>
+        <li class="logout-btn" hover:text-primary>
+          <button id="logout-btn" class="hover:text-primary">Logout</button>
+        </li>
+      </ul>
+    </header>
+    <div class="img-container relative -top-10 -m-11 max-h-[500px]">
       <img
         id="product-image"
         src=""
         alt="Product Image"
-        class="object-cover w-full h-full"
+        class="object-contain max-h-[500px] w-full"
       />
-      <!-- Profile -->
-      <a href="/profile/">
-        <img
-          src=""
-          alt="Profile"
-          class="profile-pic absolute top-4 right-4 object-contain w-10 h-10 rounded-full border-2 border-gray-300 cursor-pointer"
-          id="profile-link"
-        />
-      </a>
-    </header>
+      <p id="countdown-timer" class="-translate-y-5"></p>
+    </div>
 
     <!-- Product Stats -->
-    <section class="flex justify-evenly items-center bg-white shadow-md py-4">
+    <section
+      class="product-stats flex justify-evenly items-center bg-white/10 backdrop-blur-md shadow-md py-4"
+    >
       <div>
-        <p class="text-gray-600 text-sm">Biddings</p>
-        <p id="biddings-count" class="text-lg font-bold">0</p>
+        <p class="text-gray-400 text-sm">Biddings:</p>
+        <p id="biddings-count" class="text-lg font-bold text-gray-300">0</p>
       </div>
       <div>
-        <p class="text-gray-600 text-sm">Last bid</p>
-        <p id="price" class="text-lg font-bold">0 NOK</p>
+        <p class="text-gray-400 text-sm">Last bid:</p>
+        <p id="price" class="text-lg font-bold text-gray-300">0 NOK</p>
       </div>
       <div>
-        <p class="text-gray-600 text-sm">Countdown</p>
-        <p id="countdown-timer" class="text-lg font-bold">00:00:00</p>
+        <p class="text-gray-400 text-sm">Date listed:</p>
+        <p id="date-created" class="text-lg font-bold text-gray-300"></p>
       </div>
     </section>
 
     <!-- Product Info -->
-    <section class="p-4">
-      <h1 id="product-title" class="text-xl font-bold">Product Title</h1>
+    <section class="relative p-4">
+      <h1 id="product-title" class="text-xl font-bold text-gray-300 pb-2">
+        Product Title
+      </h1>
       <button id="edit-listing-btn" class="flex h-20 w-20">Edit here</button>
-      <p id="product-category" class="text-gray-600 text-sm">
+      <p id="product-category" class="text-gray-400 text-sm">
         Category: <span class="font-medium">Clothes</span>
       </p>
-      <p id="product-seller" class="text-gray-600 text-sm">
+      <p id="product-seller" class="text-gray-400 text-sm">
         Seller: <span class="font-medium">John Doe</span>
       </p>
-      <p id="start-price" class="text-gray-600 text-sm">
+      <p id="start-price" class="text-gray-400 text-sm">
         Start pirce: <span class="font-medium">John Doe</span>
       </p>
-      <p id="product-description" class="mt-4 text-gray-700">
+      <p id="product-description" class="mt-4 text-gray-300">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
         gravida.
       </p>
     </section>
 
     <!-- Credit and Bid Form -->
-    <section class="bid-container bg-white shadow-md py-4 px-4">
-      <span class="user-credit flex text-blue-600 font-bold">
+    <section
+      class="bid-container bg-white/10 backdrop-blur-md shadow-md pt-4 pb-6 px-4"
+    >
+      <span class="user-credit flex text-gray-300 font-bold">
         <p>Credit:</p>
-        <p class="credit-amount text-black font-light"></p>
+        <p class="credit-amount text-accent font-light pl-2"></p>
       </span>
       <form id="bid-form" class="mt-4 flex gap-4">
         <input
@@ -87,26 +126,30 @@
           required
           min=""
         />
-        <button
-          type="submit"
-          class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md"
-        >
-          Place Bid
-        </button>
+        <button type="submit" class="pink-buttons">Place Bid</button>
       </form>
     </section>
 
     <!-- Last Bids -->
     <section class="p-4">
-      <h2 class="text-lg font-bold mb-2">Last Bids</h2>
-      <div id="last-bids" class="space-y-4">
-        <!-- Example Bid -->
-        <div
-          class="flex justify-between items-center border-b border-gray-300 pb-2"
-        >
-          <p class="text-gray-600 font-medium">Name</p>
-          <p class="text-gray-400 text-sm">At: 00:00</p>
-        </div>
+      <h2 class="text-lg font-bold mb-2 text-gray-300">Last Bids</h2>
+      <div id="last-bids" class="space-y-4"></div>
+
+      <!-- pagination -->
+      <div class="pagination flex justify-center items-center mt-4 pb-[100px]">
+        <button class="first-page-btn text-accent mr-3">
+          <i class="fa-solid fa-backward"></i>
+        </button>
+        <button class="prev-btn pink-buttons">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <p class="page-info text-white m-2">1/1</p>
+        <button class="next-btn pink-buttons">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <button class="last-page-btn text-accent ml-3">
+          <i class="fa-solid fa-forward"></i>
+        </button>
       </div>
     </section>
 
@@ -195,10 +238,11 @@
           >
             Cancel
           </button>
-          <button 
-          type="button"
-          id="delete-btn"
-          class="bg-red-500 text-white p-2 rounded">
+          <button
+            type="button"
+            id="delete-btn"
+            class="bg-red-500 text-white p-2 rounded"
+          >
             Delete
           </button>
         </div>
@@ -206,44 +250,43 @@
     </div>
 
     <!-- Delete confirm modal -->
-    <div 
-    id="delete-modal"
-    class="hidden absolute top-1/2 left-1/2 w-[70%] p-2 bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2">
-      <p>
-        Are you sure you want to delete this listing?
-        This can't be undone.
-      </p>
+    <div
+      id="delete-modal"
+      class="hidden absolute top-1/2 left-1/2 w-[70%] p-2 bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
+    >
+      <p>Are you sure you want to delete this listing? This can't be undone.</p>
       <button
-      type="button"
-      class="bg-red-500 text-white p-2 rounded"
-      id="confirm-delete-btn">
-      Delete
+        type="button"
+        class="bg-red-500 text-white p-2 rounded"
+        id="confirm-delete-btn"
+      >
+        Delete
       </button>
       <button
-      type="button"
-      class="bg-blue-500 text-white p-2 rounded"
-      id="cancel-delete-btn">
-      Cancel
+        type="button"
+        class="bg-blue-500 text-white p-2 rounded"
+        id="cancel-delete-btn"
+      >
+        Cancel
       </button>
-
     </div>
 
     <!-- Navigation Bar -->
     <nav
-      class="fixed bottom-0 left-1/2 transform -translate-x-1/2 mobile-nav flex justify-evenly items-center w-[80%] p-2 bg-white shadow-md"
+      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 m-2 bg-white/20 backdrop-blur-md text-white text-xl rounded-full shadow-md md:hidden"
     >
-      <a href="/">
+      <a href="/" class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
         <i class="fa-solid fa-house"></i>
       </a>
-      <a href="#">
-        <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="#" class="px-3 py-2 rounded-full">
+        <i class="fa-solid fa-message"></i>
       </a>
-      <button id="create-listing-btn">
-        <i class="fa-solid fa-plus"></i>
-      </button>
-      <button class="logout-btn">
-        <i class="fa-solid fa-right-from-bracket"></i>
-      </button>
+      <a href="#" class="px-3 py-2 rounded-full">
+        <i class="fa-solid fa-bell"></i>
+      </a>
+      <a href="/profile/" class="px-3 py-2 rounded-full">
+        <i class="fa-solid fa-user"></i>
+      </a>
     </nav>
   </body>
 </html>

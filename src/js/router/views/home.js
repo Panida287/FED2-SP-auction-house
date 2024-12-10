@@ -3,10 +3,10 @@ import { renderListings, renderCarousel } from '../../ui/listing/display';
 import { authGuard } from '../../utilities/authGuard';
 import { initCarousel } from '../../utilities/initCarousel';
 
+renderListings();
 initCarousel();
 authGuard();
 setLogoutListener();
-renderListings();
 renderCarousel();
 
 // Add event listeners to category buttons
