@@ -55,7 +55,6 @@ export async function readListings(tag = null, sortByBids = false, sortByEnding 
   }
 }
 
-
 /**
  * Fetches a single auction listing based on its ID from the URL.
  *
@@ -84,7 +83,6 @@ export async function readListing() {
     }
 
     const result = await response.json();
-    console.log("API Response:", result);
     return result.data;
   } catch (error) {
     console.error("Error fetching listings:", error);
@@ -117,7 +115,6 @@ export async function readListingsByUser(limit = 12, page = 1, username) {
     if (response.ok) {
       return result;
     } else {
-      console.error(result);
       throw new Error(`Failed to fetch listings: ${result.message}`);
     }
   } catch (error) {
@@ -161,7 +158,6 @@ export async function readUserBidsWins(type, limit = 12, page = 1, username) {
     if (response.ok) {
       return result;
     } else {
-      console.error(result);
       throw new Error(`Failed to fetch ${type}: ${result.message}`);
     }
   } catch (error) {
@@ -170,13 +166,21 @@ export async function readUserBidsWins(type, limit = 12, page = 1, username) {
   }
 }
 
-
-
+/**
+ * Searches listings for a specific query.
+ *
+ * @async
+ * @function searchListings
+ * @param {string} query - The search query.
+ * @returns {Promise<Object>} A promise that resolves with the filtered listings data.
+ * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
+ */
 export async function searchListings(query) {
   const myHeaders = await headers();
   const params = new URLSearchParams({
     _bids: "true",
     _seller: "true",
+    _active: "true",
   });
 
   try {
@@ -191,15 +195,20 @@ export async function searchListings(query) {
 
     const result = await response.json();
 
-    // Create a regex to match the exact word "car"
-    const regex = new RegExp(`\\b${query}\\b`, "i"); // \b ensures word boundaries
+    // Escape and sanitize query
+    const sanitizedQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    // Create a regex with word boundaries to match the exact word
+    const regex = new RegExp(`\\b${sanitizedQuery}\\b`, "i"); // Match whole word only
 
     // Filter results based on title or description and exclude ended listings
-    const filteredData = result.data.filter(
-      (listing) =>
-        (regex.test(listing.title) || regex.test(listing.description)) &&
-        new Date(listing.endsAt) > new Date() // Exclude ended listings
-    );
+    const filteredData = result.data.filter((listing) => {
+      const matchesTitle = regex.test(listing.title);
+      const matchesDescription = regex.test(listing.description);
+      const isActive = new Date(listing.endsAt) > new Date();
+
+      return (matchesTitle || matchesDescription) && isActive;
+    });
 
     return { data: filteredData };
   } catch (error) {
@@ -207,4 +216,3 @@ export async function searchListings(query) {
     throw error;
   }
 }
-
