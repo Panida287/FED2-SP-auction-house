@@ -1,4 +1,4 @@
-import { headers } from '../headers';
+import { loggedInHeaders } from '../headers';
 import { API_AUCTION_LISTING } from '../constants';
 
 /**
@@ -16,7 +16,7 @@ import { API_AUCTION_LISTING } from '../constants';
  */
 export async function createListing({ title, description, tags, media, endsAt }) {
   try {
-    const myHeaders = await headers();
+    const myHeaders = await loggedInHeaders();
 
     const response = await fetch(API_AUCTION_LISTING, {
       method: "POST",
