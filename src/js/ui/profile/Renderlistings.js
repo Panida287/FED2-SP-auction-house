@@ -1,11 +1,12 @@
 import { readUserBidsWins,readListingsByUser } from "../../api/listing/read";
 import { renderListingsToContainer } from "../listing/display";
 import { updateCountdown } from "../../utilities/updateCountdown";
+import { FALLBACK_IMG } from "../../api/constants";
 
 export async function renderListingsByUser(username, page = 1, limit = 12) {
   const container = document.querySelector(".result-container");
   const messageContainer = document.querySelector(".message-container");
-  const paginationContainer = document.querySelector(".pagination"); // Select the pagination container
+  const paginationContainer = document.querySelector(".pagination");
   const paginationInfo = document.querySelector(".page-info");
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
@@ -14,19 +15,75 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
     const response = await readListingsByUser(limit, page, username);
     const listings = response.data;
     const meta = response.meta;
-    console.log(listings)
 
-    if (listings.length === 0) {
+    if (!listings || listings.length === 0) {
       messageContainer.textContent = `No listings found for user: ${username}`;
-      paginationContainer.style.display = "hidden";
       container.innerHTML = ""; // Clear previous content
+      paginationContainer.style.display = "none"; // Hide pagination
       return;
     }
-    
-    messageContainer.textContent = "";
-    paginationContainer.style.display = "flex"; // Show pagination if listings are found
 
-    renderListingsToContainer(listings, container);
+    messageContainer.textContent = "";
+    paginationContainer.style.display = "flex"; // Show pagination
+    container.innerHTML = ""; // Clear existing content
+
+    listings.forEach((listing) => {
+      const now = new Date();
+      const endDate = new Date(listing.endsAt);
+      const listingCreated = new Date(listing.created);
+      const isEnded = now > endDate;
+      const countdownTimerId = `countdown-${listing.id}`;
+
+      const listingElement = document.createElement("a");
+      listingElement.className =
+        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto w-[350px] flex items-start shadow-md w-full mb-4 md:w-[400px]";
+      listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
+
+      const lastBidAmount = listing.bids?.length
+        ? listing.bids[listing.bids.length - 1].amount
+        : "0";
+
+      listingElement.innerHTML = `
+        <div class="listing-img h-[150px] w-[150px] rounded-lg overflow-hidden mr-4">
+          <img 
+            src="${listing.media?.[0]?.url || FALLBACK_IMG}"
+            alt="${listing.media?.[0]?.alt || 'Listing Image'}"
+            class="w-full h-full object-cover"
+            onerror="this.src='/fallback-image.png'"
+          />
+        </div>
+        <div class="listing-details flex flex-col justify-between h-full">
+          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
+            ${listing.title || "No title"}
+          </h3>
+          <p class="listing-bids text-gray-400 text-sm mt-2">
+            Bids: ${listing._count?.bids || 0}
+          </p>
+          <p class="listing-current-bid text-gray-400 text-sm">
+            Last bid: ${lastBidAmount} NOK
+          </p>
+          <p class="listing-created text-gray-400 text-sm">
+            Created: ${listingCreated.toLocaleDateString()}
+          </p>
+          <div id="${countdownTimerId}" class="countdown text-sm text-gray-400 mt-2"></div>
+                  ${
+          isEnded
+            ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
+                Auction Ended
+              </div>`
+            : ""
+        }
+        </div>
+      `;
+
+      container.appendChild(listingElement);
+
+      // Initialize countdown timer if the auction hasn't ended
+      if (!isEnded) {
+        const timerElement = document.getElementById(countdownTimerId);
+        updateCountdown(endDate, timerElement);
+      }
+    });
 
     // Update pagination
     paginationInfo.textContent = `Page ${meta.currentPage} of ${meta.pageCount}`;
@@ -39,9 +96,10 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
   } catch (error) {
     console.error("Error rendering user listings:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
-    paginationContainer.style.display = "hidden"; // Hide pagination in case of error
+    paginationContainer.style.display = "none"; // Hide pagination in case of error
   }
 }
+
 
 export async function renderUserBidsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
@@ -58,6 +116,11 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     if (!bidData || bidData.length === 0) {
       messageContainer.textContent = `${username} has not bid on anything yet.`;
       container.innerHTML = ""; // Clear previous content
+      paginationContainer.style.display = "hidden"; // Hide pagination
+      return;
+    }
+
+    if (bidData.length <= 12) {
       paginationContainer.style.display = "hidden"; // Hide pagination
       return;
     }

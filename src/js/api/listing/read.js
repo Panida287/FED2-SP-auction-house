@@ -106,7 +106,7 @@ export async function readListingsByUser(limit = 12, page = 1, username) {
   const myHeaders = await loggedInHeaders();
 /* eslint-enable no-unused-vars */
   try {
-    const response = await fetch(`${API_PROFILES}/${username}/listings`, {
+    const response = await fetch(`${API_PROFILES}/${username}/listings?_bids=true`, {
       method: "GET",
       headers: myHeaders,
     });
