@@ -103,7 +103,7 @@ export async function readListing() {
  */
 /* eslint-disable no-unused-vars */
 export async function readListingsByUser(limit = 12, page = 1, username) {
-  const myHeaders = await headers();
+  const myHeaders = await loggedInHeaders();
 /* eslint-enable no-unused-vars */
   try {
     const response = await fetch(`${API_PROFILES}/${username}/listings`, {
@@ -141,7 +141,7 @@ export async function readUserBidsWins(type, limit = 12, page = 1, username) {
   const params = new URLSearchParams({
     limit: limit.toString(),
     page: page.toString(),
-    _listings: "true", // Add the `_listings=true` flag
+    _listings: "true",
   });
 
   try {

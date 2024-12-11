@@ -78,3 +78,4 @@ if (editBtn && editProfileContainer) {
     editProfileContainer.classList.toggle("flex");
   });
 }
+

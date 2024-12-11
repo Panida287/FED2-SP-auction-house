@@ -1,5 +1,6 @@
 import { FALLBACK_AVATAR, FALLBACK_BANNER } from "../../api/constants";
 import { readProfile } from "../../api/profile/read";
+import { renderListingsByUser } from "./Renderlistings";
 
 /**
  * Fetches and renders the user's profile.
@@ -63,3 +64,44 @@ export async function renderProfile() {
     }
   }
 }
+
+export function setupProfileButton() {
+  const profileButton = document.querySelector(".profile-btn");
+
+  if (!profileButton) return;
+
+  profileButton.addEventListener("click", async () => {
+    const username = localStorage.getItem("userName");
+
+    if (!username) {
+      alert("User is not logged in.");
+      return;
+    }
+
+    try {
+      // Redirect the user to the profile page
+      window.location.href = "/profile/";
+
+      // Add an event listener to ensure profile and listings are rendered after navigation
+      window.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Fetch the user's profile
+          const profile = await readProfile(username);
+
+          // Handle profile data (e.g., display user information if needed)
+          console.log("User Profile:", profile);
+
+          // Render listings by user
+          renderListingsByUser(username);
+        } catch (error) {
+          console.error("Error fetching user profile or listings:", error);
+          document.querySelector(".message-container").textContent =
+            "Failed to load profile or listings. Please try again later.";
+        }
+      });
+    } catch (error) {
+      console.error("Error during profile redirection:", error);
+    }
+  });
+}
+

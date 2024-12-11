@@ -1,5 +1,6 @@
 import { readUserBidsWins,readListingsByUser } from "../../api/listing/read";
 import { renderListingsToContainer } from "../listing/display";
+import { updateCountdown } from "../../utilities/updateCountdown";
 
 export async function renderListingsByUser(username, page = 1, limit = 12) {
   const container = document.querySelector(".result-container");
@@ -13,6 +14,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
     const response = await readListingsByUser(limit, page, username);
     const listings = response.data;
     const meta = response.meta;
+    console.log(listings)
 
     if (listings.length === 0) {
       messageContainer.textContent = `No listings found for user: ${username}`;
@@ -41,8 +43,6 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
   }
 }
 
-
-
 export async function renderUserBidsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
   const messageContainer = document.querySelector(".message-container");
@@ -64,14 +64,54 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
 
     messageContainer.textContent = "";
     paginationContainer.style.display = "flex"; // Show pagination if bids are found
+    container.innerHTML = ""; // Clear existing content
 
-    container.innerHTML = ""; // Clear previous listings
-
-    // Render each bid's associated listing
+    // Process each bid
     bidData.forEach((bid) => {
-      const { listing } = bid;
-      if (!listing) return;
-      renderListingsToContainer([listing], container);
+      const { listing, amount, created } = bid;
+
+      if (!listing) return; // Skip if no listing data is available
+
+      const now = new Date();
+      const endDate = new Date(listing.endsAt);
+      const isEnded = now > endDate;
+
+      const card = document.createElement("div");
+      card.className = "card bg-gray-800 text-white rounded-lg overflow-hidden shadow-md";
+      card.innerHTML = `
+        <a href="/listing/?listingID=${listing.id}" class="block relative">
+          <img
+            class="object-cover w-full h-48"
+            src="${listing.media?.[0]?.url || '/fallback-image.png'}"
+            alt="${listing.media?.[0]?.alt || 'Listing Image'}"
+            onerror="this.src='/fallback-image.png'"
+          />
+          ${
+            isEnded
+              ? `<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-red-500 font-bold text-xl">
+                  Auction Ended
+                </div>`
+              : ""
+          }
+        </a>
+        <div class="p-4">
+          <h3 class="text-lg font-bold">${listing.title}</h3>
+          <p class="text-sm text-gray-400">${listing.description}</p>
+          <div class="flex justify-between items-center mt-2">
+            <span class="text-gray-300 text-sm">Your Bid: ${amount} NOK</span>
+            <span class="text-gray-300 text-sm">Created: ${new Date(created).toLocaleDateString()}</span>
+          </div>
+          <div id="countdown-${listing.id}" class="text-sm text-gray-400 mt-2"></div>
+        </div>
+      `;
+
+      container.appendChild(card);
+
+      // Initialize countdown timer if the auction hasn't ended
+      if (!isEnded) {
+        const timerElement = document.getElementById(`countdown-${listing.id}`);
+        updateCountdown(endDate, timerElement);
+      }
     });
 
     // Update pagination
@@ -89,7 +129,6 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     paginationContainer.style.display = "hidden"; // Hide pagination in case of error
   }
 }
-
 
 export async function renderUserWinsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
@@ -138,6 +177,8 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     paginationContainer.style.display = "hidden"; // Hide pagination in case of error
   }
 }
+
+
 
 
   
