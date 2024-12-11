@@ -58,6 +58,7 @@ listedButton.addEventListener("click", () => {
 biddedButton.addEventListener("click", () => {
   clearActiveButton();
   biddedButton.classList.add("active");
+  resultContainer.innerHTML = `<p>Loading your listings...</p>`;
   renderUserBidsListings(username);
 });
 

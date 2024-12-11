@@ -1,5 +1,4 @@
 import { readUserBidsWins,readListingsByUser } from "../../api/listing/read";
-import { renderListingsToContainer } from "../listing/display";
 import { updateCountdown } from "../../utilities/updateCountdown";
 import { FALLBACK_IMG } from "../../api/constants";
 
@@ -69,7 +68,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
                   ${
           isEnded
             ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
-                Auction Ended
+                Auction ended on: ${endDate.toLocaleDateString()}
               </div>`
             : ""
         }
@@ -100,11 +99,10 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
   }
 }
 
-
 export async function renderUserBidsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
   const messageContainer = document.querySelector(".message-container");
-  const paginationContainer = document.querySelector(".pagination"); // Select the pagination container
+  const paginationContainer = document.querySelector(".pagination");
   const paginationInfo = document.querySelector(".page-info");
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
@@ -116,12 +114,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     if (!bidData || bidData.length === 0) {
       messageContainer.textContent = `${username} has not bid on anything yet.`;
       container.innerHTML = ""; // Clear previous content
-      paginationContainer.style.display = "hidden"; // Hide pagination
-      return;
-    }
-
-    if (bidData.length <= 12) {
-      paginationContainer.style.display = "hidden"; // Hide pagination
+      paginationContainer.style.display = "none"; // Hide pagination
       return;
     }
 
@@ -129,7 +122,6 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     paginationContainer.style.display = "flex"; // Show pagination if bids are found
     container.innerHTML = ""; // Clear existing content
 
-    // Process each bid
     bidData.forEach((bid) => {
       const { listing, amount, created } = bid;
 
@@ -138,33 +130,40 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
       const now = new Date();
       const endDate = new Date(listing.endsAt);
       const isEnded = now > endDate;
+      const countdownTimerId = `countdown-${listing.id}`;
 
-      const card = document.createElement("div");
-      card.className = "card bg-gray-800 text-white rounded-lg overflow-hidden shadow-md";
+      const card = document.createElement("a");
+      card.className =
+        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto w-[350px] flex items-start shadow-md w-full mb-4 md:w-[400px]";
+      card.href = `/listing/?listingID=${listing.id}`;
+
       card.innerHTML = `
-        <a href="/listing/?listingID=${listing.id}" class="block relative">
-          <img
-            class="object-cover w-full h-48"
-            src="${listing.media?.[0]?.url || '/fallback-image.png'}"
+        <div class="listing-img h-[150px] w-[150px] rounded-lg overflow-hidden mr-4">
+          <img 
+            src="${listing.media?.[0]?.url || FALLBACK_IMG}"
             alt="${listing.media?.[0]?.alt || 'Listing Image'}"
+            class="w-full h-full object-cover"
             onerror="this.src='/fallback-image.png'"
           />
+        </div>
+        <div class="listing-details flex flex-col justify-between h-full">
+          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
+            ${listing.title || "No title"}
+          </h3>
+          <p class="listing-bids text-gray-400 text-sm mt-2">
+            Your Bid: ${amount} NOK
+          </p>
+          <p class="listing-current-bid text-gray-400 text-sm">
+            Date Bided: ${new Date(created).toLocaleDateString()}
+          </p>
+          <div id="${countdownTimerId}" class="countdown text-sm text-gray-400 mt-2"></div>
           ${
-            isEnded
-              ? `<div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-red-500 font-bold text-xl">
-                  Auction Ended
-                </div>`
-              : ""
+          isEnded
+          ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
+                Auction ended on: ${endDate.toLocaleDateString()}
+              </div>`
+          : ""
           }
-        </a>
-        <div class="p-4">
-          <h3 class="text-lg font-bold">${listing.title}</h3>
-          <p class="text-sm text-gray-400">${listing.description}</p>
-          <div class="flex justify-between items-center mt-2">
-            <span class="text-gray-300 text-sm">Your Bid: ${amount} NOK</span>
-            <span class="text-gray-300 text-sm">Created: ${new Date(created).toLocaleDateString()}</span>
-          </div>
-          <div id="countdown-${listing.id}" class="text-sm text-gray-400 mt-2"></div>
         </div>
       `;
 
@@ -172,7 +171,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
 
       // Initialize countdown timer if the auction hasn't ended
       if (!isEnded) {
-        const timerElement = document.getElementById(`countdown-${listing.id}`);
+        const timerElement = document.getElementById(countdownTimerId);
         updateCountdown(endDate, timerElement);
       }
     });
@@ -189,14 +188,14 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
   } catch (error) {
     console.error("Error fetching bids with listings:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load user bids.</p>`;
-    paginationContainer.style.display = "hidden"; // Hide pagination in case of error
+    paginationContainer.style.display = "none"; // Hide pagination in case of error
   }
 }
 
 export async function renderUserWinsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
   const messageContainer = document.querySelector(".message-container");
-  const paginationContainer = document.querySelector(".pagination"); // Select pagination container
+  const paginationContainer = document.querySelector(".pagination");
   const paginationInfo = document.querySelector(".page-info");
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
@@ -212,7 +211,7 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     // Check if no wins found
     if (!winData || winData.length === 0) {
       messageContainer.textContent = `${username} hasn't won anything yet.`;
-      paginationContainer.style.display = "hidden"; // Hide pagination
+      paginationContainer.style.display = "none"; // Hide pagination
       return;
     }
 
@@ -221,8 +220,32 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
 
     // Render each win listing
     winData.forEach((listing) => {
-      const listingElement = renderListingsToContainer([listing], container);
-      container.appendChild(listingElement);
+      const { title, _count, endsAt, media } = listing;
+      const endDate = new Date(endsAt);
+      const card = document.createElement("div");
+      card.className = "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto w-[350px] flex flex-col items-start shadow-md w-full mb-4 md:w-[400px]";
+
+      card.innerHTML = `
+        <div class="listing-details flex flex-col justify-between w-full">
+          <img 
+            src="${media?.[0]?.url || FALLBACK_IMG}"
+            alt="${media?.[0]?.alt || 'Listing Image'}"
+            class="w-full h-full object-cover rounded-lg mb-4"
+            onerror="this.src='${FALLBACK_IMG}'"
+          />
+          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
+            ${title || "No title"}
+          </h3>
+          <p class="listing-bids text-gray-400 text-sm mt-2">
+            Bids: ${_count?.bids || 0}
+          </p>
+          <p class="listing-ended text-gray-400 text-sm mt-2">
+            Ended: ${endDate.toLocaleDateString()}
+          </p>
+        </div>
+      `;
+
+      container.appendChild(card);
     });
 
     // Update pagination
@@ -237,12 +260,8 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
   } catch (error) {
     console.error("Error fetching wins:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load user wins.</p>`;
-    paginationContainer.style.display = "hidden"; // Hide pagination in case of error
+    paginationContainer.style.display = "none"; // Hide pagination in case of error
   }
 }
 
-
-
-
-  
-  
+    
