@@ -1,5 +1,5 @@
 import { renderListingById, renderPaginatedBids } from "../../ui/listing/display";
-import { renderProfile } from "../../ui/profile/renderProfile";
+import { renderProfile, setupProfileButton } from "../../ui/profile/renderProfile";
 import { setupBidForm } from "../../ui/listing/placeBid";
 import { readListing } from "../../api/listing/read";
 import { setupPreview } from "../../utilities/preview";
@@ -9,6 +9,7 @@ import { onDelete } from "../../ui/listing/delete";
 import { setLogoutListener } from "../../ui/global/logout";
 import { authGuard } from "../../utilities/authGuard";
 
+setupProfileButton();
 authGuard();
 setLogoutListener();
 renderListingById();
@@ -193,10 +194,10 @@ function deleteListing() {
 
 }
 
-const profileBtn = document.querySelector(".profile-btn");
+const profileToggle = document.querySelector(".profile-toggle");
 const profileMenu = document.querySelector(".profile-menu");
 
-profileBtn.addEventListener("click", (event) => {
+profileToggle.addEventListener("click", (event) => {
   // Toggle the visibility of the menu
   profileMenu.classList.toggle("dropdown-hidden");
   profileMenu.classList.toggle("dropdown-display");
@@ -227,3 +228,4 @@ if (backButton) {
     }
   });
 }
+
