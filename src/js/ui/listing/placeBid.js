@@ -14,11 +14,6 @@ import { readListing } from "../../api/listing/read";
 export function setupBidForm() {
   const bidForm = document.getElementById("bid-form");
 
-  if (!bidForm) {
-    console.error("Bid form not found on the page.");
-    return;
-  }
-
   bidForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     
@@ -28,8 +23,6 @@ export function setupBidForm() {
     const lastBidAmount = listing.bids && listing.bids.length > 0
     ? listing.bids[listing.bids.length - 1].amount
     : "0";
-
-    console.log(`last bid amount:${lastBidAmount}`);
 
     bidInput.placeholder = `Enter more than ${lastBidAmount} NOK`;
 
@@ -42,7 +35,6 @@ export function setupBidForm() {
       renderListingById();
     } catch (error) {
       alert(`Failed to place bid: ${error.message}`);
-      console.error("Error during bid placement:", error);
     } finally {
       // Reset the bid form input field
       bidInput.value = "";
