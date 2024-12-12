@@ -1,4 +1,4 @@
-import { readUserBidsWins,readListingsByUser } from "../../api/listing/read";
+import { readUserBidsWins, readListingsByUser } from "../../api/listing/read";
 import { updateCountdown } from "../../utilities/updateCountdown";
 import { FALLBACK_IMG } from "../../api/constants";
 
@@ -15,17 +15,25 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
     const listings = response.data;
     const meta = response.meta;
 
+    // Clear existing content
+    container.innerHTML = "";
+    messageContainer.textContent = "";
+
     if (!listings || listings.length === 0) {
       messageContainer.textContent = `No listings found for user: ${username}`;
-      container.innerHTML = ""; // Clear previous content
-      paginationContainer.style.display = "none"; // Hide pagination
+      paginationContainer.classList.add("hidden"); // Hide pagination
       return;
     }
 
-    messageContainer.textContent = "";
-    paginationContainer.style.display = "flex"; // Show pagination
-    container.innerHTML = ""; // Clear existing content
+    // Show or hide pagination based on totalCount
+    if (meta.totalCount > limit) {
+      paginationContainer.classList.remove("hidden"); // Show pagination
+      paginationContainer.classList.add("flex");
+    } else {
+      paginationContainer.classList.add("hidden"); // Hide pagination
+    }
 
+    // Render listings
     listings.forEach((listing) => {
       const now = new Date();
       const endDate = new Date(listing.endsAt);
@@ -35,7 +43,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
 
       const listingElement = document.createElement("a");
       listingElement.className =
-        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto w-[350px] flex items-start shadow-md w-full mb-4 md:w-[400px]";
+        "item-card bg-card backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto flex items-start shadow-md w-full mb-4 md:w-[350px]";
       listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
 
       const lastBidAmount = listing.bids?.length
@@ -46,7 +54,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
         <div class="listing-img h-[150px] w-[150px] rounded-lg overflow-hidden mr-4">
           <img 
             src="${listing.media?.[0]?.url || FALLBACK_IMG}"
-            alt="${listing.media?.[0]?.alt || 'Listing Image'}"
+            alt="${listing.media?.[0]?.alt || "Listing Image"}"
             class="w-full h-full object-cover"
             onerror="this.src='/fallback-image.png'"
           />
@@ -66,12 +74,12 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
           </p>
           <div id="${countdownTimerId}" class="countdown text-sm text-gray-400 mt-2"></div>
                   ${
-          isEnded
-            ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
+                    isEnded
+                      ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
                 Auction ended on: ${endDate.toLocaleDateString()}
               </div>`
-            : ""
-        }
+                      : ""
+                  }
         </div>
       `;
 
@@ -95,7 +103,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
   } catch (error) {
     console.error("Error rendering user listings:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
-    paginationContainer.style.display = "none"; // Hide pagination in case of error
+    paginationContainer.classList.add("hidden"); // Hide pagination in case of error
   }
 }
 
@@ -114,13 +122,20 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     if (!bidData || bidData.length === 0) {
       messageContainer.textContent = `${username} has not bid on anything yet.`;
       container.innerHTML = ""; // Clear previous content
-      paginationContainer.style.display = "none"; // Hide pagination
+      paginationContainer.classList.add("hidden"); // Hide pagination
       return;
     }
 
     messageContainer.textContent = "";
-    paginationContainer.style.display = "flex"; // Show pagination if bids are found
     container.innerHTML = ""; // Clear existing content
+
+    // Show or hide pagination based on totalCount
+    if (bidData.length > limit) {
+      paginationContainer.classList.remove("hidden"); // Show pagination
+      paginationContainer.classList.add("flex");
+    } else {
+      paginationContainer.classList.add("hidden"); // Hide pagination
+    }
 
     bidData.forEach((bid) => {
       const { listing, amount, created } = bid;
@@ -141,7 +156,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
         <div class="listing-img h-[150px] w-[150px] rounded-lg overflow-hidden mr-4">
           <img 
             src="${listing.media?.[0]?.url || FALLBACK_IMG}"
-            alt="${listing.media?.[0]?.alt || 'Listing Image'}"
+            alt="${listing.media?.[0]?.alt || "Listing Image"}"
             class="w-full h-full object-cover"
             onerror="this.src='/fallback-image.png'"
           />
@@ -158,11 +173,11 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
           </p>
           <div id="${countdownTimerId}" class="countdown text-sm text-gray-400 mt-2"></div>
           ${
-          isEnded
-          ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
+            isEnded
+              ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
                 Auction ended on: ${endDate.toLocaleDateString()}
               </div>`
-          : ""
+              : ""
           }
         </div>
       `;
@@ -177,10 +192,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     });
 
     // Update pagination
-    const meta = response.meta;
-    paginationInfo.textContent = `Page ${meta.currentPage} of ${meta.pageCount}`;
-    prevBtn.disabled = !meta.previousPage;
-    nextBtn.disabled = !meta.nextPage;
+    paginationInfo.textContent = `Page ${page} of ${Math.ceil(bidData.length / limit)}`;
 
     // Add pagination functionality
     prevBtn.onclick = () => renderUserBidsListings(username, limit, page - 1);
@@ -188,7 +200,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
   } catch (error) {
     console.error("Error fetching bids with listings:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load user bids.</p>`;
-    paginationContainer.style.display = "none"; // Hide pagination in case of error
+    paginationContainer.classList.add("hidden"); // Hide pagination in case of error
   }
 }
 
@@ -211,25 +223,31 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     // Check if no wins found
     if (!winData || winData.length === 0) {
       messageContainer.textContent = `${username} hasn't won anything yet.`;
-      paginationContainer.style.display = "none"; // Hide pagination
+      paginationContainer.classList.add("hidden"); // Hide pagination
       return;
     }
 
     // Show pagination if wins are found
-    paginationContainer.style.display = "flex";
+    if (winData.length > limit) {
+      paginationContainer.classList.remove("hidden"); // Show pagination
+      paginationContainer.classList.add("flex");
+    } else {
+      paginationContainer.classList.add("hidden"); // Hide pagination
+    }
 
     // Render each win listing
     winData.forEach((listing) => {
       const { title, _count, endsAt, media } = listing;
       const endDate = new Date(endsAt);
       const card = document.createElement("div");
-      card.className = "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto w-[350px] flex flex-col items-start shadow-md w-full mb-4 md:w-[400px]";
+      card.className =
+        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto w-[350px] flex flex-col items-start shadow-md w-full mb-4 md:w-[400px]";
 
       card.innerHTML = `
         <div class="listing-details flex flex-col justify-between w-full">
           <img 
             src="${media?.[0]?.url || FALLBACK_IMG}"
-            alt="${media?.[0]?.alt || 'Listing Image'}"
+            alt="${media?.[0]?.alt || "Listing Image"}"
             class="w-full h-full object-cover rounded-lg mb-4"
             onerror="this.src='${FALLBACK_IMG}'"
           />
@@ -249,10 +267,7 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     });
 
     // Update pagination
-    const meta = response.meta;
-    paginationInfo.textContent = `Page ${meta.currentPage} of ${meta.pageCount}`;
-    prevBtn.disabled = !meta.previousPage;
-    nextBtn.disabled = !meta.nextPage;
+    paginationInfo.textContent = `Page ${page} of ${Math.ceil(winData.length / limit)}`;
 
     // Handle pagination functionality
     prevBtn.onclick = () => renderUserWinsListings(username, limit, page - 1);
@@ -260,8 +275,6 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
   } catch (error) {
     console.error("Error fetching wins:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load user wins.</p>`;
-    paginationContainer.style.display = "none"; // Hide pagination in case of error
+    paginationContainer.classList.add("hidden"); // Hide pagination in case of error
   }
 }
-
-    

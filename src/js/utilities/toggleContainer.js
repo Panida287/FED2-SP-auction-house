@@ -7,6 +7,6 @@
 export function toggleContainer(container, show) {
   if (container) {
     container.classList.toggle("hidden", !show);
-    container.classList.toggle("flex", show);
+    container.classList.toggle("block", show);
   }
 }

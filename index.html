@@ -34,9 +34,9 @@
     <header>
       <div class="header-elements flex justify-between items-start px-4 py-4">
         <img class="h-20" src="assets/logo.png" />
-        <span class="credit text-sm text-white font-light"
+        <span class="credit text-sm text-white font-light font-h"
           >Credit:
-          <span class="credit credit-amount text-accent"></span> NOK</span
+          <span class="credit credit-amount text-accent font-h text-center"></span> NOK</span
         >
         <button
           class="profile-btn flex flex-col justify-center items-center md:pointer-events-none"
@@ -47,26 +47,36 @@
             class="profile-pic object-cover h-[60px] w-[60px] rounded-full cursor-pointer mb-2 shadow-md"
             id="profile-link"
           />
-          <span class="author text-sm text-white font-light"></span>
+          <span class="author text-sm text-text font-h"></span>
         </button>
         <ul
-          class="profile-menu dropdown-hidden backdrop-blur-md z-10 absolute right-4 top-[110px] py-3 px-3 pr-10 rounded-lg shadow-md bg-white/50 text-text text-sm"
+          class="profile-menu dropdown-hidden flex flex-col gap-2 backdrop-blur-md z-10 absolute right-4 top-[110px] p-4 pr-10 rounded-lg shadow-md bg-card text-text text-sm"
         >
-          <a href="/profile/" class="hover:text-primary"><li>Profile</li></a>
-          <a href="#" class="hover:text-primary"><li>Inbox</li></a>
+          <a href="/profile/" class="nav-link hover:text-accent font-h">
+            <li>
+              Profile
+            </li>
+          </a>
+          <a href="#" class="nav-link hover:text-accent font-h">
+            <li>
+              Inbox
+            </li>
+          </a>
           <li class="logout-btn" hover:text-primary>
-            <button id="logout-btn" class="hover:text-primary">Logout</button>
+            <button id="logout-btn" class="nav-link hover:text-accent font-h">
+              Logout
+            </button>
           </li>
         </ul>
       </div>
       <!-- Nav bar -->
       <nav
-        class="nav-bar hidden w-full justify-center items-center gap-10 py-4 font-light bg-white/40 backdrop-blur-sm text-text md:flex"
+        class="nav-bar hidden w-full justify-center items-center gap-10 py-4 font-light bg-card backdrop-blur-sm text-text md:flex"
       >
-        <a class="nav-focused bg-primary p-2 rounded-full text-white" href="#">Home</a>
-        <a class="nav-link" href="#">Inbox</a>
-        <a class="nav-link" href="#">Notification</a>
-        <a class="nav-link" href="/profile/">My profile</a>
+        <a class="nav-link text-accent font-h" href="#">Home</a>
+        <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
+        <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
+        <a class="nav-link hover:text-accent font-h" href="/profile/">My profile</a>
       </nav>
     </header>
 
@@ -74,35 +84,35 @@
     <section
       class="carousel flex flex-col min-h-[550px] pb-20 items-center bg-gradient-mask md:flex-row md:px-5 lg:px-10"
     >
-      <div class="advert-container flex justify-center items-center mb-10 md:mb-0">
+      <div class="advert-container flex justify-center items-center mb-10 md:mb-0 md:w-[600px]">
         <div
           class="advert-wrapper flex flex-col justify-center items-center p-4 mt-3 gap-4 text-white w-ful md:items-start"
         >
           <h3 class="advert-title text-3xl font-extrabold">WELCOME</h3>
-          <h2 class="advert-secondary-title text-gray-500">Start your bidding journey</h2>
+          <h2 class="advert-secondary-title text-secondText">Start your bidding journey</h2>
           <button class="pink-buttons">Sign up</button>
         </div>
       </div>
-      <div class="carousel-container w-full max-w-[1000px]">
-        <h2 class="absolute top-0 left-1/2 -translate-x-1/2 text-gray-300 font-thin">Newly listed items</h2>
+      <div class="carousel-container w-full max-w-[1000px] md:mr-20 md:scale-75">
+        <h2 class="absolute top-0 left-1/2 -translate-x-1/2 text-text font-thin font-p md:text-2xl md:-mt-10">Newly listed items</h2>
         <div
-          class="carousel-item carousel-item-1 bg-white"
+          class="carousel-item carousel-item-1"
           data-index="1"
         ></div>
         <div
-          class="carousel-item carousel-item-2 bg-white"
+          class="carousel-item carousel-item-2"
           data-index="2"
         ></div>
         <div
-          class="carousel-item carousel-item-3 bg-white"
+          class="carousel-item carousel-item-3"
           data-index="3"
         ></div>
         <div
-          class="carousel-item carousel-item-4 bg-white"
+          class="carousel-item carousel-item-4"
           data-index="4"
         ></div>
         <div
-          class="carousel-item carousel-item-5 bg-white"
+          class="carousel-item carousel-item-5"
           data-index="5"
         ></div>
         <div
@@ -117,7 +127,7 @@
     >
       <!-- clothings button -->
       <button
-        class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="clothings"
       >
         <svg
@@ -134,7 +144,7 @@
 
       <!-- arts button -->
       <button
-        class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="arts"
       >
         <svg
@@ -159,7 +169,7 @@
 
       <!-- electronics button -->
       <button
-        class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="electronics"
       >
         <svg
@@ -195,7 +205,7 @@
 
       <!-- travel button -->
       <button
-        class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="travel"
       >
         <svg
@@ -222,7 +232,7 @@
 
       <!-- properties button -->
       <button
-        class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="properties"
       >
         <svg
@@ -250,7 +260,7 @@
 
       <!-- vehicles button -->
       <button
-        class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="vehicles"
       >
         <svg
@@ -277,7 +287,7 @@
       <!-- Ending Soon Button -->
       <button
         id="end-soon-btn"
-        class="backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
       >
         <svg
           viewBox="-6.4 -6.4 44.80 44.80"
@@ -326,7 +336,7 @@
       <!-- Trending Button -->
       <button
         id="sort-by-bids-btn"
-        class="backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
       >
         <svg
           viewBox="-4.8 -4.8 33.60 33.60"
@@ -352,7 +362,7 @@
 
       <!-- All Listings Button -->
       <button
-        class="category-btn backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-gray-400 py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
       >
         <svg
           fill="#ffffff"
@@ -412,7 +422,7 @@
     </div>
 
     <!-- pagination -->
-    <div class="pagination flex justify-center items-center mt-4 pb-[100px]">
+    <div class="pagination hidden justify-center items-center mt-4 pb-[100px]">
       <button class="first-page-btn text-accent mr-3">
         <i class="fa-solid fa-backward"></i>
       </button>
@@ -428,20 +438,20 @@
       </button>
     </div>
 
-    <!-- Navigation Bar -->
+    <!-- Mobile navigation Bar -->
     <nav
-      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 m-2 bg-white/20 backdrop-blur-md text-white text-xl rounded-full shadow-md md:hidden"
+      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 m-2 bg-card backdrop-blur-md text-white text-xl rounded-full shadow-md md:hidden"
     >
       <a href="#" class="bg-accent flex justify-center items-center w-[50px] h-[50px] rounded-full">
         <i class="fa-solid fa-house"></i>
       </a>
-      <a href="#" class="px-3 py-2 rounded-full">
+      <a href="#">
         <i class="fa-solid fa-message"></i>
       </a>
-      <a href="#" class="px-3 py-2 rounded-full">
+      <a href="#">
         <i class="fa-solid fa-bell"></i>
       </a>
-      <a href="/profile/" class="px-3 py-2 rounded-full">
+      <a href="/profile/">
         <i class="fa-solid fa-user"></i>
       </a>
     </nav>

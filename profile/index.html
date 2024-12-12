@@ -30,10 +30,10 @@
     <title>Profile</title>
   </head>
 
-  <body>
+  <body class="pb-[70px]">
     <!-- Banner Section -->
-    <div class="flex items-center -z-1 w-screen h-[200px] overflow-hidden">
-      <img class="banner" />
+    <div class="flex items-center -z-1 w-full max-h-[200px] overflow-hidden md:max-h-[350px]">
+      <img class="banner object-cover w-full" />
     </div>
 
     <!-- Profile Section -->
@@ -43,86 +43,102 @@
     >
       <!-- Profile Picture and Edit Button -->
       <div
-        class="profile-pic-container flex items-center justify-center w-full -mt-[50px]"
+        class="profile-pic-container relative flex items-center justify-center w-full -mt-[50px]"
       >
         <img
-          class="profile-pic object-cover border-[2px] border-white h-[80px] w-[80px] rounded-full"
+          class="profile-pic object-cover border-[2px] border-white h-[100px] w-[100px] rounded-full"
         />
         <button
           id="edit-btn"
-          class="absolute z-2 translate-x-[60px] translate-y-[30px]"
+          class="tab-buttons absolute right-2 top-[60px] scale-75"
         >
           Edit
+        </button>
+        <button
+          id="create-listing-btn"
+          class="pink-buttons absolute left-0 top-[60px] scale-75 md:scale-100 md:left-2"
+        >
+          + Add listing
         </button>
       </div>
       <!-- User Name -->
       <div>
-        <h1 class="author"></h1>
+        <h1 class="author font-h text-text m-2"></h1>
       </div>
     </div>
 
     <!-- User Stats Section -->
-    <div class="profile-info flex justify-evenly items-center">
-      <span class="user-credit">
+    <div
+      class="user-stats flex justify-evenly items-center font-p text-text p-4"
+    >
+      <span class="user-credit text-center">
         Credit:
-        <p class="credit-amount"></p>
+        <p class="credit-amount text-center text-accent"></p>
       </span>
-      <span class="user-bids">
+      <span class="user-bids text-center">
         Listings:
-        <p class="listings-amount"></p>
+        <p class="listings-amount text-center text-accent"></p>
       </span>
-      <span class="user-wins">
+      <span class="user-wins text-center">
         Wins:
-        <p class="win-amount"></p>
+        <p class="win-amount text-center text-accent"></p>
       </span>
     </div>
 
     <!-- Filter Buttons Section -->
-    <div class="display-filter-btn flex justify-evenly items-center">
-      <button id="listed">Items listed</button>
-      <button id="bidded">Bidded</button>
-      <button id="wins">Wins</button>
+    <div
+      class="display-filter-btn w-screen flex justify-between items-center p-4 mt-2 md:justify-evenly"
+    >
+      <button id="listed" class="tab-buttons text-sm font-extralight">
+        Items listed
+      </button>
+      <button id="bidded" class="tab-buttons text-sm font-extralight">
+        Items Bided
+      </button>
+      <button id="wins" class="tab-buttons text-sm font-extralight">
+        Items Won
+      </button>
     </div>
 
     <!-- Results Section -->
-    <div
-      class="result-container grid"
-    >
-    </div>
-    <!-- Pagination -->
-    <div class="pagination hidden justify-center items-center mt-4 pb-[60px]">
-      <button
-        class="prev-btn bg-gray-300 text-gray-800 px-4 py-2 rounded mr-2"
-        disabled
-      >
-        Previous
+    <div class="result-container grid md:grid-cols-2 p-4"></div>
+
+    <!-- pagination -->
+    <div class="pagination hidden justify-center items-center mt-4 pb-[100px]">
+      <button class="first-page-btn text-accent mr-3">
+        <i class="fa-solid fa-backward"></i>
       </button>
-      <p class="page-info text-gray-700">Page 1 of 1</p>
-      <button
-        class="next-btn bg-gray-300 text-gray-800 px-4 py-2 rounded ml-2"
-        disabled
-      >
-        Next
+      <button class="prev-btn pink-buttons">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <p class="page-info text-white m-2">1/1</p>
+      <button class="next-btn pink-buttons">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <button class="last-page-btn text-accent ml-3">
+        <i class="fa-solid fa-forward"></i>
       </button>
     </div>
 
     <!-- Error msg -->
     <div class="message-container text-red-500"></div>
 
-    <!-- Navigation Bar -->
+    <!-- Mobile navigation Bar -->
     <nav
-      class="fixed bottom-0 left-1/2 transform -translate-x-1/2 mobile-nav flex justify-evenly items-center w-[80%] p-2 bg-white shadow-md"
+      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 m-2 bg-card backdrop-blur-md text-white text-xl rounded-full shadow-md md:hidden"
     >
-      <a href="/">
+      <a href="/" class="flex justify-center items-center w-[50px] h-[50px]">
         <i class="fa-solid fa-house"></i>
       </a>
-      <a href="#">
-        <i class="fa-solid fa-magnifying-glass"></i>
+      <a href="#" class="flex justify-center items-center w-[50px] h-[50px]">
+        <i class="fa-solid fa-message"></i>
       </a>
-      <button id="create-listing-btn">
-        <i class="fa-solid fa-plus"></i>
-      </button>
-      <button class="logout-btn">
+      <a href="#" class="flex justify-center items-center w-[50px] h-[50px]">
+        <i class="fa-solid fa-bell"></i>
+      </a>
+      <button
+        class="logout-btn flex justify-center items-center w-[50px] h-[50px]"
+      >
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </nav>
@@ -130,18 +146,23 @@
     <!-- Create Listing Modal -->
     <div
       id="create-container"
-      class="hidden absolute top-1/2 left-1/2 w-[70%] p-2 bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
+      class="hidden absolute top-1/2 left-1/2 w-[70%] p-8 bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
     >
       <form id="listing-form" class="flex flex-col gap-4">
+        <h2
+          class="font-h text-accent w-full justify-center items-center text-center font-bold"
+        >
+          ADD NEW LISTING
+        </h2>
         <!-- Image URL -->
         <div>
-          <label for="item-image-url">Image URL</label>
+          <label for="item-image-url" class="text-text"> Image URL </label>
           <input
             type="url"
             id="item-image-url"
             name="item-image-url"
             placeholder="Enter image URL"
-            class="border border-gray-300 p-2"
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
           <!-- Image Preview -->
           <div id="image-preview" class="mt-4">
@@ -149,42 +170,42 @@
               id="preview-image"
               src=""
               alt="Item preview"
-              class="hidden w-full h-48 object-cover border border-gray-300"
+              class="hidden w-full h-48 object-cover border border-gray-300 rounded-md"
             />
           </div>
         </div>
         <!-- Item Name -->
         <div>
-          <label for="item-name">Item Name</label>
+          <label class="text-text" for="item-name"> Item Name </label>
           <input
             type="text"
             id="item-name"
             name="item-name"
             required
-            class="border border-gray-300 p-2"
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
         <!-- Item Description -->
         <div>
-          <label for="item-description">Description</label>
+          <label class="text-text" for="item-description"> Description </label>
           <input
             type="text"
             id="item-description"
             name="item-description"
             required
-            class="border border-gray-300 p-2"
+            class="border w-full h-[100px] text-text border-gray-300 p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
         <!-- Tags -->
         <div>
-          <label for="item-category">Category</label>
+          <label class="text-text" for="item-category"> Category </label>
           <select
             id="item-category"
             name="item-category"
             required
-            class="border border-gray-300 p-2"
+            class="border w-full text-text border-gray-300 p-2 mt-2 rounded-md bg-transparent"
           >
             <option value="" disabled selected>Select a category</option>
             <option value="clothes">Clothes</option>
@@ -196,28 +217,18 @@
           </select>
         </div>
 
-        <!-- Price -->
-        <div>
-          <label for="item-price">Price</label>
-          <input
-            type="number"
-            id="item-price"
-            name="item-price"
-            required
-            class="border border-gray-300 p-2"
-          />
-        </div>
-
         <!-- Auction Duration -->
         <div>
-          <label for="auction-duration">Auction Duration (Days)</label>
+          <label class="text-text" for="auction-duration">
+            Auction Duration (Days)
+          </label>
           <input
             type="number"
             id="auction-duration"
             name="auction-duration"
-            placeholder="Enter number of days (1-365)"
+            placeholder="Max 365 days"
             required
-            class="border border-gray-300 p-2"
+            class="border w-full text-text border-gray-300 p-2 mt-2 rounded-md bg-transparent"
             min="1"
             max="365"
           />
@@ -226,16 +237,10 @@
         <!-- Buttons -->
         <div class="flex justify-between mt-4">
           <!-- Submit Button -->
-          <button type="submit" class="bg-blue-500 text-white p-2 rounded">
-            Submit
-          </button>
+          <button type="submit" class="pink-buttons">Submit</button>
 
           <!-- Cancel Button -->
-          <button
-            type="button"
-            id="cancel-create-btn"
-            class="bg-red-500 text-white p-2 rounded"
-          >
+          <button type="button" id="cancel-create-btn" class="tab-buttons">
             Cancel
           </button>
         </div>
@@ -243,65 +248,63 @@
     </div>
 
     <!-- Edit Profile Modal -->
+    <!-- Edit Profile Modal -->
     <div
       id="edit-profile-container"
-      class="edit-profile-container hidden absolute top-1/2 left-1/2 w-[70%] h-[400px] bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2 p-4"
+      class="edit-profile-container hidden absolute top-1/2 left-1/2 w-[70%] p-8 bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
     >
       <form id="edit-profile-form" class="flex flex-col gap-4">
+        <h2
+          class="font-h text-accent w-full justify-center items-center text-center font-bold"
+        >
+          EDIT PROFILE
+        </h2>
         <!-- Avatar URL -->
         <div>
-          <label for="avatar-url">Avatar URL</label>
+          <label for="avatar-url" class="text-text">Avatar URL</label>
           <input
             type="url"
             id="avatar-url"
             name="avatar-url"
             placeholder="Enter avatar URL"
-            class="border border-gray-300 p-2"
+            class="border w-full border-gray-300 p-2 mt-2 rounded-md bg-transparent"
           />
           <div id="avatar-preview" class="mt-4">
             <img
               id="preview-avatar"
               src=""
               alt="Avatar Preview"
-              class="hidden w-full h-48 object-cover border border-gray-300"
+              class="hidden w-full h-48 object-cover border border-gray-300 rounded-md"
             />
           </div>
         </div>
 
         <!-- Banner URL -->
         <div>
-          <label for="banner-url">Banner URL</label>
+          <label for="banner-url" class="text-text">Banner URL</label>
           <input
             type="url"
             id="banner-url"
             name="banner-url"
             placeholder="Enter banner URL"
-            class="border border-gray-300 p-2"
+            class="border w-full border-gray-300 p-2 mt-2 rounded-md bg-transparent"
           />
           <div id="banner-preview" class="mt-4">
             <img
               id="preview-banner"
               src=""
               alt="Banner Preview"
-              class="hidden w-full h-48 object-cover border border-gray-300"
+              class="hidden w-full h-48 object-cover border border-gray-300 rounded-md"
             />
           </div>
         </div>
 
         <!-- Buttons -->
         <div class="flex justify-between mt-4">
-          <button
-            type="button"
-            id="cancel-edit-btn"
-            class="bg-red-500 text-white p-2 rounded"
-          >
+          <button type="button" id="cancel-edit-btn" class="tab-buttons">
             Cancel
           </button>
-          <button
-            type="submit"
-            id="submit-edit-btn"
-            class="bg-blue-500 text-white p-2 rounded"
-          >
+          <button type="submit" id="submit-edit-btn" class="pink-buttons">
             Save Changes
           </button>
         </div>

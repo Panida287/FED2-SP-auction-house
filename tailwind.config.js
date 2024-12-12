@@ -21,15 +21,16 @@ export default {
       },
       colors: {
         bg: '#EFD7FF',
-        secondary: '#B28DFF',
+        secondary: '#A1A1A1',
         accent: '#ff4081',
         primary: '#6A0DAD',
-        text: '#121212',
+        text: '#EAEAEA',
+        secondText: '#A1A1A1',
         error: '#FF4D4D',
-        border: '#A1A1A1',
       },
       backgroundImage: {
         'gradient-mask': 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 29.53%, rgba(0, 0, 0, 1) 76%, rgba(0, 0, 0, 0) 100%)',
+        'card': 'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.10) 100%)'
       },
     }
   },

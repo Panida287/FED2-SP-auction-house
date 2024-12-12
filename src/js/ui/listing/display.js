@@ -75,7 +75,7 @@ export function renderListingsToContainer(listings, container) {
 
     const listingElement = document.createElement("div");
     listingElement.className =
-      "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-50 mb-10 flex flex-col items-center shadow-md w-[358px] sm:w-[470px]";
+      "item-card bg-card backdrop-blur-lg rounded-2xl p-4 mx-50 mb-10 flex flex-col items-center shadow-md w-[358px] sm:w-[470px]";
 
     const biddersContainer = document.createElement("div");
     biddersContainer.className = "flex items-center justify-start mt-2";
@@ -176,6 +176,7 @@ export async function renderListings(
 ) {
   const itemsSection = document.querySelector(".items-section");
   const messageContainer = document.querySelector(".message-container");
+  const paginationContainer = document.querySelector(".pagination"); // Added reference to pagination container
   const paginationInfo = document.querySelector(".page-info");
   const prevBtn = document.querySelector(".prev-btn");
   const nextBtn = document.querySelector(".next-btn");
@@ -199,64 +200,61 @@ export async function renderListings(
 
     const listings = response.data;
 
-    // Update pagination information
+    // Handle empty listings
+    if (!listings || listings.length === 0) {
+      messageContainer.textContent = "No listings found.";
+      paginationContainer.classList.add("hidden"); // Hide pagination
+      return;
+    }
+
+    // Calculate total pages and slice listings for the current page
     const totalPages = Math.ceil(listings.length / limit);
     const start = (page - 1) * limit;
     const end = start + limit;
     const paginatedListings = listings.slice(start, end);
 
-    // Render listings into the container
+    // Render paginated listings
     renderListingsToContainer(paginatedListings, itemsSection);
 
-    if (listings.length === 0) {
-      messageContainer.textContent = `No listings found.`;
-      paginationInfo.textContent = "";
-      prevBtn.disabled = true;
-      nextBtn.disabled = true;
-      firstPageBtn.disabled = true;
-      lastPageBtn.disabled = true;
-      return;
+    // Show or hide pagination based on total listings
+    if (totalPages > 1) {
+      paginationContainer.classList.remove("hidden"); // Show pagination
     } else {
-      messageContainer.textContent = "";
-      firstPageBtn.disabled = false;
-      lastPageBtn.disabled = false;
+      paginationContainer.classList.add("hidden"); // Hide pagination
     }
 
+    // Update pagination information
     paginationInfo.textContent = `${page} / ${totalPages}`;
 
-    // Disable prev and first-page buttons if on the first page
+    // Disable or enable buttons based on the current page
     prevBtn.disabled = page <= 1;
     firstPageBtn.disabled = page <= 1;
-
-    // Disable next and last-page buttons if on the last page
     nextBtn.disabled = page >= totalPages;
     lastPageBtn.disabled = page >= totalPages;
 
     // Pagination button handlers
     prevBtn.onclick = () => {
-      if (page > 1) renderListings(tag, page - 1, limit, sortByBids, query);
+      if (page > 1) renderListings(tag, page - 1, limit, sortByBids, sortByEnding, query);
     };
 
     nextBtn.onclick = () => {
-      if (page < totalPages)
-        renderListings(tag, page + 1, limit, sortByBids, query);
+      if (page < totalPages) renderListings(tag, page + 1, limit, sortByBids, sortByEnding, query);
     };
 
-    // First Page button: Redirect to the first page
     firstPageBtn.onclick = () => {
-      if (page > 1) renderListings(tag, 1, limit, sortByBids, query);
+      if (page > 1) renderListings(tag, 1, limit, sortByBids, sortByEnding, query);
     };
 
-    // Last Page button: Redirect to the last page
     lastPageBtn.onclick = () => {
-      if (page < totalPages)
-        renderListings(tag, totalPages, limit, sortByBids, query);
+      if (page < totalPages) renderListings(tag, totalPages, limit, sortByBids, sortByEnding, query);
     };
   } catch (error) {
     console.error("Error rendering listings:", error);
     itemsSection.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
+    paginationContainer.classList.add("hidden"); // Hide pagination in case of error
   }
 }
+
 
 /**
  * Renders a single auction listing based on its ID from the URL.
