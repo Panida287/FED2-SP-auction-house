@@ -50,7 +50,7 @@ if (username) {
 listedButton.addEventListener("click", () => {
   clearActiveButton();
   listedButton.classList.add("active");
-  resultContainer.innerHTML = `<p>Loading your listings...</p>`;
+  resultContainer.innerHTML = `<p class="text-text">Loading your listings...</p>`;
   renderListingsByUser(username);
 });
 
@@ -58,13 +58,14 @@ listedButton.addEventListener("click", () => {
 biddedButton.addEventListener("click", () => {
   clearActiveButton();
   biddedButton.classList.add("active");
-  resultContainer.innerHTML = `<p>Loading your listings...</p>`;
+  resultContainer.innerHTML = `<p class="text-text">Loading your listings...</p>`;
   renderUserBidsListings(username);
 });
 
 winsButton.addEventListener("click", () => {
   clearActiveButton();
   winsButton.classList.add("active");
+  resultContainer.innerHTML = `<p class="text-text">Loading your listings...</p>`;
   renderUserWinsListings(username);
 });
 
