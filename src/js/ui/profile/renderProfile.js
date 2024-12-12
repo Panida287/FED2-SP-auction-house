@@ -52,7 +52,7 @@ export async function renderProfile() {
     }
 
     // Populate stats: credits, bids, and wins
-    if (creditAmount) creditAmount.textContent = profile.data.credits || 0;
+    if (creditAmount) creditAmount.textContent = `${profile.data.credits || 0} NOK`;
     if (listingsAmount) listingsAmount.textContent = profile.data._count?.listings || 0;
     if (winAmount) winAmount.textContent = profile.data._count?.wins || 0;
   } catch (error) {
