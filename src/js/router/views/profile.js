@@ -4,25 +4,17 @@ import { setupCreateListing } from "../../ui/listing/create";
 import { renderProfile } from "../../ui/profile/renderProfile";
 import { renderUserBidsListings, renderUserWinsListings ,renderListingsByUser } from "../../ui/profile/Renderlistings";
 
-
 // Retrieve the username from local storage
 const username = localStorage.getItem("userName");
 
 if (!username) {
   console.error("No username found in local storage.");
   document.querySelector(".result-container").innerHTML = `<p class="text-red-500">Please log in to view your profile.</p>`;
-}
+} 
 
-// Initialize logout button functionality
 setLogoutListener();
-
-// Initialize edit profile functionality
 editProfile();
-
-// Render the profile data
 renderProfile();
-
-// Initialize create listing functionality
 setupCreateListing();
 
 // Add event listeners for filter buttons

@@ -32,7 +32,9 @@
 
   <body class="pb-[70px]">
     <!-- Banner Section -->
-    <div class="flex items-center -z-1 w-full max-h-[200px] overflow-hidden md:max-h-[350px]">
+    <div
+      class="flex items-center -z-1 w-full max-h-[200px] overflow-hidden md:max-h-[350px]"
+    >
       <img class="banner object-cover w-full" />
     </div>
 
@@ -50,15 +52,9 @@
         />
         <button
           id="edit-btn"
-          class="tab-buttons absolute right-2 top-[60px] scale-75"
+          class="tab-buttons absolute translate-x-[70px] top-[50px] scale-75"
         >
           Edit
-        </button>
-        <button
-          id="create-listing-btn"
-          class="pink-buttons absolute left-0 top-[60px] scale-75 md:scale-100 md:left-2"
-        >
-          + Add listing
         </button>
       </div>
       <!-- User Name -->
@@ -68,26 +64,37 @@
     </div>
 
     <!-- User Stats Section -->
+    <div class="user-stats bg-card">
+      <div
+        class="user-stats-container w-[80%] mx-auto py-4 flex justify-between items-center font-p text-text"
+      >
+        <span class="user-credit text-center">
+          Credit:
+          <p class="credit-amount text-center text-accent"></p>
+        </span>
+        <span class="user-bids text-center">
+          Listings:
+          <p class="listings-amount text-center text-accent"></p>
+        </span>
+        <span class="user-wins text-center">
+          Wins:
+          <p class="win-amount text-center text-accent"></p>
+        </span>
+      </div>
+    </div>
+
+    <!-- Create listing button -->
     <div
-      class="user-stats flex bg-card justify-evenly items-center font-p text-text p-4"
+      class="create-listing-btn-container w-[80%] mx-auto justify-start items-center"
     >
-      <span class="user-credit text-center">
-        Credit:
-        <p class="credit-amount text-center text-accent"></p>
-      </span>
-      <span class="user-bids text-center">
-        Listings:
-        <p class="listings-amount text-center text-accent"></p>
-      </span>
-      <span class="user-wins text-center">
-        Wins:
-        <p class="win-amount text-center text-accent"></p>
-      </span>
+      <button id="create-listing-btn" class="pink-buttons mt-5 text-sm">
+        + Add Listing
+      </button>
     </div>
 
     <!-- Filter Buttons Section -->
     <div
-      class="display-filter-btn w-screen flex justify-between items-center p-4 mt-2 md:justify-evenly"
+      class="display-filter-btn w-[80%] mx-auto flex justify-between items-center my-5"
     >
       <button id="listed" class="tab-buttons text-sm font-extralight">
         Items listed
@@ -101,7 +108,7 @@
     </div>
 
     <!-- Results Section -->
-    <div class="result-container grid md:grid-cols-2 p-4"></div>
+    <div class="result-container grid w-[80%] mx-auto lg:grid-cols-2"></div>
 
     <!-- pagination -->
     <div class="pagination hidden justify-center items-center mt-4 pb-[100px]">
@@ -146,7 +153,7 @@
     <!-- Create Listing Modal -->
     <div
       id="create-container"
-      class="hidden absolute top-1/2 left-1/2 w-[70%] p-8 bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
+      class="hidden absolute z-20 top-1/2 left-1/2 w-[70%] p-8 mb-[100px] bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
     >
       <form id="listing-form" class="flex flex-col gap-4">
         <h2
@@ -194,7 +201,7 @@
             id="item-description"
             name="item-description"
             required
-            class="border w-full h-[100px] text-text border-gray-300 p-2 mt-2 rounded-md bg-transparent"
+            class="border w-full text-text border-gray-300 p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
@@ -208,12 +215,12 @@
             class="border w-full text-text border-gray-300 p-2 mt-2 rounded-md bg-transparent"
           >
             <option value="" disabled selected>Select a category</option>
-            <option value="clothes">Clothes</option>
-            <option value="arts">Arts</option>
-            <option value="electronics">Electronics</option>
-            <option value="vehicles">Vehicles</option>
-            <option value="travels">Travels</option>
-            <option value="properties">Properties</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Arts">Arts</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Vehicles">Vehicles</option>
+            <option value="Travels">Travels</option>
+            <option value="Properties">Properties</option>
           </select>
         </div>
 
@@ -247,7 +254,6 @@
       </form>
     </div>
 
-    <!-- Edit Profile Modal -->
     <!-- Edit Profile Modal -->
     <div
       id="edit-profile-container"
