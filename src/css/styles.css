@@ -25,12 +25,11 @@ body {
 /* Styles for the tab buttons */
 .tab-buttons {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 5px 10px;
   font-size: 1rem;
   font-weight: 500;
-  color: #000000;
-  background-color: #ffffff;
-  border: 2px solid #dcdcdc;
+  color: white;
+  border: 1px solid #dcdcdc;
   border-radius: 25px;
   text-align: center;
   cursor: pointer;
@@ -50,7 +49,7 @@ body {
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: #ff4081;
+  background: linear-gradient(135deg, #6A0DAD 0%, #FF4081 100%);
   border: none;
   border-radius: 25px;
   text-align: center;
@@ -64,7 +63,7 @@ body {
 
 button:disabled {
   opacity: 0.5;
-  cursor: not-allowed;
+  cursor: none;
 }
 
 .dropdown-display {
@@ -81,23 +80,10 @@ button:disabled {
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  background: rgba(255, 255, 255, 0.4); /* Semi-transparent background */
-  backdrop-filter: blur(5px);
-  padding: 1rem;
-}
-
 .nav-link {
   position: relative;
   text-decoration: none;
   transition: color 0.3s ease; /* Smooth text color transition */
-}
-
-.nav-link:hover {
-  color: #6a0dad;
 }
 
 .nav-link::after {
@@ -108,7 +94,7 @@ button:disabled {
   left: 0;
   width: 0;
   height: 2px; /* Thickness of the underline */
-  background-color: #6a0dad; /* Underline color */
+  background-color: #ff4081; /* Underline color */
   transition: width 0.3s ease-in-out; /* Smooth animation */
 }
 
@@ -187,16 +173,6 @@ button:disabled {
   justify-content: center;
   margin: 25px 0;
   height: 100px;
-}
-
-.carousel.controls button {
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
-  font-size: 30px;
-  margin: 0 50px;
-  padding: 0 12px;
-  text-transform: capitalize;
 }
 
 .carousel-controls-button:focus {
