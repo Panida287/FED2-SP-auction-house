@@ -5,6 +5,7 @@ import {
 } from "../../api/listing/read";
 import { FALLBACK_AVATAR, FALLBACK_IMG } from "../../api/constants";
 import { updateCountdown } from "../../utilities/updateCountdown";
+import { truncateText } from "../../utilities/truncateText";
 
 /**
  * Generates stacked avatars for bidders and appends them to a container.
@@ -123,9 +124,9 @@ export function renderListingsToContainer(listings, container) {
         }
       </a>
       <div class="item-details flex flex-col w-full mt-4">
-        <h3 class="text-lg text-white font-semibold">${listing.title}</h3>
+        <h3 class="text-center text-lg text-white font-semibold">${truncateText(listing.title,20,40)}</h3>
         <p class="text-sm font-light text-white bg-white/20 rounded-md p-4 mt-2">
-        ${listing.description}
+        ${truncateText(listing.description, 40, 100)}
         </p>
         <div class="flex flex-col items-start">
           <div class="flex w-full justify-between items-center mt-2">

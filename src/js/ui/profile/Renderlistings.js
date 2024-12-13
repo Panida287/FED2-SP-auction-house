@@ -1,6 +1,7 @@
 import { readUserBidsWins, readListingsByUser } from "../../api/listing/read";
 import { updateCountdown } from "../../utilities/updateCountdown";
 import { FALLBACK_IMG } from "../../api/constants";
+import { truncateText } from "../../utilities/truncateText";
 
 export async function renderListingsByUser(username, page = 1, limit = 12) {
   const container = document.querySelector(".result-container");
@@ -61,7 +62,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
         </div>
         <div class="listing-details flex flex-col justify-between h-full">
           <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
-            ${listing.title || "No title"}
+          ${truncateText(listing.title,20,40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Bids: ${listing._count?.bids || 0}
@@ -163,7 +164,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
         </div>
         <div class="listing-details flex flex-col justify-between h-full">
           <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
-            ${listing.title || "No title"}
+          ${truncateText(listing.title,20,40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Your Bid: ${amount} NOK
@@ -252,7 +253,7 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
             onerror="this.src='${FALLBACK_IMG}'"
           />
           <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
-            ${title || "No title"}
+          ${truncateText(title,20,40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Bids: ${_count?.bids || 0}
