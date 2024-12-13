@@ -30,11 +30,15 @@ body {
   color: #ffffff;
 }
 
+.tab-buttons:focus {
+  background: linear-gradient(135deg, #6A0DAD 0%, #FF4081 100%);
+  color: #ffffff;
+}
+
 /* Styles for the pink buttons */
 .pink-buttons {
   display: inline-block;
   padding: 12px 24px;
-  font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
   background: linear-gradient(135deg, #6A0DAD 0%, #FF4081 100%);
@@ -192,4 +196,3 @@ button:disabled {
   margin-left: 2rem;
   margin-right: 2rem;
 }
-

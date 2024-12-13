@@ -278,3 +278,6 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     paginationContainer.classList.add("hidden"); // Hide pagination in case of error
   }
 }
+
+
+

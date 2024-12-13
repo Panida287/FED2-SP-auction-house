@@ -34,10 +34,11 @@
     <header>
       <div class="header-elements flex justify-between items-start px-4 py-4">
         <img class="h-20" src="assets/logo.png" />
-        <span class="credit text-sm text-white font-light font-h"
-          >Credit:
-          <span class="credit credit-amount text-accent font-h text-center"></span> NOK</span
-        >
+        <span class="credit text-sm text-white font-light font-h">
+          Credit:
+          <span class="credit credit-amount text-accent font-h text-center">
+          </span>
+        </span>
         <button
           class="profile-btn flex flex-col justify-center items-center md:pointer-events-none"
         >
@@ -63,7 +64,7 @@
             </li>
           </a>
           <li class="logout-btn" hover:text-primary>
-            <button id="logout-btn" class="nav-link hover:text-accent font-h">
+            <button class="logout-btn nav-link hover:text-accent font-h">
               Logout
             </button>
           </li>
@@ -71,12 +72,15 @@
       </div>
       <!-- Nav bar -->
       <nav
-        class="nav-bar hidden w-full justify-center items-center gap-10 py-4 font-light bg-card backdrop-blur-sm text-text md:flex"
+        class="nav-bar hidden w-full justify-center items-center gap-20 py-4 font-light bg-card backdrop-blur-sm text-text md:flex"
       >
         <a class="nav-link text-accent font-h" href="#">Home</a>
         <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
         <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
         <a class="nav-link hover:text-accent font-h" href="/profile/">My profile</a>
+        <button class="logout-btn tab-buttons absolute right-4 scale-75">
+          Logout
+        </button>
       </nav>
     </header>
 
@@ -422,7 +426,7 @@
     </div>
 
     <!-- pagination -->
-    <div class="pagination hidden justify-center items-center mt-4 pb-[100px]">
+    <div class="pagination flex justify-center items-center mt-4 pb-[100px]">
       <button class="first-page-btn text-accent mr-3">
         <i class="fa-solid fa-backward"></i>
       </button>

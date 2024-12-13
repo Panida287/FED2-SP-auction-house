@@ -4,25 +4,17 @@ import { setupCreateListing } from "../../ui/listing/create";
 import { renderProfile } from "../../ui/profile/renderProfile";
 import { renderUserBidsListings, renderUserWinsListings ,renderListingsByUser } from "../../ui/profile/Renderlistings";
 
-
 // Retrieve the username from local storage
 const username = localStorage.getItem("userName");
 
 if (!username) {
   console.error("No username found in local storage.");
   document.querySelector(".result-container").innerHTML = `<p class="text-red-500">Please log in to view your profile.</p>`;
-}
+} 
 
-// Initialize logout button functionality
 setLogoutListener();
-
-// Initialize edit profile functionality
 editProfile();
-
-// Render the profile data
 renderProfile();
-
-// Initialize create listing functionality
 setupCreateListing();
 
 // Add event listeners for filter buttons
@@ -50,7 +42,7 @@ if (username) {
 listedButton.addEventListener("click", () => {
   clearActiveButton();
   listedButton.classList.add("active");
-  resultContainer.innerHTML = `<p>Loading your listings...</p>`;
+  resultContainer.innerHTML = `<p class="text-text">Loading your listings...</p>`;
   renderListingsByUser(username);
 });
 
@@ -58,13 +50,14 @@ listedButton.addEventListener("click", () => {
 biddedButton.addEventListener("click", () => {
   clearActiveButton();
   biddedButton.classList.add("active");
-  resultContainer.innerHTML = `<p>Loading your listings...</p>`;
+  resultContainer.innerHTML = `<p class="text-text">Loading your listings...</p>`;
   renderUserBidsListings(username);
 });
 
 winsButton.addEventListener("click", () => {
   clearActiveButton();
   winsButton.classList.add("active");
+  resultContainer.innerHTML = `<p class="text-text">Loading your listings...</p>`;
   renderUserWinsListings(username);
 });
 
@@ -76,7 +69,7 @@ const editProfileContainer = document.getElementById("edit-profile-container");
 if (editBtn && editProfileContainer) {
   editBtn.addEventListener("click", () => {
     editProfileContainer.classList.toggle("hidden");
-    editProfileContainer.classList.toggle("flex");
+    editProfileContainer.classList.toggle("block");
   });
 }
 
