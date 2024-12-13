@@ -30,8 +30,9 @@ export default {
       },
       backgroundImage: {
         'gradient-mask': 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 29.53%, rgba(0, 0, 0, 1) 76%, rgba(0, 0, 0, 0) 100%)',
-        'card': 'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.10) 100%)'
-      },
+        'card': 'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.10) 100%)',
+        'primaryLinear': 'linear-gradient(135deg, #6A0DAD 0%, #FF4081 50%, #FFD700 100%)',
+      }
     }
   },
   plugins: [],

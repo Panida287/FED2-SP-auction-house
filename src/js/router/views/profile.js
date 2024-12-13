@@ -69,7 +69,7 @@ const editProfileContainer = document.getElementById("edit-profile-container");
 if (editBtn && editProfileContainer) {
   editBtn.addEventListener("click", () => {
     editProfileContainer.classList.toggle("hidden");
-    editProfileContainer.classList.toggle("flex");
+    editProfileContainer.classList.toggle("block");
   });
 }
 
