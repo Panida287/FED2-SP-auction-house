@@ -124,8 +124,8 @@ export function renderListingsToContainer(listings, container) {
         }
       </a>
       <div class="item-details flex flex-col w-full mt-4">
-        <h3 class="text-center text-lg text-white font-semibold">${truncateText(listing.title,20,40)}</h3>
-        <p class="text-sm font-light text-white bg-white/20 rounded-md p-4 mt-2">
+        <h3 class="text-center text-lg text-white font-semibold break-words">${truncateText(listing.title,20,30)}</h3>
+        <p class="text-sm font-light text-white bg-white/20 rounded-md p-4 mt-2 break-words">
         ${truncateText(listing.description, 40, 100)}
         </p>
         <div class="flex flex-col items-start">

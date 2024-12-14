@@ -31,7 +31,7 @@
   </head>
   <body>
     <!-- Header -->
-    <header>
+    <header class="backdrop-blur-sm">
       <div class="header-elements flex justify-between items-start px-4 py-4">
         <img class="h-20" src="assets/logo.png" />
         <span class="credit text-sm text-white font-light font-h">
@@ -72,7 +72,7 @@
       </div>
       <!-- Nav bar -->
       <nav
-        class="nav-bar hidden w-full justify-center items-center gap-20 py-4 font-light bg-card backdrop-blur-sm text-text md:flex"
+        class="nav-bar hidden w-full justify-center items-center gap-20 py-4 font-light text-text md:flex"
       >
         <a class="nav-link text-accent font-h" href="#">Home</a>
         <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
@@ -97,8 +97,8 @@
           <button class="pink-buttons">Sign up</button>
         </div>
       </div>
-      <div class="carousel-container w-full max-w-[1000px] md:mr-20 md:scale-75">
-        <h2 class="absolute top-0 left-1/2 -translate-x-1/2 text-text font-thin font-p md:text-2xl md:-mt-10">Newly listed items</h2>
+      <div class="carousel-container w-full max-w-[1000px] scale-75 -translate-y-10 md:mr-20 md:-translate-y-0">
+        <h2 class="absolute top-0 left-1/2 -translate-x-1/2 text-accent font-thin font-h md:text-2xl md:-mt-10">Hot items</h2>
         <div
           class="carousel-item carousel-item-1"
           data-index="1"

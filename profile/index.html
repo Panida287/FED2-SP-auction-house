@@ -57,16 +57,17 @@
           Edit
         </button>
       </div>
+
       <!-- User Name -->
-      <div>
-        <h1 class="author font-h text-text m-2"></h1>
+      <div class="w-full justify-items-center md:justify-items-start">
+        <h1 class="author font-h text-text m-2 md:relative md:-right-[208px] md:-translate-y-[50px]"></h1>
       </div>
     </div>
 
     <!-- User Stats Section -->
-    <div class="user-stats bg-card">
+    <div class="user-stats bg-card md:relative md:-translate-y-[110px] md:flex">
       <div
-        class="user-stats-container w-[80%] mx-auto py-4 flex justify-between items-center font-p text-text"
+        class="user-stats-container w-[80%] mx-auto py-4 flex justify-between items-center font-p text-text md:relative md:w-[50%] md:translate-x-[200px]"
       >
         <span class="user-credit text-center">
           Credit:
@@ -85,7 +86,7 @@
 
     <!-- Create listing button -->
     <div
-      class="create-listing-btn-container w-[80%] mx-auto justify-start items-center"
+      class="create-listing-btn-container w-[80%] mx-auto justify-start items-center md:-mt-[100px]"
     >
       <button id="create-listing-btn" class="pink-buttons mt-5 text-md scale-75 -translate-x-[18px]">
         + New listing
@@ -108,7 +109,7 @@
     </div>
 
     <!-- Results Section -->
-    <div class="result-container grid w-[80%] mx-auto lg:grid-cols-2"></div>
+    <div class="result-container grid w-[80%] mx-auto gap-5 md:grid-cols-2"></div>
 
     <!-- pagination -->
     <div class="pagination hidden justify-center items-center mt-4 pb-[100px]">
@@ -153,7 +154,7 @@
     <!-- Create Listing Modal -->
     <div
       id="create-container"
-      class="hidden absolute z-20 top-1/2 left-1/2 w-[70%] p-8 mb-[100px] bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
+      class="hidden absolute z-20 top-1/2 left-1/2 w-[70%] max-w-[600px] p-8 mb-[100px] bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
     >
       <form id="listing-form" class="flex flex-col gap-4">
         <h2
@@ -257,7 +258,7 @@
     <!-- Edit Profile Modal -->
     <div
       id="edit-profile-container"
-      class="edit-profile-container hidden absolute top-1/2 left-1/2 w-[70%] p-8 bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
+      class="edit-profile-container hidden absolute top-1/2 left-1/2 w-[70%] max-w-[600px] p-8 bg-card backdrop-blur-2xl rounded-lg -translate-x-1/2 -translate-y-1/2"
     >
       <form id="edit-profile-form" class="flex flex-col gap-4">
         <h2
