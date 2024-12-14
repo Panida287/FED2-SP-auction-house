@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint 'src/**/*.{js,jsx}'"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
