@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   appType: "mpa", // Multi-Page Application
-  base: "/FED2-SP-auction-house/", // Add your repository name here
+  base: "", // Add your repository name here
   build: {
     target: "esnext",
     rollupOptions: {
