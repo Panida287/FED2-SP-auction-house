@@ -13,7 +13,7 @@ export default defineConfig({
     target: "esnext",
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, "./index.html"),
+        main: path.resolve(__dirname, "index.html"),
         login: path.resolve(__dirname, "./auth/login/index.html"),
         register: path.resolve(__dirname, "./auth/register/index.html"),
         profile: path.resolve(__dirname, "./profile/index.html"),
