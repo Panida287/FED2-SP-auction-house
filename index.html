@@ -57,25 +57,7 @@
             id="profile-link"
           />
           <span class="author text-sm text-text font-h"></span>
-          <button class="profile-btn pink-buttons mt-2 scale-75 md:hidden">
-            <i class="fa-solid fa-bars"></i>
-          </button>
         </div>
-        <ul
-          class="profile-menu dropdown-hidden flex flex-col gap-2 backdrop-blur-md z-10 absolute right-4 top-[160px] p-4 pr-10 rounded-lg shadow-md bg-card text-text text-sm"
-        >
-          <a href="/profile/" class="nav-link hover:text-accent font-h">
-            <li>Profile</li>
-          </a>
-          <a href="#" class="nav-link hover:text-accent font-h">
-            <li>Inbox</li>
-          </a>
-          <li class="logout-btn" hover:text-primary>
-            <button class="logout-btn nav-link hover:text-accent font-h">
-              Logout
-            </button>
-          </li>
-        </ul>
       </div>
       <!-- Nav bar -->
       <nav
@@ -84,12 +66,7 @@
         <a class="nav-link text-accent font-h" href="#">Home</a>
         <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
         <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
-        <a class="nav-link hover:text-accent font-h" href="/profile/"
-          >My profile</a
-        >
-        <button class="logout-btn tab-buttons absolute right-4 scale-75">
-          Logout
-        </button>
+        <a class="nav-link hover:text-accent font-h" href="/profile/">My profile</a>
       </nav>
     </header>
 
@@ -113,7 +90,9 @@
       <div
         class="carousel-container w-full max-w-[1000px] scale-75 -translate-y-10 md:mr-20 md:-translate-y-0"
       >
-        <div class="carousel-title w-full absolute flex justify-center items-center -top-10 left-1/2 -translate-x-1/2">
+        <div
+          class="carousel-title w-full absolute flex justify-center items-center -top-10 left-1/2 -translate-x-1/2"
+        >
           <svg
             class="scale-50 -translate-y-1"
             width="64px"
@@ -177,11 +156,7 @@
               </g>
             </g>
           </svg>
-          <h2
-            class="text-white font-thin font-h text-2xl"
-          >
-            Hot items
-          </h2>
+          <h2 class="text-white font-thin font-h text-2xl">Hot items</h2>
           <svg
             class="scale-50 -translate-y-1"
             width="64px"

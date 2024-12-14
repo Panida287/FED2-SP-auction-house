@@ -33,9 +33,24 @@
   </head>
 
   <body class="pb-[70px]">
+  <header>
+    <!-- Nav bar -->
+      <nav
+        class="nav-bar hidden relative z-10 backdrop-blur-md w-full justify-center items-center gap-20 py-4 font-light text-text md:flex"
+      >
+        <a class="nav-link text-accent font-h" href="/">Home</a>
+        <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
+        <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
+        <a class="nav-link hover:text-accent font-h" href="#">My profile</a
+        >
+        <button class="logout-btn tab-buttons absolute right-4 scale-75">
+          Logout
+        </button>
+      </nav>
+  </header>
     <!-- Banner Section -->
     <div
-      class="flex items-center -z-1 w-full max-h-[200px] overflow-hidden md:max-h-[350px]"
+      class="relative -mt-[60px] flex items-center -z-1 w-full max-h-[200px] overflow-hidden md:max-h-[350px]"
     >
       <img class="banner object-cover w-full" />
     </div>
@@ -69,7 +84,7 @@
     <!-- User Stats Section -->
     <div class="user-stats bg-card md:relative md:-translate-y-[110px] md:flex">
       <div
-        class="user-stats-container w-[80%] mx-auto py-4 flex justify-between items-center font-p text-text md:relative md:w-[50%] md:translate-x-[200px]"
+        class="user-stats-container w-[80%] mx-auto py-4 flex justify-between items-center font-p text-text md:relative md:pl-[300px] md:pr-[20px]"
       >
         <span class="user-credit text-center">
           Credit:
@@ -111,6 +126,7 @@
     </div>
 
     <!-- Results Section -->
+    <h3 class="result-title flex justify-center items-center mb-[40px] mt-[40px] text-2xl font-h text-text"></h3>
     <div class="result-container grid w-[80%] mx-auto gap-5 md:grid-cols-2"></div>
 
     <!-- pagination -->

@@ -5,6 +5,7 @@ import { truncateText } from "../../utilities/truncateText";
 
 export async function renderListingsByUser(username, page = 1, limit = 12) {
   const container = document.querySelector(".result-container");
+  const resultTitle = document.querySelector(".result-title");
   const messageContainer = document.querySelector(".message-container");
   const paginationContainer = document.querySelector(".pagination");
   const paginationInfo = document.querySelector(".page-info");
@@ -19,6 +20,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
     // Clear existing content
     container.innerHTML = "";
     messageContainer.textContent = "";
+    resultTitle.textContent = "";
 
     if (!listings || listings.length === 0) {
       messageContainer.textContent = `No listings found for user: ${username}`;
@@ -33,6 +35,8 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
     } else {
       paginationContainer.classList.add("hidden"); // Hide pagination
     }
+
+    resultTitle.textContent = `All listings sold by ${username}`;
 
     // Render listings
     listings.forEach((listing) => {
@@ -110,6 +114,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
 
 export async function renderUserBidsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
+  const resultTitle = document.querySelector(".result-title");
   const messageContainer = document.querySelector(".message-container");
   const paginationContainer = document.querySelector(".pagination");
   const paginationInfo = document.querySelector(".page-info");
@@ -120,15 +125,16 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     const response = await readUserBidsWins("bids", limit, page, username);
     const bidData = response.data;
 
+    // Clear previous content
+    container.innerHTML = "";
+    messageContainer.textContent = "";
+    resultTitle.textContent = "";
+
     if (!bidData || bidData.length === 0) {
       messageContainer.textContent = `${username} has not bid on anything yet.`;
-      container.innerHTML = ""; // Clear previous content
       paginationContainer.classList.add("hidden"); // Hide pagination
       return;
     }
-
-    messageContainer.textContent = "";
-    container.innerHTML = ""; // Clear existing content
 
     // Show or hide pagination based on totalCount
     if (bidData.length > limit) {
@@ -138,6 +144,9 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
       paginationContainer.classList.add("hidden"); // Hide pagination
     }
 
+    resultTitle.textContent = `All bids made by ${username}`;
+
+    // Render each bid listing
     bidData.forEach((bid) => {
       const { listing, amount, created } = bid;
 
@@ -164,7 +173,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
         </div>
         <div class="listing-details flex flex-col justify-between w-full h-full">
           <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1 w-full flex justify-center">
-          ${truncateText(listing.title,20,40) || "No title"}
+          ${truncateText(listing.title, 20, 40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Your Bid: ${amount} NOK
@@ -205,8 +214,10 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
   }
 }
 
+
 export async function renderUserWinsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
+  const resultTitle = document.querySelector(".result-title");
   const messageContainer = document.querySelector(".message-container");
   const paginationContainer = document.querySelector(".pagination");
   const paginationInfo = document.querySelector(".page-info");
@@ -220,8 +231,8 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     // Clear previous content
     container.innerHTML = "";
     messageContainer.textContent = "";
+    resultTitle.textContent = "";
 
-    // Check if no wins found
     if (!winData || winData.length === 0) {
       messageContainer.textContent = `${username} hasn't won anything yet.`;
       paginationContainer.classList.add("hidden"); // Hide pagination
@@ -235,6 +246,8 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     } else {
       paginationContainer.classList.add("hidden"); // Hide pagination
     }
+
+    resultTitle.textContent = `All listings won by ${username}`;
 
     // Render each win listing
     winData.forEach((listing) => {
@@ -253,7 +266,7 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
             onerror="this.src='${FALLBACK_IMG}'"
           />
           <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1 w-full flex justify-center">
-          ${truncateText(title,20,40) || "No title"}
+          ${truncateText(title, 20, 40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Bids: ${_count?.bids || 0}
@@ -279,6 +292,4 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     paginationContainer.classList.add("hidden"); // Hide pagination in case of error
   }
 }
-
-
 
