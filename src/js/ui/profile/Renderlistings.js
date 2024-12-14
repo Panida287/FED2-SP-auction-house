@@ -1,6 +1,7 @@
 import { readUserBidsWins, readListingsByUser } from "../../api/listing/read";
 import { updateCountdown } from "../../utilities/updateCountdown";
 import { FALLBACK_IMG } from "../../api/constants";
+import { truncateText } from "../../utilities/truncateText";
 
 export async function renderListingsByUser(username, page = 1, limit = 12) {
   const container = document.querySelector(".result-container");
@@ -43,7 +44,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
 
       const listingElement = document.createElement("a");
       listingElement.className =
-        "item-card bg-card backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto flex items-start shadow-md w-full mb-4 md:w-[350px]";
+        "item-card bg-card backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto flex items-start shadow-md w-full";
       listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
 
       const lastBidAmount = listing.bids?.length
@@ -59,9 +60,9 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
             onerror="this.src='/fallback-image.png'"
           />
         </div>
-        <div class="listing-details flex flex-col justify-between h-full">
-          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
-            ${listing.title || "No title"}
+        <div class="listing-details flex flex-col justify-between items-start w-full h-full">
+          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1 flex w-full justify-center">
+          ${truncateText(listing.title,20,40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Bids: ${listing._count?.bids || 0}
@@ -149,7 +150,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
 
       const card = document.createElement("a");
       card.className =
-        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto w-[350px] flex items-start shadow-md w-full mb-4 md:w-[400px]";
+        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto flex items-start shadow-md w-full";
       card.href = `/listing/?listingID=${listing.id}`;
 
       card.innerHTML = `
@@ -161,9 +162,9 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
             onerror="this.src='/fallback-image.png'"
           />
         </div>
-        <div class="listing-details flex flex-col justify-between h-full">
-          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
-            ${listing.title || "No title"}
+        <div class="listing-details flex flex-col justify-between w-full h-full">
+          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1 w-full flex justify-center">
+          ${truncateText(listing.title,20,40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Your Bid: ${amount} NOK
@@ -241,7 +242,7 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
       const endDate = new Date(endsAt);
       const card = document.createElement("div");
       card.className =
-        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto w-[350px] flex flex-col items-start shadow-md w-full mb-4 md:w-[400px]";
+        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto flex flex-col items-start shadow-md w-full";
 
       card.innerHTML = `
         <div class="listing-details flex flex-col justify-between w-full">
@@ -251,8 +252,8 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
             class="w-full h-full object-cover rounded-lg mb-4"
             onerror="this.src='${FALLBACK_IMG}'"
           />
-          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1">
-            ${title || "No title"}
+          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1 w-full flex justify-center">
+          ${truncateText(title,20,40) || "No title"}
           </h3>
           <p class="listing-bids text-gray-400 text-sm mt-2">
             Bids: ${_count?.bids || 0}
