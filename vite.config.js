@@ -17,7 +17,7 @@ export default defineConfig({
         login: path.resolve(__dirname, "./auth/login/index.html"),
         register: path.resolve(__dirname, "./auth/register/index.html"),
         profile: path.resolve(__dirname, "./profile/index.html"),
-        listing: path.resolve(__dirname, "./auction-item/index.html"),
+        listing: path.resolve(__dirname, "./listing/index.html"),
       },
     },
   },
