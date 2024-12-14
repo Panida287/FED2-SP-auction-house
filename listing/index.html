@@ -41,25 +41,16 @@
         <i class="fa-solid fa-arrow-left"></i>
       </button>
       <!-- Profile -->
-      <button
+      <a
         class="profile-toggle h-full items-center z-20 cursor-pointer m-3"
+        href="/profile/"
       >
         <img
           src=""
           alt="Profile"
           class="profile-pic object-cover h-[60px] w-[60px] rounded-full shadow-md"
-          id="profile-link"
         />
-      </button>
-      <ul
-        class="profile-menu dropdown-hidden backdrop-blur-md z-20 absolute right-4 top-[80px] py-3 px-3 pr-10 rounded-lg shadow-md bg-white/50 text-text text-sm"
-      >
-        <button class="profile-btn hover:text-primary"><li>Profile</li></button>
-        <a href="#" class="hover:text-primary"><li>Inbox</li></a>
-        <li class="logout-btn" hover:text-primary>
-          <button id="logout-btn" class="hover:text-primary">Logout</button>
-        </li>
-      </ul>
+    </a>
     </header>
     <div class="img-container relative -top-10 -m-11 max-h-[500px]">
       <img

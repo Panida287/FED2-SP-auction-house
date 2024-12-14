@@ -11,6 +11,7 @@ export default [
         ...globals.jest,    // Jest-specific globals (e.g., describe, test, expect)
       },
     },
+    ignores: ["dist/**"], // Ignore all files in the dist folder
   },
   pluginJs.configs.recommended, // Use ESLint's recommended rules
 ];
