@@ -1,4 +1,3 @@
-import { setLogoutListener } from '../../ui/global/logout';
 import { renderListings, renderCarousel } from '../../ui/listing/display';
 import { authGuard } from '../../utilities/authGuard';
 import { initCarousel } from '../../utilities/initCarousel';
@@ -6,7 +5,6 @@ import { initCarousel } from '../../utilities/initCarousel';
 renderListings();
 initCarousel();
 authGuard();
-setLogoutListener();
 renderCarousel();
 
 // Add event listeners to category buttons
@@ -56,22 +54,3 @@ searchInput.addEventListener("keydown", async (event) => {
   }
 });
 
-const profileBtn = document.querySelector(".profile-btn");
-const profileMenu = document.querySelector(".profile-menu");
-
-profileBtn.addEventListener("click", (event) => {
-  // Toggle the visibility of the menu
-  profileMenu.classList.toggle("dropdown-hidden");
-  profileMenu.classList.toggle("dropdown-display");
-
-  // Stop the click event from propagating to the document
-  event.stopPropagation();
-});
-
-// Hide the menu when clicking anywhere else on the page
-document.addEventListener("click", () => {
-  if (!profileMenu.classList.contains("dropdown-hidden")) {
-    profileMenu.classList.add("dropdown-hidden");
-    profileMenu.classList.remove("dropdown-display");
-  }
-});
