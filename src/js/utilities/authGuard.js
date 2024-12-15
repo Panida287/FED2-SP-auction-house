@@ -53,7 +53,7 @@ export function authGuard() {
           </a>
           Or
           <a href="/auth/register/"
-          class="pink-buttons">
+          class="text-accent hover:underline">
           Register
           </a>
           to place bids
