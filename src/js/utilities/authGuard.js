@@ -1,7 +1,7 @@
 import { renderProfile } from "../ui/profile/renderProfile";
 
 export function authGuard() {
-     const profileBtn = document.querySelector(".profile-btn");
+     const profile = document.querySelector(".profile");
      const credits = document.querySelectorAll(".credit");
      const headerElements = document.querySelector(".header-elements");
      const navBar = document.querySelector(".nav-bar");
@@ -13,8 +13,8 @@ export function authGuard() {
    
      if (!isAuthenticated) {
        // If the user is not logged in, change the profile button's behavior
-       profileBtn.classList.remove("flex"); // Remove the 'flex' class
-       profileBtn.classList.add("hidden"); // Add the 'hidden' class
+       profile.classList.remove("flex"); // Remove the 'flex' class
+       profile.classList.add("hidden"); // Add the 'hidden' class
 
    
        // Hide navigation bars
