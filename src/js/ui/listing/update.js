@@ -8,10 +8,10 @@ export async function onUpdate(event) {
   event.preventDefault(); // Prevent default form submission
 
   // Select form elements
-  const titleInput = document.getElementById("item-name");
-  const descriptionInput = document.getElementById("item-description");
-  const categorySelect = document.getElementById("item-category");
-  const mediaUrlInput = document.getElementById("item-image-url");
+  const titleInput = document.getElementById("listing-name");
+  const descriptionInput = document.getElementById("listing-description");
+  const categorySelect = document.getElementById("listing-category");
+  const mediaUrlInput = document.getElementById("listing-image-url");
 
   // Retrieve the Listing ID
   const listingId = getIDFromURL("listingID"); // Use your utility function
