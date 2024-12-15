@@ -20,6 +20,7 @@ deleteListing();
 initializeBids();
 
 function setupPaginationButtons(bids, container, perPage) {
+  const paginationDiv = document.querySelector(".pagination");
   const prevButton = document.querySelector(".prev-btn");
   const nextButton = document.querySelector(".next-btn");
   const firstPageButton = document.querySelector(".first-page-btn");
@@ -42,6 +43,11 @@ function setupPaginationButtons(bids, container, perPage) {
 
     // Render the current page of bids
     renderPaginatedBids(bids, currentPage, perPage, container);
+
+    if(bids.length <= 12) {
+      paginationDiv.classList.add("hidden");
+    }
+
   }
 
   // Add event listeners to the buttons
@@ -193,26 +199,6 @@ function deleteListing() {
    })
 
 }
-
-const profileToggle = document.querySelector(".profile-toggle");
-const profileMenu = document.querySelector(".profile-menu");
-
-profileToggle.addEventListener("click", (event) => {
-  // Toggle the visibility of the menu
-  profileMenu.classList.toggle("dropdown-hidden");
-  profileMenu.classList.toggle("dropdown-display");
-
-  // Stop the click event from propagating to the document
-  event.stopPropagation();
-});
-
-// Hide the menu when clicking anywhere else on the page
-document.addEventListener("click", () => {
-  if (!profileMenu.classList.contains("dropdown-hidden")) {
-    profileMenu.classList.add("dropdown-hidden");
-    profileMenu.classList.remove("dropdown-display");
-  }
-});
 
 // Back Button Handling
 const backButton = document.getElementById("back-btn");
