@@ -52,59 +52,67 @@
         />
     </div>
     </header>
-    <div class="img-container relative -top-10 -m-11 max-h-[500px]">
-      <img
-        id="product-image"
-        src=""
-        alt="Product Image"
-        class="object-contain max-h-[500px] w-full"
-      />
-      <p id="countdown-timer" class="-translate-y-5"></p>
+
+    <div class="item">
+      <section class="img-container relative -top-10 -m-11 max-h-[500px]">
+        <img
+          id="item-image"
+          src=""
+          alt="item Image"
+          class="object-contain max-h-[500px] w-full"
+        />
+      </section>
+  
+      <!-- item Stats -->
+      <section
+        class="item-stats flex justify-evenly items-center bg-white/10 backdrop-blur-md shadow-md py-4"
+      >
+        <div class="flex flex-col items-center justify-center">
+          <p class="text-gray-400 text-sm">Biddings:</p>
+          <p id="biddings-count" class="text-lg font-bold text-gray-300">0</p>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <p class="text-gray-400 text-sm">Last bid:</p>
+          <p id="price" class="text-lg font-bold text-gray-300">0 NOK</p>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+          <p class="text-gray-400 text-sm">Countdown:</p>
+          <p id="countdown-timer" class="text-lg font-bold text-error"></p>
+        </div>
+      </section>
+  
+      <!-- Win detail -->
+      <section class="win-details w-full flex justify-center mt-4"></section>
+  
+    <!-- item Info -->
+      <section class="relative p-4">
+        <button 
+        id="edit-listing-btn" 
+        class="tab-buttons absolute right-0 mr-2">
+          <i class="fa-solid fa-pencil"></i>
+          Edit
+        </button>
+        <h1 id="item-title" class="text-xl break-words font-bold text-gray-300 pb-2">
+          item Title
+        </h1>
+        <p class="text-gray-400 text-sm">
+          Date listed: <span id="date-created" class="font-medium"></span>
+        </p>
+        <p id="item-category" class="text-gray-400 text-sm">
+          Category: <span class="font-medium">Clothes</span>
+        </p>
+        <p id="item-seller" class="text-gray-400 text-sm">
+          Seller: <span class="font-medium">John Doe</span>
+        </p>
+        <p id="start-price" class="text-gray-400 text-sm">
+          Start pirce: <span class="font-medium">John Doe</span>
+        </p>
+        <p id="item-description" class="mt-4 break-words text-gray-300">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+          gravida.
+        </p>
+      </section>
     </div>
-
-    <!-- Product Stats -->
-    <section
-      class="product-stats flex justify-evenly items-center bg-white/10 backdrop-blur-md shadow-md py-4"
-    >
-      <div>
-        <p class="text-gray-400 text-sm">Biddings:</p>
-        <p id="biddings-count" class="text-lg font-bold text-gray-300">0</p>
-      </div>
-      <div>
-        <p class="text-gray-400 text-sm">Last bid:</p>
-        <p id="price" class="text-lg font-bold text-gray-300">0 NOK</p>
-      </div>
-      <div>
-        <p class="text-gray-400 text-sm">Date listed:</p>
-        <p id="date-created" class="text-lg font-bold text-gray-300"></p>
-      </div>
-    </section>
-
-    <!-- Product Info -->
-    <section class="relative p-4">
-      <button 
-      id="edit-listing-btn" 
-      class="tab-buttons absolute right-0 mr-2">
-        <i class="fa-solid fa-pencil"></i>
-        Edit
-      </button>
-      <h1 id="product-title" class="text-xl break-words font-bold text-gray-300 pb-2">
-        Product Title
-      </h1>
-      <p id="product-category" class="text-gray-400 text-sm">
-        Category: <span class="font-medium">Clothes</span>
-      </p>
-      <p id="product-seller" class="text-gray-400 text-sm">
-        Seller: <span class="font-medium">John Doe</span>
-      </p>
-      <p id="start-price" class="text-gray-400 text-sm">
-        Start pirce: <span class="font-medium">John Doe</span>
-      </p>
-      <p id="product-description" class="mt-4 break-words text-gray-300">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-        gravida.
-      </p>
-    </section>
 
     <!-- Credit and Bid Form -->
     <section
@@ -152,7 +160,6 @@
     </section>
 
     <!-- Edit Listing Modal -->
-
     <div
       id="edit-listing-container"
       class="hidden absolute top-1/2 left-1/2 w-[70%] p-2 bg-white border-2 border-black -translate-x-1/2 -translate-y-1/2"
@@ -160,11 +167,11 @@
       <form id="edit-listing-form" class="flex flex-col gap-4">
         <!-- Image URL -->
         <div>
-          <label for="item-image-url">Image URL</label>
+          <label for="listing-image-url">Image URL</label>
           <input
             type="url"
-            id="item-image-url"
-            name="item-image-url"
+            id="listing-image-url"
+            name="image-url"
             placeholder="Enter image URL"
             class="border border-gray-300 p-2"
           />
@@ -178,25 +185,25 @@
             />
           </div>
         </div>
-        <!-- Item Name -->
+        <!-- Listing Name -->
         <div>
-          <label for="item-name">Item Name</label>
+          <label for="listing-name">Item Name</label>
           <input
             type="text"
-            id="item-name"
-            name="item-name"
+            id="listing-name"
+            name="name"
             required
             class="border border-gray-300 p-2"
           />
         </div>
 
-        <!-- Item Description -->
+        <!-- Listing Description -->
         <div>
-          <label for="item-description">Description</label>
+          <label for="listing-description">Description</label>
           <input
             type="text"
-            id="item-description"
-            name="item-description"
+            id="listing-description"
+            name="description"
             required
             class="border border-gray-300 p-2"
           />
@@ -204,10 +211,10 @@
 
         <!-- Tags -->
         <div>
-          <label for="item-category">Category</label>
+          <label for="listing-category">Category</label>
           <select
-            id="item-category"
-            name="item-category"
+            id="listing-category"
+            name="category"
             required
             class="border border-gray-300 p-2"
           >
@@ -269,22 +276,31 @@
       </button>
     </div>
 
-    <!-- Navigation Bar -->
-    <nav
-      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 m-2 bg-white/20 backdrop-blur-md text-white text-xl rounded-full shadow-md md:hidden"
-    >
-      <a href="/" class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
-        <i class="fa-solid fa-house"></i>
-      </a>
-      <a href="#" class="px-3 py-2 rounded-full">
-        <i class="fa-solid fa-message"></i>
-      </a>
-      <a href="#" class="px-3 py-2 rounded-full">
-        <i class="fa-solid fa-bell"></i>
-      </a>
-      <a href="/profile/" class="px-3 py-2 rounded-full">
-        <i class="fa-solid fa-user"></i>
-      </a>
-    </nav>
+<!-- Mobile navigation Bar -->
+<nav
+class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 mx-auto my-5 bg-card backdrop-blur-lg text-white text-xl rounded-full shadow-md md:hidden"
+>
+<a
+  href="/"
+  class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+>
+  <i class="fa-solid fa-house"></i>
+</a>
+<a 
+  href="#"
+  class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
+  <i class="fa-solid fa-message"></i>
+</a>
+<a 
+href="#"
+class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
+  <i class="fa-solid fa-bell"></i>
+</a>
+<a 
+href="/profile/"
+class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
+  <img class="profile-pic w-[30px] h-[30px] rounded-full object-cover"></img>
+</a>
+</nav>
   </body>
 </html>

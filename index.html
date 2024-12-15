@@ -551,7 +551,7 @@
 
     <!-- Mobile navigation Bar -->
     <nav
-      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 m-2 bg-card backdrop-blur-md text-white text-xl rounded-full shadow-md md:hidden"
+      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 mx-auto my-5 bg-card backdrop-blur-lg text-white text-xl rounded-full shadow-md md:hidden"
     >
       <a
         href="#"
@@ -559,14 +559,20 @@
       >
         <i class="fa-solid fa-house"></i>
       </a>
-      <a href="#">
+      <a 
+        href="#"
+        class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
         <i class="fa-solid fa-message"></i>
       </a>
-      <a href="#">
+      <a 
+      href="#"
+      class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
         <i class="fa-solid fa-bell"></i>
       </a>
-      <a href="/profile/">
-        <i class="fa-solid fa-user"></i>
+      <a 
+      href="/profile/"
+      class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
+        <img class="profile-pic w-[30px] h-[30px] rounded-full object-cover"></img>
       </a>
     </nav>
   </body>

@@ -117,7 +117,7 @@ export function renderListingsToContainer(listings, container) {
         <div id="${countdownTimerId}" class="absolute bottom-2 left-1/2 transform -translate-x-1/2"></div>
         ${
           isEnded
-            ? `<div class="absolute h-full w-full top-0 left-0 bg-black/50 flex justify-center items-center text-red-500 font-bold text-lg">
+            ? `<div class="absolute h-full w-full top-0 left-0 bg-black/50 flex justify-center items-center text-error font-bold text-lg">
                 Auction Ended
               </div>`
             : ""
@@ -265,17 +265,18 @@ export async function renderListings(
  * @returns {Promise<void>}
  */
 export async function renderListingById() {
-  const productImage = document.getElementById("product-image");
-  const productTitle = document.getElementById("product-title");
-  const productCategory = document.getElementById("product-category");
-  const productSeller = document.getElementById("product-seller");
-  const productDescription = document.getElementById("product-description");
+  const itemImage = document.getElementById("item-image");
+  const itemTitle = document.getElementById("item-title");
+  const itemCategory = document.getElementById("item-category");
+  const itemSeller = document.getElementById("item-seller");
+  const itemDescription = document.getElementById("item-description");
   const price = document.getElementById("price");
   const biddingsCount = document.getElementById("biddings-count");
   const countdownTimer = document.getElementById("countdown-timer");
   const startPrice = document.getElementById("start-price");
   const bidInput = document.getElementById("bid-amount");
   const dateCreatedElement = document.getElementById("date-created");
+  const winDetailsContainer = document.querySelector(".win-details");
 
   const auctionEndedOverlay = document.createElement("div"); // Overlay for auction ended
   auctionEndedOverlay.className =
@@ -285,13 +286,13 @@ export async function renderListingById() {
     // Fetch the listing data
     const listing = await readListing();
 
-    // Set the product image
-    productImage.src = listing.media?.[0]?.url || `${FALLBACK_IMG}`;
-    productImage.alt = listing.media?.[0]?.alt || "Product Image";
+    // Set the item image
+    itemImage.src = listing.media?.[0]?.url || `${FALLBACK_IMG}`;
+    itemImage.alt = listing.media?.[0]?.alt || "Item Image";
 
     // Fallback to default if the image fails to load
-    productImage.onerror = () => {
-      productImage.src = FALLBACK_IMG;
+    itemImage.onerror = () => {
+      itemImage.src = FALLBACK_IMG;
     };
 
     // Add auction ended overlay if auction has ended
@@ -299,27 +300,27 @@ export async function renderListingById() {
     const endDate = new Date(listing.endsAt);
     if (now > endDate) {
       auctionEndedOverlay.textContent = "Auction Ended";
-      productImage.parentElement.style.position = "relative";
-      productImage.parentElement.appendChild(auctionEndedOverlay);
+      itemImage.parentElement.style.position = "relative";
+      itemImage.parentElement.appendChild(auctionEndedOverlay);
     }
 
     // Set the date created
     const dateCreated = new Date(listing.created); // Use the 'created' field from the listing
     dateCreatedElement.textContent = `${dateCreated.toLocaleDateString()}`;
 
-    // Set product details
-    productTitle.textContent = listing.title;
-    productCategory.innerHTML = `Category: <span class="font-medium">${
+    // Set item details
+    itemTitle.textContent = listing.title;
+    itemCategory.innerHTML = `Category: <span class="font-medium">${
       listing.tags.join(", ") || "N/A"
     }</span>`;
-    productSeller.innerHTML = `Seller: <span class="font-medium">${
+    itemSeller.innerHTML = `Seller: <span class="font-medium">${
       listing.seller?.name || "Unknown"
     }</span>`;
     startPrice.innerHTML = `Start price: <span class="font-medium">${
       listing.bids?.[0]?.amount || "0"
     } NOK</span>`;
 
-    productDescription.textContent =
+    itemDescription.textContent =
       listing.description || "No description available.";
 
     // Logic for the edit button visibility
@@ -335,38 +336,52 @@ export async function renderListingById() {
       editBtn.classList.add("hidden");
     }
 
-    // Set product stats
+    // Set item stats
     const lastBidAmount =
       listing.bids && listing.bids.length > 0
-        ? listing.bids[listing.bids.length - 1].amount
+        ? Math.max(...listing.bids.map((bid) => bid.amount))
         : "0";
 
     price.textContent = `${lastBidAmount || "0"} NOK`;
     biddingsCount.textContent = listing._count.bids || "0";
 
-    // Display "Ended: (date and time)" if the auction has ended
+    // Display "Ended: (date and time)" and hide bid container if the auction has ended
+    const bidContainer = document.querySelector(".bid-container");
     if (now > endDate) {
       countdownTimer.textContent = `Ended: ${endDate.toLocaleString()}`;
-      countdownTimer.classList.add("text-red-500");
+      bidContainer.classList.add("hidden");
     } else {
       updateCountdown(endDate, countdownTimer);
     }
 
     // Display win details if auction ended
     if (now > endDate && listing.bids && listing.bids.length > 0) {
-      const winner =
-        listing.bids[listing.bids.length - 1].bidder.name || "Unknown";
-      const winnerAvatar =
-        listing.bids[listing.bids.length - 1].bidder.avatar?.url ||
-        `${FALLBACK_AVATAR}`;
-      const endedPrice = listing.bids[listing.bids.length - 1].amount || "0";
+      // Find the bid with the highest amount
+      const highestBid = listing.bids.reduce((maxBid, currentBid) =>
+        currentBid.amount > maxBid.amount ? currentBid : maxBid
+      );
+
+      const winner = highestBid.bidder?.name || "Unknown";
+      const winnerAvatar = highestBid.bidder?.avatar?.url || `${FALLBACK_AVATAR}`;
+      const endedPrice = highestBid.amount || "0";
+
       const winDetails = document.createElement("div");
-      winDetails.className = "flex justify-center mt-4 w-[full] text-gray-800";
+      winDetails.className = "flex flex-col text-text p-10 bg-card rounded-xl";
       winDetails.innerHTML = `
-        <p class=""flex items-center"><strong>Win:</strong><img class= h-10 w-10 rounded-full src= ${winnerAvatar}> ${winner}</p>
-        <p><strong>Price:</strong> ${endedPrice} NOK</p>
+      <div class="flex flex-col gap-4">
+        <p class="font-h text-xl font-bold flex w-full justify-center text-accent">Winner</p>
+        <div class="flex">
+          <img class="h-10 w-10 rounded-full object-cover mr-2" src= ${winnerAvatar}> 
+          <p class="flex items-center font-p">${winner}</p>
+        </div>
+      </div>
+      <div class="flex mt-4">
+        <p class="pr-2">Price won:</p>
+        <p>${endedPrice} NOK</p>
+      </div>
       `;
       countdownTimer.parentElement.appendChild(winDetails);
+      winDetailsContainer.appendChild(winDetails);
     }
 
     // Set bid amount placeholder and minimum bid
@@ -375,10 +390,9 @@ export async function renderListingById() {
 
     // Hide bidding section for own listing
     const bidForm = document.getElementById("bid-form");
-    const bidContainer = document.querySelector(".bid-container");
     if (loggedInUser === listing.seller?.name) {
       const bidNotAllowed = document.createElement("h2");
-      bidNotAllowed.classList = "text-red-500";
+      bidNotAllowed.classList = "text-error";
       bidNotAllowed.textContent = "You cannot bid on your own listing";
 
       bidForm.classList = "hidden";
@@ -391,6 +405,7 @@ export async function renderListingById() {
     document.body.innerHTML = `<p class="text-red-500 text-center mt-4">Failed to load listing. Please try again later.</p>`;
   }
 }
+
 
 
 /**
