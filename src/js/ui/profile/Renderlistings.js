@@ -48,7 +48,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
 
       const listingElement = document.createElement("a");
       listingElement.className =
-        "item-card bg-card backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto flex items-start shadow-md w-full";
+        "item-card bg-card backdrop-blur-lg rounded-2xl p-4 mx-auto flex items-start shadow-md w-[300px]";
       listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
 
       const lastBidAmount = listing.bids?.length
@@ -56,36 +56,38 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
         : "0";
 
       listingElement.innerHTML = `
-        <div class="listing-img h-[150px] w-[150px] rounded-lg overflow-hidden mr-4">
-          <img 
-            src="${listing.media?.[0]?.url || FALLBACK_IMG}"
-            alt="${listing.media?.[0]?.alt || "Listing Image"}"
-            class="w-full h-full object-cover"
-            onerror="this.src='/fallback-image.png'"
-          />
+      <div class="flex flex-col w-full">
+          <div class="listing-img h-[200px] object-cover rounded-lg overflow-hidden mr-4">
+            <img 
+              src="${listing.media?.[0]?.url || FALLBACK_IMG}"
+              alt="${listing.media?.[0]?.alt || "Listing Image"}"
+              class="w-full h-full object-cover"
+              onerror="this.src='/fallback-image.png'"
+            />
+          </div>
+          <div class="listing-details flex flex-col justify-between items-start w-full h-full">
+            <h3 class="listing-title text-gray-300 text-lg font-semibold mt-2 flex w-full justify-center">
+            ${truncateText(listing.title,20,40) || "No title"}
+            </h3>
+            <p class="listing-bids text-gray-400 text-sm mt-2">
+              Bids: ${listing._count?.bids || 0}
+            </p>
+            <p class="listing-current-bid text-gray-400 text-sm">
+              Last bid: ${lastBidAmount} NOK
+            </p>
+            <p class="listing-created text-gray-400 text-sm">
+              Created: ${listingCreated.toLocaleDateString()}
+            </p>
+          </div>
+        <div class="flex w-full justify-center items-center mt-4">
+          <div id="${countdownTimerId}"></div>
         </div>
-        <div class="listing-details flex flex-col justify-between items-start w-full h-full">
-          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1 flex w-full justify-center">
-          ${truncateText(listing.title,20,40) || "No title"}
-          </h3>
-          <p class="listing-bids text-gray-400 text-sm mt-2">
-            Bids: ${listing._count?.bids || 0}
-          </p>
-          <p class="listing-current-bid text-gray-400 text-sm">
-            Last bid: ${lastBidAmount} NOK
-          </p>
-          <p class="listing-created text-gray-400 text-sm">
-            Created: ${listingCreated.toLocaleDateString()}
-          </p>
-          <div id="${countdownTimerId}" class="absolute bottom-3 countdown text-sm text-gray-400 mt-2"></div>
-                  ${
-                    isEnded
-                      ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
-                Auction ended on: ${endDate.toLocaleDateString()}
-              </div>`
-                      : ""
-                  }
-        </div>
+        ${isEnded? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-error font-bold text-lg">
+                    Auction ended on: ${endDate.toLocaleDateString()}
+                    </div>`
+                    : ""
+        }
+      </div>
       `;
 
       container.appendChild(listingElement);
@@ -157,42 +159,45 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
       const isEnded = now > endDate;
       const countdownTimerId = `countdown-${listing.id}`;
 
-      const card = document.createElement("a");
-      card.className =
-        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 pb-[80px] mx-auto flex items-start shadow-md w-full";
-      card.href = `/listing/?listingID=${listing.id}`;
 
-      card.innerHTML = `
-        <div class="listing-img h-[150px] w-[150px] rounded-lg overflow-hidden mr-4">
-          <img 
-            src="${listing.media?.[0]?.url || FALLBACK_IMG}"
-            alt="${listing.media?.[0]?.alt || "Listing Image"}"
-            class="w-full h-full object-cover"
-            onerror="this.src='/fallback-image.png'"
-          />
+      const listingElement = document.createElement("a");
+      listingElement.className =
+        "item-card bg-card backdrop-blur-lg rounded-2xl p-4 mx-auto flex items-start shadow-md w-[300px]";
+      listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
+
+      listingElement.innerHTML = `
+      <div class="flex flex-col w-full">
+          <div class="listing-img h-[200px] object-cover rounded-lg overflow-hidden mr-4">
+            <img 
+              src="${listing.media?.[0]?.url || FALLBACK_IMG}"
+              alt="${listing.media?.[0]?.alt || "Listing Image"}"
+              class="w-full h-full object-cover"
+              onerror="this.src='/fallback-image.png'"
+            />
+          </div>
+          <div class="listing-details flex flex-col justify-between items-start w-full h-full">
+            <h3 class="listing-title text-gray-300 text-lg font-semibold mt-2 flex w-full justify-center">
+            ${truncateText(listing.title,20,40) || "No title"}
+            </h3>
+            <p class="listing-bids text-gray-400 text-sm mt-2">
+              Your Bid: ${amount} NOK
+            </p>
+            <p class="listing-current-bid text-gray-400 text-sm">
+              Date Bided: ${new Date(created).toLocaleDateString()}
+            </p>
+          </div>
+        <div class="flex w-full justify-center items-center mt-4">
+          <div id="${countdownTimerId}"></div>
         </div>
-        <div class="listing-details flex flex-col justify-between w-full h-full">
-          <h3 class="listing-title text-gray-300 text-lg font-semibold -mt-1 w-full flex justify-center">
-          ${truncateText(listing.title, 20, 40) || "No title"}
-          </h3>
-          <p class="listing-bids text-gray-400 text-sm mt-2">
-            Your Bid: ${amount} NOK
-          </p>
-          <p class="listing-current-bid text-gray-400 text-sm">
-            Date Bided: ${new Date(created).toLocaleDateString()}
-          </p>
-          <div id="${countdownTimerId}" class="countdown absolute bottom-3 text-sm text-gray-400 mt-2"></div>
-          ${
-            isEnded
-              ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
-                Auction ended on: ${endDate.toLocaleDateString()}
-              </div>`
-              : ""
-          }
-        </div>
+        ${isEnded? `<div class="w-full flex justify-center items-center text-error font-bold text-lg">
+                    Auction ended on: ${endDate.toLocaleDateString()}
+                    </div>`
+                    : ""
+        }
+      </div>
       `;
 
-      container.appendChild(card);
+      container.appendChild(listingElement);
 
       // Initialize countdown timer if the auction hasn't ended
       if (!isEnded) {
@@ -255,7 +260,7 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
       const endDate = new Date(endsAt);
       const card = document.createElement("div");
       card.className =
-        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto flex flex-col items-start shadow-md w-full";
+        "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto flex flex-col items-start shadow-md w-[300px]";
 
       card.innerHTML = `
         <div class="listing-details flex flex-col justify-between w-full">

@@ -3,6 +3,7 @@ import { setLogoutListener } from "../../ui/global/logout";
 import { setupCreateListing } from "../../ui/listing/create";
 import { renderProfile } from "../../ui/profile/renderProfile";
 import { renderUserBidsListings, renderUserWinsListings ,renderListingsByUser } from "../../ui/profile/Renderlistings";
+import { toggleContainer } from "../../utilities/toggleContainer";
 
 // Retrieve the username from local storage
 const username = localStorage.getItem("userName");
@@ -64,12 +65,19 @@ winsButton.addEventListener("click", () => {
 
 // Handle edit profile container toggle
 const editBtn = document.getElementById("edit-btn");
+const cancelEditBtn = document.getElementById("cancel-edit-btn");
 const editProfileContainer = document.getElementById("edit-profile-container");
+const overlay = document.querySelector(".overlay");
 
-if (editBtn && editProfileContainer) {
-  editBtn.addEventListener("click", () => {
-    editProfileContainer.classList.toggle("hidden");
-    editProfileContainer.classList.toggle("block");
-  });
-}
+editBtn.addEventListener("click", () => {
+  toggleContainer(editProfileContainer, true);
+  toggleContainer(overlay, true);
+});
+
+cancelEditBtn.addEventListener("click", () => {
+  toggleContainer(editProfileContainer, false);
+  toggleContainer(overlay, false);
+})
+
+
 

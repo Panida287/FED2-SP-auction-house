@@ -19,6 +19,8 @@ export async function readListings(tag = null, sortByBids = false, sortByEnding 
     _seller: "true",
     _bids: "true",
     _active: "true", // Always fetch active listings
+    sort: "created", // Sort by creation date
+    sortOrder: "desc", // Descending order to fetch the latest posts
   });
 
   if (tag) {
@@ -36,6 +38,7 @@ export async function readListings(tag = null, sortByBids = false, sortByEnding 
     }
 
     const result = await response.json();
+    
 
     if (sortByBids) {
       // Sort by number of bids (descending)
@@ -43,12 +46,9 @@ export async function readListings(tag = null, sortByBids = false, sortByEnding 
     } else if (sortByEnding) {
       // Sort by ending date (end soon first)
       result.data.sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt));
-    } else {
-      // Sort by creation date (newest first)
-      result.data.sort((a, b) => new Date(b.created) - new Date(a.created));
-    }
-
+    } 
     return result;
+
   } catch (error) {
     console.error("Error fetching listings:", error);
     throw error;
@@ -181,6 +181,8 @@ export async function searchListings(query) {
     _bids: "true",
     _seller: "true",
     _active: "true",
+    sort: "created", // Sort by creation date
+    sortOrder: "desc", // Descending order to fetch the latest posts
   });
 
   try {
