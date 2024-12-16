@@ -77,7 +77,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
           <p class="listing-created text-gray-400 text-sm">
             Created: ${listingCreated.toLocaleDateString()}
           </p>
-          <div id="${countdownTimerId}" class="countdown text-sm text-gray-400 mt-2"></div>
+          <div id="${countdownTimerId}" class="absolute bottom-3 countdown text-sm text-gray-400 mt-2"></div>
                   ${
                     isEnded
                       ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">
@@ -181,7 +181,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
           <p class="listing-current-bid text-gray-400 text-sm">
             Date Bided: ${new Date(created).toLocaleDateString()}
           </p>
-          <div id="${countdownTimerId}" class="countdown text-sm text-gray-400 mt-2"></div>
+          <div id="${countdownTimerId}" class="countdown absolute bottom-3 text-sm text-gray-400 mt-2"></div>
           ${
             isEnded
               ? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-red-500 font-bold text-lg">

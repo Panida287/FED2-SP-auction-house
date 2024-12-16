@@ -76,7 +76,7 @@ export function renderListingsToContainer(listings, container) {
 
     const listingElement = document.createElement("div");
     listingElement.className =
-      "item-card bg-card backdrop-blur-lg rounded-2xl p-4 mx-50 mb-10 flex flex-col items-center shadow-md w-[358px] sm:w-[470px]";
+      "item-card bg-card backdrop-blur-lg rounded-2xl p-4 mx-50 mb-10 flex flex-col items-center shadow-md w-[470px] md:w-[450px]";
 
     const biddersContainer = document.createElement("div");
     biddersContainer.className = "flex items-center justify-start mt-2";

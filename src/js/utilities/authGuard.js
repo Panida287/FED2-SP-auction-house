@@ -45,7 +45,7 @@ export function authGuard() {
        if (bidContainer) {
         const loginToBid = document.createElement("div");
         loginToBid.innerHTML = `
-        <span class="login-to-bid h-full w-full absolute top-0 left-0 flex gap-2 font-bold justify-center items-center bg-white/80 backdrop-blur-md">
+        <span class="login-to-bid h-full w-full bg-white/60 absolute top-0 left-0 flex gap-2 font-bold justify-center items-center backdrop-blur-md md:bg-transparent md:relative md:-translate-y-[50px] md:h-[60px] md:rounded-xl">
           Please
           <a href="/auth/login/"
           class="pink-buttons">
