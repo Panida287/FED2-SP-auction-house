@@ -42,7 +42,7 @@ export function updateCountdown(endDate, timerElement) {
     `;
   }
 
-  calculateTimeLeft(); // Initialize immediately
+  calculateTimeLeft();
   const intervalId = setInterval(calculateTimeLeft, 1000);
 }
 

@@ -239,6 +239,7 @@ export async function renderListings(
       if (page < totalPages) renderListings(tag, totalPages, limit, sortByBids, sortByEnding, query);
     };
   } catch (error) {
+    console.error("Error rendering listings:", error);
     itemsSection.innerHTML = `<p class="text-error">Failed to load listings. Please try again later.</p>`;
     paginationContainer.classList.add("hidden");
   }
@@ -377,6 +378,7 @@ export async function renderListingById() {
     }
 
   } catch (error) {
+    console.error("Error rendering listings:", error);
     document.body.innerHTML = `<p class="text-red-500 text-center mt-4">Failed to load listing. Please try again later.</p>`;
   }
 }
@@ -479,6 +481,7 @@ export async function renderCarousel() {
       }
     });
   } catch (error) {
+    console.error("Error rendering listings:", error);
     carouselItems.forEach((item) => {
       item.innerHTML = `<p class="text-red-500 text-center mt-4">Failed to load data.</p>`;
     });

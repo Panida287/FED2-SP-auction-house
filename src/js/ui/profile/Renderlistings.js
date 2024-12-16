@@ -102,6 +102,7 @@ export async function renderListingsByUser(username, page = 1, limit = 6) {
     prevBtn.onclick = () => renderListingsByUser(username, page - 1, limit);
     nextBtn.onclick = () => renderListingsByUser(username, page + 1, limit);
   } catch (error) {
+    console.error("Error rendering listings:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
     paginationContainer.classList.add("hidden");
   }
@@ -199,6 +200,7 @@ export async function renderUserBidsListings(username, limit = 6, page = 1) {
     prevBtn.onclick = () => renderUserBidsListings(username, limit, page - 1);
     nextBtn.onclick = () => renderUserBidsListings(username, limit, page + 1);
   } catch (error) {
+    console.error("Error rendering listings:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load user bids.</p>`;
     paginationContainer.classList.add("hidden");
   }
@@ -266,13 +268,12 @@ export async function renderUserWinsListings(username, limit = 6, page = 1) {
       container.appendChild(listingElement);
     });
 
-    // Update pagination
     paginationInfo.textContent = `Page ${page} of ${Math.ceil(winData.length / limit)}`;
 
-    // Handle pagination functionality
     prevBtn.onclick = () => renderUserWinsListings(username, limit, page - 1);
     nextBtn.onclick = () => renderUserWinsListings(username, limit, page + 1);
   } catch (error) {
+    console.error("Error rendering listings:", error);
     container.innerHTML = `<p class="text-red-500">Failed to load user wins.</p>`;
     paginationContainer.classList.add("hidden");
   }

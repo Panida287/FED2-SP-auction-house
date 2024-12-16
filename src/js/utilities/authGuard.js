@@ -8,36 +8,28 @@ export function authGuard() {
      const mobileNavbar = document.querySelector(".mobile-nav");
      const bidContainer = document.querySelector(".bid-container");
    
-     // Check if the user is authenticated
      const isAuthenticated = localStorage.getItem("accessToken");
    
      if (!isAuthenticated) {
-       // If the user is not logged in, change the profile button's behavior
-       profile.classList.remove("flex"); // Remove the 'flex' class
-       profile.classList.add("hidden"); // Add the 'hidden' class
-
-   
-       // Hide navigation bars
+       profile.classList.remove("flex");
+       profile.classList.add("hidden"); 
 
        if (navBar) {
-          navBar.classList.add("md:hidden"); // Add the 'hidden' class
-          navBar.classList.remove("md:flex"); // Remove the 'flex' class
+          navBar.classList.add("md:hidden");
+          navBar.classList.remove("md:flex");
         }
         
        if (mobileNavbar) mobileNavbar.classList.add("hidden");
    
-       // Loop through the NodeList to hide each credit element
        credits.forEach((credit) => {
          credit.classList.add("hidden");
        });
    
-       // Dynamically create and append an <a> tag with a link to /login/
        const loginLink = document.createElement("a");
-       loginLink.href = "auth/login/"; // Set the href to the login page
-       loginLink.className = "pink-buttons z-10 mr-2"; // Add the class
-       loginLink.textContent = "Login"; // Add text content
+       loginLink.href = "auth/login/";
+       loginLink.className = "pink-buttons z-10 mr-2";
+       loginLink.textContent = "Login";
    
-       // Append the link to the header container
        if (headerElements) {
          headerElements.appendChild(loginLink);
        }
@@ -63,7 +55,7 @@ export function authGuard() {
        }
 
      } else {
-       renderProfile(); // Render the profile for authenticated users
+       renderProfile();
      }
    }
    
