@@ -22,84 +22,133 @@
       href="/assets/favicon_io/favicon-16x16.png"
     />
     <script type="module" src="../../src/js/main.js"></script>
-    <link rel="stylesheet" href="../../src/css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap">
+    <link rel="stylesheet" href="../../src/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
   </head>
 
-  <body class="flex justify-center items-center w-screen h-screen">
-    <div class="register-form bg-gray-400 w-[90%] m-auto">
-      <h1 class="flex justify-center items-center">Register</h1>
-      <form name="register">
-        <div class="p-1">
-          <label for="email">Email</label>
+  <body class="flex flex-col justify-center items-center overflow-auto md:flex-row">
+    <h2 class="mt-40 w-1/2 font-h font-bold text-white text-2xl text-center md:mt-0 md:mx-auto">
+      AUCTION HOUSE
+    </h2>
+    <!-- Register Modal -->
+    <div
+      class="register-form m-20 w-full max-w-[400px] p-8 bg-card backdrop-blur-xl rounded-lg shadow-lg"
+    >
+      <h1 class="text-text text-center font-semibold mb-6">REGISTER</h1>
+      <form name="register" class="flex flex-col gap-4">
+        <!-- Email -->
+        <div>
+          <label for="email" class="text-text">Email</label>
           <input
             id="email"
             type="email"
             name="email"
+            value="@stud.noroff.no"
             required
-            placeholder="@stud.noroff.no"
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
-        <div class="p-1">
-          <label for="name">Username</label>
+        <!-- Username -->
+        <div>
+          <label for="name" class="text-text">Username</label>
           <input
             id="name"
             type="text"
             name="name"
             maxlength="20"
-            pattern="^[\w]+$"
+            pattern="^[\\w]+$"
             required
+            placeholder="Letters, numbers, and underscores only"
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
-        <div class="p-1">
-          <label for="password">Password</label>
+        <!-- Password -->
+        <div>
+          <label for="password" class="text-text">Password</label>
           <input
             type="password"
             name="password"
             id="password"
             minlength="8"
-            placeholder="must be at least 8 characters"
+            placeholder="At least 8 characters"
             required
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
-        <div class="p-1">
-          <label for="repeatPassword">Repeat password</label>
+        <!-- Repeat Password -->
+        <div>
+          <label for="repeatPassword" class="text-text">Repeat Password</label>
           <input
             type="password"
             name="repeatPassword"
             id="repeatPassword"
             minlength="8"
             required
+            placeholder="Re-enter your password"
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
-        <div class="p-1">
-          <label for="avatar">Avatar</label>
-          <input type="url" name="avatar" id="avatar" placeholder="optional" />
+        <!-- Avatar -->
+        <div>
+          <label for="avatar" class="text-text">Avatar (optional)</label>
+          <input
+            type="url"
+            name="avatar"
+            id="avatar"
+            placeholder="Enter image URL"
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
+          />
         </div>
 
-        <div class="p-1">
-          <label for="banner">Banner photo</label>
-          <input type="url" name="banner" id="banner" placeholder="optional" />
+        <!-- Banner Photo -->
+        <div>
+          <label for="banner" class="text-text">Banner Photo (optional)</label>
+          <input
+            type="url"
+            name="banner"
+            id="banner"
+            placeholder="Enter image URL"
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
+          />
         </div>
-        <div class="error-msg text-red-500"></div>
-        <button type="submit" class="border-black border-2">Register</button>
+
+        <!-- Error Message -->
+        <p class="error-msg text-red-500 text-sm text-center hidden">
+          Please fix errors in the form.
+        </p>
+
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
+          <button type="submit" class="pink-buttons w-full">Register</button>
+        </div>
       </form>
-      <div>
+
+      <!-- Login Link -->
+      <div class="text-center mt-4 text-text">
         <p>Already a member?</p>
-        <a href="/auth/login/">Login</a>
+        <a href="/auth/login/" class="text-accent font-semibold hover:underline">
+          Login
+        </a>
       </div>
     </div>
+
+    <!-- Success Modal -->
     <div
-      class="register-success hidden flex-col absolute z-10 w-[150px] h-[100px] top[50%] left[50%] bg-slate-400"
+      class="register-success hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[300px] p-6 bg-green-500 text-white rounded-lg shadow-lg text-center"
     >
-      <h2>Registration successful!</h2>
-      <a href="/auth/login/" class="border-2 border-black">Login</a>
+      <h2 class="font-bold mb-4">Registration Successful!</h2>
+      <a href="/auth/login/" class="text-sm underline hover:text-gray-200">
+        Proceed to Login
+      </a>
     </div>
   </body>
 </html>
