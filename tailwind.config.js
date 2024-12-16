@@ -11,8 +11,8 @@ export default {
       ph: '480px',
       sm: '500px',
       md: '600px',
-      lg: '976px',
-      xl: '1440px'
+      lg: '756px',
+      xl: '1200px'
     },
     extend: {
       fontFamily: {

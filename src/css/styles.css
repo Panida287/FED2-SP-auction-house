@@ -6,6 +6,8 @@ html,
 body {
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   background: url(https://img.freepik.com/free-photo/abstract-background-with-flowing-waves_1048-14437.jpg?t=st=1733215754~exp=1733219354~hmac=6fbf2b82f012b1e12ae5f977ffe317b8859f1442c2bbc368bd9c25bb97db1a1c&w=1060) no-repeat center/cover;
 }

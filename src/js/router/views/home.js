@@ -1,11 +1,13 @@
 import { renderListings, renderCarousel } from '../../ui/listing/display';
 import { authGuard } from '../../utilities/authGuard';
 import { initCarousel } from '../../utilities/initCarousel';
+import { backToTop } from '../../ui/global/backToTop';
 
 renderListings();
 initCarousel();
 authGuard();
 renderCarousel();
+backToTop("back-to-top", 1050);
 
 // Add event listeners to category buttons
 const categoryButtons = document.querySelectorAll(".category-btn");
@@ -53,4 +55,5 @@ searchInput.addEventListener("keydown", async (event) => {
     }
   }
 });
+
 

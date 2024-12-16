@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:image" content="/assets/favicon_io/apple-touch-icon.png" />
+    <meta
+      property="og:image"
+      content="/assets/favicon_io/apple-touch-icon.png"
+    />
     <link
       rel="icon"
       type="image/png"
@@ -22,8 +25,11 @@
       sizes="16x16"
       href="/assets/favicon_io/favicon-16x16.png"
     />
-    <link rel="stylesheet" href="../src/css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap">
+    <link rel="stylesheet" href="../src/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap"
+    />
     <script type="module" src="../src/js/main.js"></script>
     <script
       src="https://kit.fontawesome.com/5d32d5fe01.js"
@@ -33,24 +39,28 @@
   </head>
 
   <body class="pb-[70px]">
-  <header>
-    <!-- Nav bar -->
+    <header>
+      <button
+      id="back-btn"
+      class="z-20 relative bg-white h-10 w-10 rounded-full shadow-md cursor-pointer m-3"
+    >
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+      <!-- Nav bar -->
       <nav
-        class="nav-bar hidden relative z-10 backdrop-blur-md w-full justify-center items-center gap-20 py-4 font-light text-text md:flex"
+        class="nav-bar hidden bg-card relative z-10 -mt-[65px] backdrop-blur-md w-full justify-center items-center gap-20 py-4 font-light text-text md:flex"
       >
-        <a class="nav-link text-accent font-h" href="/">Home</a>
+        <a class="nav-link hover:text-accent font-h" href="/">Home</a>
         <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
         <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
-        <a class="nav-link hover:text-accent font-h" href="#">My profile</a
-        >
         <button class="logout-btn tab-buttons absolute right-4 scale-75">
           Logout
         </button>
       </nav>
-  </header>
+    </header>
     <!-- Banner Section -->
     <div
-      class="relative -mt-[60px] flex items-center -z-1 w-full max-h-[200px] overflow-hidden md:max-h-[350px]"
+      class="relative -mt-[120px] flex items-center -z-1 w-full max-h-[200px] overflow-hidden md:max-h-[350px]"
     >
       <img class="banner object-cover w-full" />
     </div>
@@ -77,14 +87,16 @@
 
       <!-- User Name -->
       <div class="w-full justify-items-center md:justify-items-start">
-        <h1 class="author font-h text-text m-2 md:relative md:-right-[208px] md:-translate-y-[50px]"></h1>
+        <h1
+          class="author font-h text-text m-2 md:relative md:-right-[208px] md:-translate-y-[50px]"
+        ></h1>
       </div>
     </div>
 
     <!-- User Stats Section -->
     <div class="user-stats bg-card md:relative md:-translate-y-[110px] md:flex">
       <div
-        class="user-stats-container w-[80%] mx-auto py-4 flex justify-between items-center font-p text-text md:relative md:pl-[300px] md:pr-[20px]"
+        class="user-stats-container mx-auto py-4 flex justify-evenly items-center font-p text-text md:relative md:pl-[300px] md:pr-[20px] md:w-full"
       >
         <span class="user-credit text-center">
           Credit:
@@ -102,11 +114,16 @@
     </div>
 
     <!-- Create listing button -->
-    <div class="overlay hidden absolute top-0 left-0 z-10 h-full w-full bg-black/80"></div>
+    <div
+      class="overlay hidden absolute top-0 left-0 z-10 h-full w-full bg-black/80"
+    ></div>
     <div
       class="create-listing-btn-container w-[80%] mx-auto justify-start items-center md:-mt-[100px]"
     >
-      <button id="create-listing-btn" class="pink-buttons mt-5 text-md scale-75 -translate-x-[18px]">
+      <button
+        id="create-listing-btn"
+        class="pink-buttons mt-5 text-md scale-75 -translate-x-[18px]"
+      >
         + New listing
       </button>
     </div>
@@ -127,8 +144,12 @@
     </div>
 
     <!-- Results Section -->
-    <h3 class="result-title flex justify-center items-center mb-[40px] mt-[40px] text-2xl font-h text-text"></h3>
-    <div class="result-container grid w-[80%] mx-auto gap-5 md:grid-cols-2"></div>
+    <h3
+      class="result-title flex justify-center items-center mb-[40px] mt-[40px] text-2xl font-h text-text"
+    ></h3>
+    <div
+      class="result-container grid w-[80%] mx-auto gap-5 lg:grid-cols-2 xl:grid-cols-3"
+    ></div>
 
     <!-- pagination -->
     <div class="pagination hidden justify-center items-center mt-4 pb-[100px]">
@@ -150,17 +171,119 @@
     <!-- Error msg -->
     <div class="message-container text-error"></div>
 
+    <!-- Back-to-Top Button -->
+    <div class="w-full flex justify-center mt-10">
+      <button id="back-to-top" class="pink-buttons" aria-label="Back to Top">
+        ↑ Back to top
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer
+    class="bg-card w-full backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:relative md:pb-8 md:bottom-0 md:-mb-20"
+    >
+      <div
+        class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 lg:px-10"
+      >
+        <!-- About Section -->
+        <div
+          class="flex flex-col items-center md:items-start mb-6 md:mb-0 md:w-1/2"
+        >
+          <h3 class="font-bold text-lg mb-2">Auction House</h3>
+          <p class="text-sm text-gray-400 text-center md:text-left">
+            Your trusted marketplace for bidding and auctions. Discover, bid,
+            and win exclusive items every day!
+          </p>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex flex-col items-center mb-6 md:mb-0">
+          <h4 class="font-semibold text-lg mb-2">Quick Links</h4>
+          <ul class="flex flex-col items-center gap-2 text-sm text-gray-400">
+            <li>
+              <a href="#" class="hover:text-accent transition duration-300"
+                >About Us</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-accent transition duration-300"
+                >Listings</a
+              >
+            </li>
+            <li>
+              <a href="#" class="hover:text-accent transition duration-300"
+                >Contact</a
+              >
+            </li>
+            <li>
+              <a
+                href="/profile/"
+                class="hover:text-accent transition duration-300"
+                >My Profile</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="flex flex-col items-center">
+          <h4 class="font-semibold text-lg mb-2">Follow Us</h4>
+          <div class="flex gap-4">
+            <a
+              href="#"
+              target="_blank"
+              class="text-gray-400 hover:text-accent transition duration-300"
+            >
+              <i class="fa-brands fa-facebook fa-lg"></i>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              class="text-gray-400 hover:text-accent transition duration-300"
+            >
+              <i class="fa-brands fa-instagram fa-lg"></i>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              class="text-gray-400 hover:text-accent transition duration-300"
+            >
+              <i class="fa-brands fa-linkedin fa-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div
+        class="border-t border-gray-600 mt-6 pt-4 text-center text-sm text-gray-500"
+      >
+        <p>
+          &copy; <span id="year"></span> Auction House. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
     <!-- Mobile navigation Bar -->
     <nav
-      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 m-2 bg-card backdrop-blur-md text-white text-xl rounded-full shadow-md md:hidden"
+      class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-4 mx-auto mt-5 bg-primaryLinear text-white text-2xl rounded-t-full shadow-md md:hidden"
     >
-      <a href="/" class="flex justify-center items-center w-[50px] h-[50px]">
+      <a
+        href="#"
+        class="bg-accent flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      >
         <i class="fa-solid fa-house"></i>
       </a>
-      <a href="#" class="flex justify-center items-center w-[50px] h-[50px]">
+      <a
+        href="#"
+        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      >
         <i class="fa-solid fa-message"></i>
       </a>
-      <a href="#" class="flex justify-center items-center w-[50px] h-[50px]">
+      <a
+        href="#"
+        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      >
         <i class="fa-solid fa-bell"></i>
       </a>
       <button
