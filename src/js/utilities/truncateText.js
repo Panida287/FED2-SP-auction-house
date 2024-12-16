@@ -9,13 +9,11 @@
 export function truncateText(text, wordLimit = 20, charLimit = 40) {
     if (!text) return "";
   
-    // Check word limit
     const words = text.split(" ");
     if (words.length > wordLimit) {
       return words.slice(0, wordLimit).join(" ") + "...";
     }
   
-    // Check character limit
     if (text.length > charLimit) {
       return text.slice(0, charLimit) + "...";
     }
