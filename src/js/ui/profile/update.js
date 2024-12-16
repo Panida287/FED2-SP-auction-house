@@ -1,5 +1,5 @@
 import { API_PROFILES } from "../../api/constants";
-import { headers } from "../../api/headers";
+import { loggedInHeaders } from "../../api/headers";
 
 /**
  * Handles the Edit Profile functionality, including image preview, submit, and cancel.
@@ -108,7 +108,7 @@ export function editProfile() {
     };
 
     try {
-      const myHeaders = await headers();
+      const myHeaders = await loggedInHeaders();
       const response = await fetch(`${API_PROFILES}/${userName}`, {
         method: "PUT",
         headers: myHeaders,
