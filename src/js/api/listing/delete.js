@@ -1,16 +1,18 @@
-import { loggedInHeaders } from '../headers';
-import { API_AUCTION_LISTING } from '../constants';
+import { loggedInHeaders } from "../headers";
+import { API_AUCTION_LISTING } from "../constants";
 
 /**
- * Updates a listing by ID.
+ * Deletes a listing by its ID.
  *
- * @param {string} id - The ID of the listing to update.
- * @returns {Promise<Object>} The updated listing data.
+ * @async
+ * @param {string} id - The ID of the listing to delete.
+ * @returns {Promise<void | Object>} Resolves with no content if deletion is successful, or optional response data.
+ * @throws {Error} Throws an error if the deletion request fails.
  */
 export async function deleteListing(id) {
-  try {
-    const myHeaders = await loggedInHeaders();
+  const myHeaders = await loggedInHeaders();
 
+  try {
     const response = await fetch(`${API_AUCTION_LISTING}/${id}`, {
       method: "DELETE",
       headers: myHeaders,
@@ -21,15 +23,14 @@ export async function deleteListing(id) {
       throw new Error(errorData.message || "Failed to delete listing.");
     }
 
-    // Check if there is a response body
-    if (response.status === 204 || response.status === 200) {
-      return; // Successful deletion, no content returned
+    // If successful but no content is returned
+    if (response.status === 204) {
+      return;
     }
 
-    // If there's content, return it (optional)
+    // Return response body if any content is provided
     return await response.json();
   } catch (error) {
-    console.error("Error deleting listing:", error);
-    throw error;
+    throw new Error(error.message || "An unexpected error occurred while deleting the listing.");
   }
 }

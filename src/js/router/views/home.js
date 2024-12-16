@@ -1,15 +1,24 @@
-import { renderListings, renderCarousel } from '../../ui/listing/display';
-import { authGuard } from '../../utilities/authGuard';
-import { initCarousel } from '../../utilities/initCarousel';
-import { backToTop } from '../../ui/global/backToTop';
+import { renderListings, renderCarousel } from "../../ui/listing/display";
+import { authGuard } from "../../utilities/authGuard";
+import { initCarousel } from "../../utilities/initCarousel";
+import { backToTop } from "../../ui/global/backToTop";
 
+/**
+ * Initialize page functionalities:
+ * - Render listings and carousel
+ * - Enforce authentication
+ * - Initialize carousel behavior
+ * - Implement back-to-top button behavior
+ */
 renderListings();
 initCarousel();
 authGuard();
 renderCarousel();
 backToTop("back-to-top", 1050);
 
-// Add event listeners to category buttons
+/**
+ * Add event listeners for category filtering.
+ */
 const categoryButtons = document.querySelectorAll(".category-btn");
 const categoryHeading = document.querySelector(".category-heading");
 
@@ -19,25 +28,34 @@ categoryButtons.forEach((button) => {
 
     // Update the category heading
     categoryHeading.textContent = category || "All Listings";
-    renderListings(category); // Fetch filtered listings
+
+    // Fetch and display filtered listings
+    renderListings(category);
   });
 });
 
-// Sort by Trending (highest bids)
+/**
+ * Sort listings by highest bids (Trending Now).
+ */
 const sortByBidsButton = document.getElementById("sort-by-bids-btn");
 sortByBidsButton.addEventListener("click", async () => {
   categoryHeading.textContent = "Trending Now";
-  await renderListings(null, 1, 12, true, false); // Sort by bids
+  await renderListings(null, 1, 12, true, false); // Fetch sorted listings by bids
 });
 
-// Sort by listings that are ending
+/**
+ * Sort listings by those ending soon.
+ */
 const sortByEndingButton = document.getElementById("end-soon-btn");
 sortByEndingButton.addEventListener("click", async () => {
   categoryHeading.textContent = "Ending Soon!";
-  await renderListings(null, 1, 12, false, true); // Sort by ending soon
+  await renderListings(null, 1, 12, false, true); // Fetch sorted listings by ending time
 });
 
-// Search functionality
+/**
+ * Implement search functionality.
+ * - Triggers on "Enter" key press in the search input field.
+ */
 const searchInput = document.getElementById("search-input");
 searchInput.addEventListener("keydown", async (event) => {
   if (event.key === "Enter") {
@@ -45,15 +63,13 @@ searchInput.addEventListener("keydown", async (event) => {
     const query = searchInput.value.trim().toLowerCase();
 
     if (query.length === 0) {
-      // Show all listings if the search is cleared
+      // Reset to all listings if the search query is empty
       categoryHeading.textContent = "All Listings";
       await renderListings();
     } else {
-      // Update the category heading and search listings
+      // Update heading and fetch filtered listings by the search query
       categoryHeading.textContent = `Results for "${query}"`;
       await renderListings(null, 1, 12, false, false, query);
     }
   }
 });
-
-

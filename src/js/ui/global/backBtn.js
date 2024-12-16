@@ -11,10 +11,8 @@ export function backButton(fallbackUrl = "/") {
     if (backButton) {
       backButton.addEventListener("click", () => {
         if (document.referrer) {
-          // Go back to the previous page in the history stack
           history.back();
         } else {
-          // Fallback to a default page if there's no referrer
           window.location.href = fallbackUrl;
         }
       });

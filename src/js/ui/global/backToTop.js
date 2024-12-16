@@ -1,17 +1,26 @@
+/**
+ * Adds a "back to top" functionality to a specified button.
+ * When clicked, it scrolls the page smoothly to a target position.
+ *
+ * @function backToTop
+ * @param {string} targetId - The ID of the button element that triggers the scroll.
+ * @param {number} scrollPosition - The vertical position (in pixels) to scroll to.
+ */
 export function backToTop(targetId, scrollPosition) {
-    const backToTopBtn = document.getElementById(targetId);
-  
-    backToTopBtn.addEventListener("click", () => {
-      const scrollTarget = document.documentElement.scrollTop ? document.documentElement : document.body;
-  
-      scrollTarget.scrollTo({
-        top: scrollPosition, // Set the desired scroll position
-        behavior: "smooth", // Enable smooth scrolling
-      });
-    });
+  const backToTopBtn = document.getElementById(targetId);
+
+  if (!backToTopBtn) {
+    console.warn(`Button with ID "${targetId}" not found.`);
+    return;
   }
-  
-  // Example usage:
-  // Adds the back-to-top functionality for a button with the ID "back-to-top" that scrolls to position 1050
-  backToTop("back-to-top", 1050);
-  
+
+  backToTopBtn.addEventListener("click", () => {
+    const scrollTarget =
+      document.documentElement.scrollTop ? document.documentElement : document.body;
+
+    scrollTarget.scrollTo({
+      top: scrollPosition,
+      behavior: "smooth",
+    });
+  });
+}

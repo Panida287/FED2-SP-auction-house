@@ -7,10 +7,8 @@ import { onLogout } from "../auth/logout";
  * If the user confirms, it calls the `onLogout` function to log the user out.
  */
 export function setLogoutListener() {
-    // Select all logout buttons
     const logoutButtons = document.querySelectorAll('.logout-btn');
     
-    // Loop through each button and add an event listener
     logoutButtons.forEach(button => {
         button.addEventListener('click', () => {
             const confirmation = window.confirm("Are you sure you want to log out?");

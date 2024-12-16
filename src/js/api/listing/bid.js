@@ -6,9 +6,9 @@ import { loggedInHeaders } from "../headers";
  * Places a bid on a specific auction listing.
  *
  * @async
- * @function placeBid
  * @param {number} amount - The bid amount (required).
- * @returns {Promise<Object>} A promise that resolves to the server's response or throws an error.
+ * @returns {Promise<Object>} Resolves to the server's response if successful.
+ * @throws {Error} Throws an error if the API request fails or returns an error.
  */
 export async function placeBid(amount) {
   const listingID = getIDFromURL("listingID");
@@ -25,14 +25,11 @@ export async function placeBid(amount) {
     const responseData = await response.json();
 
     if (!response.ok) {
-      // Throw an error with a user-friendly message from the API
-      throw new Error(responseData.message || "An error occurred while placing the bid.");
+      throw new Error(responseData.message || "Failed to place the bid.");
     }
 
-    return responseData; // Return successful response data
+    return responseData;
   } catch (error) {
-    console.error("Error placing bid:", error.message);
-    throw error; // Re-throw the error for the calling function to handle
+    throw new Error(error.message || "An unexpected error occurred while placing the bid.");
   }
 }
-

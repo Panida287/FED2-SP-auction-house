@@ -42,10 +42,16 @@
     <!-- Header -->
     <header class="backdrop-blur-sm">
       <div class="header-elements flex justify-between items-start px-4 py-4">
-        <img class="h-20" src="assets/logo.png" />
+        <img
+          class="h-20"
+          src="assets/logo.png"
+          alt="Auction House Logo"
+          loading="lazy"
+        />
         <span class="credit text-sm text-white font-light font-h">
           Credit:
           <span class="credit credit-amount text-accent font-h text-center">
+            <!-- Dynamic content here -->
           </span>
         </span>
         <div
@@ -53,22 +59,53 @@
         >
           <img
             src=""
-            alt="Profile"
+            alt="User Profile Picture"
             class="profile-pic object-cover h-[60px] w-[60px] rounded-full mb-2 shadow-md"
+            loading="lazy"
           />
-          <span class="author text-sm text-text font-h"></span>
+          <span
+            class="author text-sm text-text font-h"
+            aria-label="User name"
+          ></span>
         </div>
       </div>
+
       <!-- Nav bar -->
       <nav
         class="nav-bar hidden bg-card w-full justify-center items-center gap-20 py-4 font-light text-text md:flex"
+        aria-label="Main Navigation"
       >
-        <a class="nav-link text-accent font-h" href="#">Home</a>
-        <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
-        <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
-        <a class="nav-link hover:text-accent font-h" href="/profile/"
-          >My profile</a
-        >
+        <ul class="flex gap-20">
+          <li>
+            <a class="nav-link text-accent font-h" href="#" aria-label="Home"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link hover:text-accent font-h"
+              href="#"
+              aria-label="Inbox"
+              >Inbox</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link hover:text-accent font-h"
+              href="#"
+              aria-label="Notifications"
+              >Notifications</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link hover:text-accent font-h"
+              href="/profile/"
+              aria-label="My Profile"
+              >My Profile</a
+            >
+          </li>
+        </ul>
       </nav>
     </header>
 
@@ -86,16 +123,22 @@
           <h2 class="advert-secondary-title text-secondText">
             Start your bidding journey
           </h2>
-          <a href="/auth/register/" class="pink-buttons">Sign up</a>
+          <a href="/auth/register/" class="pink-buttons" aria-label="to sign up"
+            >Sign up</a
+          >
         </div>
       </div>
       <div
         class="carousel-container w-full max-w-[1000px] scale-75 -translate-y-10 md:mr-20 md:-translate-y-0"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Hot Items Carousel - Browse new listings"
       >
         <div
           class="carousel-title w-full absolute flex justify-center items-center -top-10 left-1/2 -translate-x-1/2"
         >
           <svg
+            aria-hidden="true"
             class="scale-50 -translate-y-1"
             width="64px"
             height="64px"
@@ -160,6 +203,7 @@
           </svg>
           <h2 class="text-white font-thin font-h text-2xl">Hot items</h2>
           <svg
+            aria-hidden="true"
             class="scale-50 -translate-y-1"
             width="64px"
             height="64px"
@@ -223,14 +267,56 @@
             </g>
           </svg>
         </div>
-        <div class="carousel-item carousel-item-1" data-index="1"></div>
-        <div class="carousel-item carousel-item-2" data-index="2"></div>
-        <div class="carousel-item carousel-item-3" data-index="3"></div>
-        <div class="carousel-item carousel-item-4" data-index="4"></div>
-        <div class="carousel-item carousel-item-5" data-index="5"></div>
+        <!-- Individual Carousel Items -->
+        <div
+          class="carousel-item carousel-item-1"
+          data-index="1"
+          aria-label="Slide 1 of 5"
+        ></div>
+        <div
+          class="carousel-item carousel-item-2"
+          data-index="2"
+          aria-label="Slide 2 of 5"
+        ></div>
+        <div
+          class="carousel-item carousel-item-3"
+          data-index="3"
+          aria-label="Slide 3 of 5"
+        ></div>
+        <div
+          class="carousel-item carousel-item-4"
+          data-index="4"
+          aria-label="Slide 4 of 5"
+        ></div>
+        <div
+          class="carousel-item carousel-item-5"
+          data-index="5"
+          aria-label="Slide 5 of 5"
+        ></div>
+        <!-- Carousel Controls -->
         <div
           class="carousel-controls relative z-20 translate-y-[250px] flex justify-center w-full pb-3"
-        ></div>
+          role="group"
+          aria-roledescription="carousel controls"
+          aria-label="Carousel Navigation Controls"
+        >
+          <button
+            class="prev-btn"
+            aria-label="Previous"
+            aria-controls="carousel-container"
+          >
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+          </button>
+          <button
+            class="next-btn"
+            aria-label="Next"
+            aria-controls="carousel-container"
+          >
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -242,6 +328,7 @@
       <button
         class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="clothings"
+        aria-label="View items in Clothing category"
       >
         <svg
           viewBox="-9.6 -9.6 67.20 67.20"
@@ -261,6 +348,7 @@
         data-category="arts"
       >
         <svg
+          aria-hidden="true"
           fill="#ffffff"
           viewBox="-9.6 -9.6 67.20 67.20"
           xmlns="http://www.w3.org/2000/svg"
@@ -284,8 +372,10 @@
       <button
         class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="electronics"
+        aria-label="View items in electronics category"
       >
         <svg
+          aria-hidden="true"
           fill="#ffffff"
           height="200px"
           width="200px"
@@ -320,8 +410,10 @@
       <button
         class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="travel"
+        aria-label="View items in travel category"
       >
         <svg
+          aria-hidden="true"
           viewBox="-204.8 -204.8 1433.60 1433.60"
           fill="#ffffff"
           class="icon"
@@ -347,8 +439,10 @@
       <button
         class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="properties"
+        aria-label="View items in properties category"
       >
         <svg
+          aria-hidden="true"
           viewBox="-3.2 -3.2 22.40 22.40"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -375,8 +469,10 @@
       <button
         class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
         data-category="vehicles"
+        aria-label="View items in vehicles category"
       >
         <svg
+          aria-hidden="true"
           viewBox="-4.8 -4.8 33.60 33.60"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -401,8 +497,10 @@
       <button
         id="end-soon-btn"
         class="bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        aria-label="View items that are ending soon"
       >
         <svg
+          aria-hidden="true"
           viewBox="-6.4 -6.4 44.80 44.80"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -450,8 +548,10 @@
       <button
         id="sort-by-bids-btn"
         class="bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        aria-label="View items that are trending"
       >
         <svg
+          aria-hidden="true"
           viewBox="-4.8 -4.8 33.60 33.60"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -476,8 +576,10 @@
       <!-- All Listings Button -->
       <button
         class="category-btn bg-card backdrop-blur-md h-[100px] flex flex-col justify-center items-center text-text py-3 rounded-lg shadow-md hover:border-white hover:border-[1px]"
+        aria-label="View all items"
       >
         <svg
+          aria-hidden="true"
           fill="#ffffff"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 100 100"
@@ -515,62 +617,85 @@
         id="search-input"
         class="w-full border bg-white/80 text-black border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-accent"
         placeholder="Search items..."
+        aria-label="Search items"
       />
     </div>
 
     <!-- Items Section -->
     <h1
       class="category-heading text-xl text-white flex justify-center items-center font-bold mb-4"
+      aria-label="All listings"
     >
       All Listings
     </h1>
+
     <div
       class="message-container text-center text-white font-medium text-2xl mb-4"
+      aria-live="polite"
     ></div>
+
     <div
       class="items-section grid place-items-center items-start gap-4 px-4 py-6 mx-auto lg:grid-cols-2 xl:grid-cols-3"
+      aria-label="Items section"
+      role="region"
     ></div>
-    <div class="loading-spinner hidden">
-      <i class="fa-solid fa-spinner fa-spin"></i>
+
+    <div
+      class="loading-spinner hidden"
+      aria-hidden="true"
+      aria-label="Loading items, please wait"
+    >
+      <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"> </i>
     </div>
 
-    <!-- pagination -->
-    <div class="pagination flex justify-center items-center -mt-2">
-      <button class="first-page-btn text-accent mr-3">
-        <i class="fa-solid fa-backward"></i>
+    <!-- Pagination -->
+    <div
+      class="pagination flex justify-center items-center -mt-2"
+      role="navigation"
+      aria-label="Pagination controls"
+    >
+      <button
+        class="first-page-btn text-accent mr-3"
+        aria-label="Go to first page"
+      >
+        <i class="fa-solid fa-backward" aria-hidden="true"></i>
       </button>
-      <button class="prev-btn pink-buttons">
-        <i class="fa-solid fa-arrow-left"></i>
+      <button class="prev-btn pink-buttons" aria-label="Go to previous page">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
       </button>
-      <p class="page-info text-white m-2">1/1</p>
-      <button class="next-btn pink-buttons">
-        <i class="fa-solid fa-arrow-right"></i>
+      <p class="page-info text-white m-2" aria-label="Current page">1/1</p>
+      <button class="next-btn pink-buttons" aria-label="Go to next page">
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
       </button>
-      <button class="last-page-btn text-accent ml-3">
-        <i class="fa-solid fa-forward"></i>
+      <button
+        class="last-page-btn text-accent ml-3"
+        aria-label="Go to last page"
+      >
+        <i class="fa-solid fa-forward" aria-hidden="true"></i>
       </button>
     </div>
 
     <!-- Back-to-Top Button -->
-     <div class="w-full flex justify-center mt-10">
-       <button
-         id="back-to-top"
-         class="pink-buttons"
-         aria-label="Back to Top"
-       >
-         ↑ Back to top
-       </button>
-     </div>
+    <div class="w-full flex justify-center mt-10">
+      <button id="back-to-top" class="pink-buttons" aria-label="Back to top">
+        ↑ Back to top
+      </button>
+    </div>
 
     <!-- Footer -->
     <footer
       class="bg-card backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:pb-8"
+      role="contentinfo"
+      aria-label="Footer"
     >
       <div
         class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 lg:px-10"
       >
         <!-- About Section -->
-        <div class="flex flex-col items-center md:items-start mb-6 md:mb-0 md:w-1/2">
+        <div
+          class="flex flex-col items-center md:items-start mb-6 md:mb-0 md:w-1/2"
+          aria-label="About Section"
+        >
           <h3 class="font-bold text-lg mb-2">Auction House</h3>
           <p class="text-sm text-gray-400 text-center md:text-left">
             Your trusted marketplace for bidding and auctions. Discover, bid,
@@ -579,62 +704,82 @@
         </div>
 
         <!-- Navigation Links -->
-        <div class="flex flex-col items-center mb-6 md:mb-0">
+        <div
+          class="flex flex-col items-center mb-6 md:mb-0"
+          aria-label="Quick Links Section"
+        >
           <h4 class="font-semibold text-lg mb-2">Quick Links</h4>
-          <ul class="flex flex-col items-center gap-2 text-sm text-gray-400">
+          <ul
+            class="flex flex-col items-center gap-2 text-sm text-gray-400"
+            role="navigation"
+            aria-label="Footer navigation"
+          >
             <li>
-              <a href="#" class="hover:text-accent transition duration-300"
-                >About Us</a
+              <a
+                href="#"
+                class="hover:text-accent transition duration-300"
+                aria-label="About Us"
               >
+                About Us
+              </a>
             </li>
             <li>
               <a
                 href="#"
                 class="hover:text-accent transition duration-300"
-                >Listings</a
+                aria-label="Listings"
               >
+                Listings
+              </a>
             </li>
             <li>
               <a
                 href="#"
                 class="hover:text-accent transition duration-300"
-                >Contact</a
+                aria-label="Contact"
               >
+                Contact
+              </a>
             </li>
             <li>
               <a
                 href="/profile/"
                 class="hover:text-accent transition duration-300"
-                >My Profile</a
+                aria-label="My Profile"
               >
+                My Profile
+              </a>
             </li>
           </ul>
         </div>
 
         <!-- Social Media Links -->
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center" aria-label="Social Media Links">
           <h4 class="font-semibold text-lg mb-2">Follow Us</h4>
           <div class="flex gap-4">
             <a
               href="#"
               target="_blank"
               class="text-gray-400 hover:text-accent transition duration-300"
+              aria-label="Facebook"
             >
-              <i class="fa-brands fa-facebook fa-lg"></i>
+              <i class="fa-brands fa-facebook fa-lg" aria-hidden="true"></i>
             </a>
             <a
               href="#"
               target="_blank"
               class="text-gray-400 hover:text-accent transition duration-300"
+              aria-label="Instagram"
             >
-              <i class="fa-brands fa-instagram fa-lg"></i>
+              <i class="fa-brands fa-instagram fa-lg" aria-hidden="true"></i>
             </a>
             <a
               href="#"
               target="_blank"
               class="text-gray-400 hover:text-accent transition duration-300"
+              aria-label="LinkedIn"
             >
-              <i class="fa-brands fa-linkedin fa-lg"></i>
+              <i class="fa-brands fa-linkedin fa-lg" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -644,40 +789,60 @@
       <div
         class="border-t border-gray-600 mt-6 pt-4 text-center text-sm text-gray-500"
       >
-        <p>
+        <p aria-label="Copyright Notice">
           &copy; <span id="year"></span> Auction House. All Rights Reserved.
         </p>
       </div>
     </footer>
 
-    <!-- Mobile navigation Bar -->
+    <!-- Mobile Navigation Bar -->
     <nav
-    class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-4 mx-auto mt-5 bg-primaryLinear text-white text-2xl rounded-t-full shadow-md md:hidden"
+      class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-1 mx-auto mt-5 bg-primaryLinear text-white text-xl rounded-t-full shadow-md md:hidden"
+      role="navigation"
+      aria-label="Mobile Navigation"
     >
-      <a
-        href="#"
-        class="bg-accent flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <i class="fa-solid fa-house"></i>
-      </a>
-      <a
-        href="#"
-        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <i class="fa-solid fa-message"></i>
-      </a>
-      <a
-        href="#"
-        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <i class="fa-solid fa-bell"></i>
-      </a>
-      <a
-        href="/profile/"
-        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <img class="profile-pic w-[50px] h-[50px] rounded-full object-cover" />
-      </a>
+      <ul class="flex justify-evenly items-center w-full">
+        <li>
+          <a
+            href="#"
+            class="bg-accent flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="Messages"
+          >
+            <i class="fa-solid fa-message" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="Notifications"
+          >
+            <i class="fa-solid fa-bell" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/profile/"
+            class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="My Profile"
+          >
+            <img
+              class="profile-pic w-[50px] h-[50px] rounded-full object-cover"
+              alt="Profile Picture"
+              loading="lazy"
+            />
+          </a>
+        </li>
+      </ul>
     </nav>
   </body>
 </html>

@@ -10,7 +10,7 @@ import { login } from "../../api/auth/login.js";
  * @returns {Promise<void>} Redirects the user to the homepage on success or does nothing if login fails.
  */
 export async function onLogin(event) {
-  event.preventDefault(); // Prevent default form submission behavior
+  event.preventDefault();
 
   const formData = {
     email: document.getElementById("email").value,
@@ -19,7 +19,6 @@ export async function onLogin(event) {
 
   const result = await login(formData);
 
-  // Redirect if login is successful
   if (result?.data) {
     window.location.href = "/";
   }

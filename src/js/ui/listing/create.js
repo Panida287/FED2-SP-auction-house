@@ -10,7 +10,7 @@ import { toggleContainer } from "../../utilities/toggleContainer";
  * @param {Event} event - The form submission event.
  */
 export async function onCreate(event) {
-  event.preventDefault(); // Prevent default form submission
+  event.preventDefault();
 
   const titleInput = document.getElementById("item-name");
   const descriptionInput = document.getElementById("item-description");
@@ -19,42 +19,34 @@ export async function onCreate(event) {
   const durationInput = document.getElementById("auction-duration");
   const previewImage = document.getElementById("preview-image");
 
-  // Dynamically update the image preview
   setupPreview(mediaUrlInput, previewImage, titleInput?.value.trim());
 
-  // Validate duration input
   const duration = parseInt(durationInput?.value.trim());
   if (isNaN(duration) || duration < 1 || duration > 365) {
     alert("Please enter a valid auction duration between 1 and 365 days.");
     return;
   }
 
-  // Calculate the auction's end date
   const currentDate = new Date();
-  const endsAt = new Date(currentDate.getTime() + duration * 24 * 60 * 60 * 1000); // Add duration in milliseconds
+  const endsAt = new Date(currentDate.getTime() + duration * 24 * 60 * 60 * 1000);
 
-  // Collect selected category tags
   const tags = Array.from(categorySelect?.selectedOptions).map((option) => option.value);
 
-  // Construct media array with title as alt text
   const media = [{ url: mediaUrlInput?.value.trim(), alt: titleInput?.value.trim() }];
 
   try {
-    // Call the API to create the listing
     await createListing({
       title: titleInput?.value.trim(),
       description: descriptionInput?.value.trim(),
       tags,
       media,
-      endsAt: endsAt.toISOString(), // Convert to ISO format
+      endsAt: endsAt.toISOString(),
     });
 
     // Handle success
     alert("Listing created successfully!");
-    location.reload(); // Reload the page after successful listing creation
+    location.reload();
   } catch (error) {
-    // Handle errors
-    console.error("Error creating listing:", error);
     alert("Failed to create listing. Please try again.");
   }
 }
@@ -71,7 +63,6 @@ export function setupCreateListing() {
   const mediaUrlInput = document.getElementById("item-image-url");
   const overlay = document.querySelector(".overlay");
 
-  // Initialize media preview
   setupPreview(mediaUrlInput, previewImage);
 
   if (createListingBtn) {

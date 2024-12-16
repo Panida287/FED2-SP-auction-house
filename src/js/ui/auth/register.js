@@ -26,7 +26,5 @@ export async function onRegister(event) {
         avatar: document.getElementById('avatar') ? document.getElementById('avatar').value : null, 
         banner: document.getElementById('banner') ? document.getElementById('banner').value : null,
     };
-
-    // Simply call `register` and let it handle success and error DOM updates
     await register(formData);
 }

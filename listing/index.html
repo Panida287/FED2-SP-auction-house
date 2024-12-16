@@ -38,7 +38,7 @@
     <title>Listing</title>
   </head>
 
-  <body>
+  <body class="grid">
     <!-- Back Button and Image -->
     <header
       class="header-elements relative h-auto w-full flex justify-between items-center"
@@ -49,18 +49,46 @@
       >
         <i class="fa-solid fa-arrow-left"></i>
       </button>
+
+      <!-- Nav bar -->
       <nav
-        class="nav-bar hidden absolute w-full justify-center items-center gap-20 py-4 font-light text-text md:flex md:text-sm md:gap-10 lg:gap-20"
+        class="nav-bar hidden w-full text-sm justify-center items-center py-4 font-light text-text md:flex md:w-[70%] lg:w-[80%]"
+        aria-label="Main Navigation"
       >
-        <a class="nav-link hover:text-accent font-h" href="/">Home</a>
-        <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
-        <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
-        <a class="nav-link hover:text-accent font-h" href="/profile/"
-          >My profile</a
-        >
+        <ul class="flex gap-10 lg:gap-20">
+          <li>
+            <a class="nav-link hover:text-accent font-h" href="/" aria-label="Home"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link hover:text-accent font-h"
+              href="#"
+              aria-label="Inbox"
+              >Inbox</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link hover:text-accent font-h"
+              href="#"
+              aria-label="Notifications"
+              >Notifications</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link hover:text-accent font-h"
+              href="/profile/"
+              aria-label="My Profile"
+              >My Profile</a
+            >
+          </li>
+        </ul>
       </nav>
       <!-- Profile -->
-      <div class="profile h-full items-center z-20 m-3">
+      <div class="profile h-full flex items-center z-20 m-3">
         <img
           src=""
           alt="Profile"
@@ -173,10 +201,12 @@
 
     <!-- Last Bids -->
     <section
-      class="max-w-[800px] mx-auto p-4 bg-card backdrop-blur-md rounded-xl"
+      class="w-full flex justify-center md:mt-6"
     >
+    <div class="w-full max-w-[800px] flex flex-col justify-center items-center p-4 bg-card backdrop-blur-md rounded-xl ">
       <h2 class="text-lg font-bold mb-2 text-gray-300">Last Bids</h2>
-      <div id="last-bids" class="space-y-4"></div>
+      <div id="last-bids" class="space-y-4 w-full px-10 py-5"></div>
+    </div>
     </section>
 
     <!-- Pagination -->
@@ -326,7 +356,7 @@
 
     <!-- Footer -->
     <footer
-    class="bg-card w-full backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:relative md:pb-8 md:bottom-0 md:-mb-20"
+    class="bg-card w-full backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:relative md:bottom-0 md:pb-8 "
     >
       <div
         class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 lg:px-10"
@@ -410,34 +440,54 @@
       </div>
     </footer>
 
-    <!-- Mobile navigation Bar -->
-    <nav
-    class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-4 mx-auto mt-5 bg-primaryLinear text-white text-2xl rounded-t-full shadow-md md:hidden"
+<!-- Mobile Navigation Bar -->
+<nav
+class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-1 mx-auto mt-5 bg-primaryLinear text-white text-xl rounded-t-full shadow-md md:hidden"
+role="navigation"
+aria-label="Mobile Navigation"
+>
+<ul class="flex justify-evenly items-center w-full">
+  <li>
+    <a
+      href="#"
+      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      aria-label="Home"
     >
-      <a
-        href="#"
-        class="bg-accent flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <i class="fa-solid fa-house"></i>
-      </a>
-      <a
-        href="#"
-        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <i class="fa-solid fa-message"></i>
-      </a>
-      <a
-        href="#"
-        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <i class="fa-solid fa-bell"></i>
-      </a>
-      <a
-        href="/profile/"
-        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      >
-        <img class="profile-pic w-[50px] h-[50px] rounded-full object-cover" />
-      </a>
-    </nav>
+      <i class="fa-solid fa-house" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a
+      href="#"
+      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      aria-label="Messages"
+    >
+      <i class="fa-solid fa-message" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a
+      href="#"
+      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      aria-label="Notifications"
+    >
+      <i class="fa-solid fa-bell" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a
+      href="/profile/"
+      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      aria-label="My Profile"
+    >
+      <img
+        class="profile-pic w-[50px] h-[50px] rounded-full object-cover"
+        alt="Profile Picture"
+        loading="lazy"
+      />
+    </a>
+  </li>
+</ul>
+</nav>
   </body>
 </html>
