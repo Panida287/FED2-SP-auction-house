@@ -22,43 +22,68 @@
       href="/assets/favicon_io/favicon-16x16.png"
     />
     <script type="module" src="../../src/js/main.js"></script>
-    <link rel="stylesheet" href="../../src/css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap">
+    <link rel="stylesheet" href="../../src/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
   </head>
 
-  <body class="flex justify-center items-center w-screen h-screen">
-    <div class="login-form bg-gray-400 w-[90%] m-auto">
-      <h1 class="flex justify-center items-center">LOGIN</h1>
-      <form name="login">
-        <div class="p-1">
-          <label for="email">Email</label>
+  <body class="w-screen h-screen flex flex-col justify-center items-center md:flex-row">
+    <h2 class="font-h font-bold w-1/2 mx-auto text-white text-2xl text-center">
+      AUCTION HOUSE
+    </h2>
+    <!-- Login Modal -->
+    <div
+      class="login-form w-full m-20 max-w-[400px] p-8 bg-card backdrop-blur-xl rounded-lg shadow-lg md:mr-10"
+    >
+      <h1 class="text-text text-center font-semibold mb-6">LOGIN</h1>
+      <form name="login" class="flex flex-col gap-4">
+        <!-- Email -->
+        <div>
+          <label for="email" class="text-text">Email</label>
           <input
             id="email"
             type="email"
             name="email"
-            placeholder="@stud.noroff.no"
+            value="@stud.noroff.no"
             required
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
 
-        <div class="p-1">
-          <label for="password">Password</label>
+        <!-- Password -->
+        <div>
+          <label for="password" class="text-text">Password</label>
           <input
             type="password"
             name="password"
             id="password"
             minlength="8"
             required
+            class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
-        <button type="submit" class="border-black border-2">LOGIN</button>
-        <p class="error-msg text-red-700"></p>
+
+        <!-- Error Message -->
+        <p class="error-msg text-red-500 text-sm text-center hidden">
+          Invalid email or password.
+        </p>
+
+        <!-- Buttons -->
+        <div class="flex justify-between mt-4">
+          <button type="submit" class="pink-buttons w-full">LOGIN</button>
+        </div>
       </form>
-      <div>
+
+      <!-- Register Link -->
+      <div class="text-center mt-4 text-text">
         <p>Not registered?</p>
-        <a href="/auth/register/">Register</a>
+        <a href="/auth/register/" class="text-accent font-semibold hover:underline">
+          Register
+        </a>
       </div>
     </div>
   </body>
