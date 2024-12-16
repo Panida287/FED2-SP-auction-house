@@ -1,5 +1,5 @@
 import { renderListingById, renderPaginatedBids } from "../../ui/listing/display";
-import { renderProfile, setupProfileButton } from "../../ui/profile/renderProfile";
+import { renderProfile } from "../../ui/profile/renderProfile";
 import { setupBidForm } from "../../ui/listing/placeBid";
 import { readListing } from "../../api/listing/read";
 import { setupPreview } from "../../utilities/preview";
@@ -11,7 +11,6 @@ import { authGuard } from "../../utilities/authGuard";
 import { backButton } from "../../ui/global/backBtn";
 
 backButton();
-setupProfileButton();
 authGuard();
 setLogoutListener();
 renderListingById();

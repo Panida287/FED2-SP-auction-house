@@ -204,7 +204,6 @@ export async function renderUserBidsListings(username, limit = 6, page = 1) {
   }
 }
 
-
 export async function renderUserWinsListings(username, limit = 6, page = 1) {
   const container = document.querySelector(".result-container");
   const resultTitle = document.querySelector(".result-title");
