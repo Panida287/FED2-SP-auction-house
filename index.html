@@ -37,6 +37,7 @@
     ></script>
     <title>Auction house</title>
   </head>
+
   <body>
     <!-- Header -->
     <header class="backdrop-blur-sm">
@@ -53,20 +54,21 @@
           <img
             src=""
             alt="Profile"
-            class="profile-pic object-cover h-[60px] w-[60px] rounded-full cursor-pointer mb-2 shadow-md"
-            id="profile-link"
+            class="profile-pic object-cover h-[60px] w-[60px] rounded-full mb-2 shadow-md"
           />
           <span class="author text-sm text-text font-h"></span>
         </div>
       </div>
       <!-- Nav bar -->
       <nav
-        class="nav-bar hidden w-full justify-center items-center gap-20 py-4 font-light text-text md:flex"
+        class="nav-bar hidden bg-card w-full justify-center items-center gap-20 py-4 font-light text-text md:flex"
       >
         <a class="nav-link text-accent font-h" href="#">Home</a>
         <a class="nav-link hover:text-accent font-h" href="#">Inbox</a>
         <a class="nav-link hover:text-accent font-h" href="#">Notification</a>
-        <a class="nav-link hover:text-accent font-h" href="/profile/">My profile</a>
+        <a class="nav-link hover:text-accent font-h" href="/profile/"
+          >My profile</a
+        >
       </nav>
     </header>
 
@@ -84,9 +86,7 @@
           <h2 class="advert-secondary-title text-secondText">
             Start your bidding journey
           </h2>
-          <a
-            href="/auth/register/" 
-            class="pink-buttons">Sign up</a>
+          <a href="/auth/register/" class="pink-buttons">Sign up</a>
         </div>
       </div>
       <div
@@ -528,14 +528,14 @@
       class="message-container text-center text-white font-medium text-2xl mb-4"
     ></div>
     <div
-      class="items-section grid place-items-center items-start gap-4 px-4 py-6 mx-auto lg:grid-cols-2 lg:w-[1000px]"
+      class="items-section grid place-items-center items-start gap-4 px-4 py-6 mx-auto lg:grid-cols-2 xl:grid-cols-3"
     ></div>
     <div class="loading-spinner hidden">
       <i class="fa-solid fa-spinner fa-spin"></i>
     </div>
 
     <!-- pagination -->
-    <div class="pagination flex justify-center items-center mt-4 pb-[100px]">
+    <div class="pagination flex justify-center items-center -mt-2">
       <button class="first-page-btn text-accent mr-3">
         <i class="fa-solid fa-backward"></i>
       </button>
@@ -551,97 +551,108 @@
       </button>
     </div>
 
+    <!-- Back-to-Top Button -->
+     <div class="w-full flex justify-center mt-10">
+       <button
+         id="back-to-top"
+         class="pink-buttons"
+         aria-label="Back to Top"
+       >
+         ↑ Back to top
+       </button>
+     </div>
+
     <!-- Footer -->
-  <footer class="bg-card backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:pb-8">
-    <div
-      class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 lg:px-10"
+    <footer
+      class="bg-card backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:pb-8"
     >
-      <!-- About Section -->
-      <div class="flex flex-col items-center md:items-start mb-6 md:mb-0">
-        <h3 class="font-bold text-lg mb-2">Auction House</h3>
-        <p class="text-sm text-gray-400 text-center md:text-left">
-          Your trusted marketplace for bidding and auctions. Discover, bid, and win
-          exclusive items every day!
-        </p>
-      </div>
+      <div
+        class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 lg:px-10"
+      >
+        <!-- About Section -->
+        <div class="flex flex-col items-center md:items-start mb-6 md:mb-0 md:w-1/2">
+          <h3 class="font-bold text-lg mb-2">Auction House</h3>
+          <p class="text-sm text-gray-400 text-center md:text-left">
+            Your trusted marketplace for bidding and auctions. Discover, bid,
+            and win exclusive items every day!
+          </p>
+        </div>
 
-      <!-- Navigation Links -->
-      <div class="flex flex-col items-center md:items-start mb-6 md:mb-0">
-        <h4 class="font-semibold text-lg mb-2">Quick Links</h4>
-        <ul class="flex flex-col items-center gap-2 text-sm text-gray-400">
-          <li>
-            <a href="/about" class="hover:text-accent transition duration-300"
-              >About Us</a
-            >
-          </li>
-          <li>
-            <a href="/listings" class="hover:text-accent transition duration-300"
-              >Listings</a
-            >
-          </li>
-          <li>
-            <a href="/contact" class="hover:text-accent transition duration-300"
-              >Contact</a
-            >
-          </li>
-          <li>
-            <a href="/profile" class="hover:text-accent transition duration-300"
-              >My Profile</a
-            >
-          </li>
-        </ul>
-      </div>
+        <!-- Navigation Links -->
+        <div class="flex flex-col items-center mb-6 md:mb-0">
+          <h4 class="font-semibold text-lg mb-2">Quick Links</h4>
+          <ul class="flex flex-col items-center gap-2 text-sm text-gray-400">
+            <li>
+              <a href="#" class="hover:text-accent transition duration-300"
+                >About Us</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="hover:text-accent transition duration-300"
+                >Listings</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="hover:text-accent transition duration-300"
+                >Contact</a
+              >
+            </li>
+            <li>
+              <a
+                href="/profile/"
+                class="hover:text-accent transition duration-300"
+                >My Profile</a
+              >
+            </li>
+          </ul>
+        </div>
 
-      <!-- Social Media Links -->
-      <div class="flex flex-col items-center">
-        <h4 class="font-semibold text-lg mb-2">Follow Us</h4>
-        <div class="flex gap-4">
-          <a
-            href="#"
-            target="_blank"
-            class="text-gray-400 hover:text-accent transition duration-300"
-          >
-            <i class="fa-brands fa-facebook fa-lg"></i>
-          </a>
-          <a
-            href="#"
-            target="_blank"
-            class="text-gray-400 hover:text-accent transition duration-300"
-          >
-            <i class="fa-brands fa-instagram fa-lg"></i>
-          </a>
-          <a
-            href="#"
-            target="_blank"
-            class="text-gray-400 hover:text-accent transition duration-300"
-          >
-            <i class="fa-brands fa-twitter fa-lg"></i>
-          </a>
-          <a
-            href="#"
-            target="_blank"
-            class="text-gray-400 hover:text-accent transition duration-300"
-          >
-            <i class="fa-brands fa-linkedin fa-lg"></i>
-          </a>
+        <!-- Social Media Links -->
+        <div class="flex flex-col items-center">
+          <h4 class="font-semibold text-lg mb-2">Follow Us</h4>
+          <div class="flex gap-4">
+            <a
+              href="#"
+              target="_blank"
+              class="text-gray-400 hover:text-accent transition duration-300"
+            >
+              <i class="fa-brands fa-facebook fa-lg"></i>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              class="text-gray-400 hover:text-accent transition duration-300"
+            >
+              <i class="fa-brands fa-instagram fa-lg"></i>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              class="text-gray-400 hover:text-accent transition duration-300"
+            >
+              <i class="fa-brands fa-linkedin fa-lg"></i>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Bottom Bar -->
-    <div
-      class="border-t border-gray-600 mt-6 pt-4 text-center text-sm text-gray-500"
-    >
-      <p>
-        &copy; <span id="year"></span> Auction House. All Rights Reserved.
-      </p>
-    </div>
-  </footer>
-
+      <!-- Bottom Bar -->
+      <div
+        class="border-t border-gray-600 mt-6 pt-4 text-center text-sm text-gray-500"
+      >
+        <p>
+          &copy; <span id="year"></span> Auction House. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
 
     <!-- Mobile navigation Bar -->
     <nav
-      class="mobile-nav z-20 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-evenly items-center w-[80%] p-2 mx-auto my-5 bg-card backdrop-blur-lg text-white text-xl rounded-full shadow-md md:hidden"
+    class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-4 mx-auto mt-5 bg-primaryLinear text-white text-2xl rounded-t-full shadow-md md:hidden"
     >
       <a
         href="#"
@@ -649,20 +660,23 @@
       >
         <i class="fa-solid fa-house"></i>
       </a>
-      <a 
+      <a
         href="#"
-        class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
+        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      >
         <i class="fa-solid fa-message"></i>
       </a>
-      <a 
-      href="#"
-      class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
+      <a
+        href="#"
+        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      >
         <i class="fa-solid fa-bell"></i>
       </a>
-      <a 
-      href="/profile/"
-      class="flex justify-center items-center w-[50px] h-[50px] rounded-full">
-        <img class="profile-pic w-[30px] h-[30px] rounded-full object-cover"></img>
+      <a
+        href="/profile/"
+        class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+      >
+        <img class="profile-pic w-[50px] h-[50px] rounded-full object-cover" />
       </a>
     </nav>
   </body>

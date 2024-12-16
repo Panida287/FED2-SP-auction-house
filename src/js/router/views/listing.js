@@ -8,7 +8,9 @@ import { onUpdate } from "../../ui/listing/update";
 import { onDelete } from "../../ui/listing/delete";
 import { setLogoutListener } from "../../ui/global/logout";
 import { authGuard } from "../../utilities/authGuard";
+import { backButton } from "../../ui/global/backBtn";
 
+backButton();
 setupProfileButton();
 authGuard();
 setLogoutListener();
@@ -201,20 +203,5 @@ function deleteListing() {
     onDelete();
    })
 
-}
-
-// Back Button Handling
-const backButton = document.getElementById("back-btn");
-
-if (backButton) {
-  backButton.addEventListener("click", () => {
-    if (document.referrer) {
-      // Go back to the previous page in the history stack
-      history.back();
-    } else {
-      // Fallback to a default page if there's no referrer
-      window.location.href = "/";
-    }
-  });
 }
 

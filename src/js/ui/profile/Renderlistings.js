@@ -23,7 +23,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
     resultTitle.textContent = "";
 
     if (!listings || listings.length === 0) {
-      messageContainer.textContent = `No listings found for user: ${username}`;
+      messageContainer.textContent = `${username} has not listed anything`;
       paginationContainer.classList.add("hidden"); // Hide pagination
       return;
     }
@@ -57,7 +57,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
 
       listingElement.innerHTML = `
       <div class="flex flex-col w-full">
-          <div class="listing-img h-[200px] object-cover rounded-lg overflow-hidden mr-4">
+          <div class="listing-img h-[200px] w-full object-cover rounded-lg overflow-hidden mr-4">
             <img 
               src="${listing.media?.[0]?.url || FALLBACK_IMG}"
               alt="${listing.media?.[0]?.alt || "Listing Image"}"
@@ -82,7 +82,7 @@ export async function renderListingsByUser(username, page = 1, limit = 12) {
         <div class="flex w-full justify-center items-center mt-4">
           <div id="${countdownTimerId}"></div>
         </div>
-        ${isEnded? `<div class="absolute h-[80px] w-full bottom-0 left-0 flex justify-center items-center text-error font-bold text-lg">
+        ${isEnded? `<div class="w-full bottom-0 left-0 flex justify-center items-center text-error font-bold text-lg">
                     Auction ended on: ${endDate.toLocaleDateString()}
                     </div>`
                     : ""
@@ -133,7 +133,7 @@ export async function renderUserBidsListings(username, limit = 12, page = 1) {
     resultTitle.textContent = "";
 
     if (!bidData || bidData.length === 0) {
-      messageContainer.textContent = `${username} has not bid on anything yet.`;
+      messageContainer.textContent = `${username} has not bid on anything.`;
       paginationContainer.classList.add("hidden"); // Hide pagination
       return;
     }
@@ -258,11 +258,11 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
     winData.forEach((listing) => {
       const { title, _count, endsAt, media } = listing;
       const endDate = new Date(endsAt);
-      const card = document.createElement("div");
-      card.className =
+      const listingElement = document.createElement("a");
+      listingElement.className =
         "item-card bg-white/5 backdrop-blur-lg rounded-2xl p-4 mx-auto flex flex-col items-start shadow-md w-[300px]";
-
-      card.innerHTML = `
+      listingElement.href = `/listing/?listingID=${listing.id}&_seller=true&_bids=true`;
+      listingElement.innerHTML = `
         <div class="listing-details flex flex-col justify-between w-full">
           <img 
             src="${media?.[0]?.url || FALLBACK_IMG}"
@@ -282,7 +282,7 @@ export async function renderUserWinsListings(username, limit = 12, page = 1) {
         </div>
       `;
 
-      container.appendChild(card);
+      container.appendChild(listingElement);
     });
 
     // Update pagination

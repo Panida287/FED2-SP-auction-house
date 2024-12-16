@@ -4,6 +4,11 @@ import { setupCreateListing } from "../../ui/listing/create";
 import { renderProfile } from "../../ui/profile/renderProfile";
 import { renderUserBidsListings, renderUserWinsListings ,renderListingsByUser } from "../../ui/profile/Renderlistings";
 import { toggleContainer } from "../../utilities/toggleContainer";
+import { backToTop } from "../../ui/global/backToTop";
+import { backButton } from "../../ui/global/backBtn";
+
+backButton();
+backToTop("back-to-top", 0);
 
 // Retrieve the username from local storage
 const username = localStorage.getItem("userName");
