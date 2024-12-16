@@ -62,9 +62,8 @@
             type="text"
             name="name"
             maxlength="20"
-            pattern="^[\\w]+$"
             required
-            placeholder="Letters, numbers, and underscores only"
+            placeholder="Username"
             class="border w-full border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent"
           />
         </div>
@@ -122,8 +121,7 @@
         </div>
 
         <!-- Error Message -->
-        <p class="error-msg text-red-500 text-sm text-center hidden">
-          Please fix errors in the form.
+        <p class="error-msg text-red-500 text-sm text-center">
         </p>
 
         <!-- Buttons -->
@@ -143,7 +141,7 @@
 
     <!-- Success Modal -->
     <div
-      class="register-success hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[300px] p-6 bg-green-500 text-white rounded-lg shadow-lg text-center"
+      class="register-success flex-col absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[300px] p-6 bg-primaryLinear text-text rounded-lg shadow-lg text-center"
     >
       <h2 class="font-bold mb-4">Registration Successful!</h2>
       <a href="/auth/login/" class="text-sm underline hover:text-gray-200">
