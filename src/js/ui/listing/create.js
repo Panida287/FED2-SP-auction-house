@@ -69,6 +69,7 @@ export function setupCreateListing() {
   const cancelBtn = document.getElementById("cancel-create-btn");
   const previewImage = document.getElementById("preview-image");
   const mediaUrlInput = document.getElementById("item-image-url");
+  const overlay = document.querySelector(".overlay");
 
   // Initialize media preview
   setupPreview(mediaUrlInput, previewImage);
@@ -76,12 +77,14 @@ export function setupCreateListing() {
   if (createListingBtn) {
     createListingBtn.addEventListener("click", () => {
       toggleContainer(createListingContainer, true);
+      toggleContainer(overlay, true);
     });
   }
 
   if (cancelBtn) {
     cancelBtn.addEventListener("click", () => {
       toggleContainer(createListingContainer, false);
+      toggleContainer(overlay, false);
       listingForm?.reset();
     });
   }

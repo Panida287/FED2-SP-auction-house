@@ -76,7 +76,7 @@ export function renderListingsToContainer(listings, container) {
 
     const listingElement = document.createElement("div");
     listingElement.className =
-      "item-card bg-card backdrop-blur-lg rounded-2xl p-4 mx-50 mb-10 flex flex-col items-center shadow-md w-[470px] md:w-[450px]";
+      "item-card bg-card backdrop-blur-lg rounded-2xl p-4 mx-auto mb-10 flex flex-col items-center shadow-md w-[400px]";
 
     const biddersContainer = document.createElement("div");
     biddersContainer.className = "flex items-center justify-start mt-2";
@@ -216,6 +216,7 @@ export async function renderListings(
 
     // Render paginated listings
     renderListingsToContainer(paginatedListings, itemsSection);
+    console.log(listings);
 
     // Show or hide pagination based on total listings
     if (totalPages > 1) {
@@ -251,9 +252,11 @@ export async function renderListings(
     };
   } catch (error) {
     console.error("Error rendering listings:", error);
-    itemsSection.innerHTML = `<p class="text-red-500">Failed to load listings. Please try again later.</p>`;
-    paginationContainer.classList.add("hidden"); // Hide pagination in case of error
+    itemsSection.innerHTML = `<p class="text-error">Failed to load listings. Please try again later.</p>`;
+    paginationContainer.classList.add("hidden");
   }
+
+  
 }
 
 
@@ -460,7 +463,6 @@ export function renderPaginatedBids(bids, page, perPage, container) {
     container.appendChild(bidElement);
   });
 }
-
 
 
 /**

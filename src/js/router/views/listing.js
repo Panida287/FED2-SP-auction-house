@@ -148,6 +148,7 @@ async function populateUpdateForm() {
     const editListingContainer = document.getElementById("edit-listing-container");
     const listingForm = document.getElementById("edit-listing-form"); // Use correct form ID
     const cancelBtn = document.getElementById("cancel-edit-btn");
+    const overlay = document.querySelector(".overlay");
   
   
     if (editBtn && editListingContainer) {
@@ -159,6 +160,7 @@ async function populateUpdateForm() {
         if (editListingContainer.classList.contains("hidden")) {
           await populateUpdateForm(); // Populate the form with listing data
           toggleContainer(editListingContainer, true); // Open the modal
+          toggleContainer(overlay, true);
         }
       });
     }
@@ -167,6 +169,7 @@ async function populateUpdateForm() {
       // Close the modal and reset the form when the cancel button is clicked
       cancelBtn.addEventListener("click", () => {
         toggleContainer(editListingContainer, false);
+        toggleContainer(overlay, false);
         listingForm?.reset();
       });
     }
