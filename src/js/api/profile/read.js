@@ -1,36 +1,31 @@
-import { API_PROFILES} from "../constants";
+import { API_PROFILES } from "../constants";
 import { loggedInHeaders } from "../headers";
 
 /**
- * Fetch a specific user's profile by username.
- * 
- * This function sends a GET request to retrieve a user's profile data by their username.
- * 
+ * Fetches the profile of a specific user by username.
+ *
  * @async
- * @param {string} userName - The username of the profile to be retrieved.
- * @returns {Promise<Object>} A promise that resolves with the user's profile data, or throws an error if the request fails.
- * 
- * @throws Will throw an error if the network request fails or the server response is not ok.
+ * @function readProfile
+ * @param {string} userName - The username of the user whose profile is to be fetched.
+ * @returns {Promise<Object>} Resolves with the user's profile data.
+ * @throws {Error} Throws an error if the network request fails or the response is not OK.
  */
-
 export async function readProfile(userName) {
-    const myHeaders = await loggedInHeaders();
+  const myHeaders = await loggedInHeaders();
 
-    try {
-        const response = await fetch(`${API_PROFILES}/${userName}`, {
-            method: "GET",
-            headers: myHeaders,
-        });
-        const result = await response.json();
+  try {
+    const response = await fetch(`${API_PROFILES}/${userName}`, {
+      method: "GET",
+      headers: myHeaders,
+    });
 
-        if (response.ok) {
-            return result;
-        } else {
-            console.error(result);
-            throw new Error(`Failed to fetch profile: ${result.message}`);
-        }
-    } catch (error) {
-        console.error("Error fetching profile:", error);
-        throw error;
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to fetch profile.");
     }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error(error.message || "Error fetching profile.");
+  }
 }

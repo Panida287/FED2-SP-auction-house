@@ -21,6 +21,13 @@ setupUpdateListing();
 deleteListing();
 initializeBids();
 
+/**
+ * Sets up pagination buttons for bids.
+ *
+ * @param {Array<Object>} bids - The list of bids.
+ * @param {HTMLElement} container - The DOM container to render the bids.
+ * @param {number} perPage - The number of bids per page.
+ */
 function setupPaginationButtons(bids, container, perPage) {
   const paginationDiv = document.querySelector(".pagination");
   const prevButton = document.querySelector(".prev-btn");
@@ -29,30 +36,19 @@ function setupPaginationButtons(bids, container, perPage) {
   const lastPageButton = document.querySelector(".last-page-btn");
   const pageInfo = document.querySelector(".page-info");
 
-  let currentPage = 1; // Default page
-
+  let currentPage = 1;
   const totalPages = Math.ceil(bids.length / perPage);
 
-  function updatePagination() {
-    // Update page info
+  const updatePagination = () => {
     pageInfo.textContent = `${currentPage} / ${totalPages}`;
-
-    // Disable or enable buttons based on the current page
     prevButton.disabled = currentPage <= 1;
     firstPageButton.disabled = currentPage <= 1;
     nextButton.disabled = currentPage >= totalPages;
     lastPageButton.disabled = currentPage >= totalPages;
-
-    // Render the current page of bids
     renderPaginatedBids(bids, currentPage, perPage, container);
+    if (bids.length <= perPage) paginationDiv.classList.add("hidden");
+  };
 
-    if(bids.length <= 12) {
-      paginationDiv.classList.add("hidden");
-    }
-
-  }
-
-  // Add event listeners to the buttons
   prevButton.addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
@@ -68,140 +64,115 @@ function setupPaginationButtons(bids, container, perPage) {
   });
 
   firstPageButton.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage = 1;
-      updatePagination();
-    }
+    currentPage = 1;
+    updatePagination();
   });
 
   lastPageButton.addEventListener("click", () => {
-    if (currentPage < totalPages) {
-      currentPage = totalPages;
-      updatePagination();
-    }
+    currentPage = totalPages;
+    updatePagination();
   });
 
-  // Initialize the pagination
   updatePagination();
 }
 
+/**
+ * Initializes the bids section with pagination.
+ *
+ * @async
+ */
 async function initializeBids() {
   const container = document.getElementById("last-bids");
   const bidsPerPage = 10;
 
   try {
-    const listing = await readListing(); // Fetch listing details
-    const bids = listing.bids || []; // Get bids from the listing
-
+    const listing = await readListing();
+    const bids = listing.bids || [];
     setupPaginationButtons(bids, container, bidsPerPage);
   } catch (error) {
     console.error("Error initializing bids:", error);
   }
 }
 
-
+/**
+ * Populates the update form with the selected listing data.
+ *
+ * @async
+ */
 async function populateUpdateForm() {
-    try {
-      const listing = await readListing(); // Fetch the listing data
-      if (!listing) {
-        throw new Error("Failed to fetch listing data.");
-      }
-  
-      console.log("Fetched listing:", listing); // Log the listing here
-  
-      // Select form elements
-      const titleInput = document.getElementById("listing-name");
-      const descriptionInput = document.getElementById("listing-description");
-      const categorySelect = document.getElementById("listing-category");
-      const mediaUrlInput = document.getElementById("listing-image-url");
-      const previewImage = document.getElementById("preview-image");
-  
-      // Populate the form fields
-      titleInput.value = listing.title || "";
-      mediaUrlInput.value = listing.media?.[0]?.url || "";
-      descriptionInput.value = listing.description || "";
-  
-      // Trigger preview image display
-      setupPreview(mediaUrlInput, previewImage, titleInput.value);
-  
-      // Handle category dropdown
-      const selectedTag = listing.tags?.[0]; // Assume the first tag represents the category
-      let matchFound = false;
-      Array.from(categorySelect.options).forEach((option) => {
-        if (option.value === selectedTag) {
-          option.selected = true;
-          matchFound = true;
-        } else {
-          option.selected = false;
-        }
-      });
-  
-      // If no match is found, set the dropdown to "Please select category"
-      if (!matchFound) {
-        categorySelect.selectedIndex = 0; // Set to the first option (default)
-      }
-    } catch (error) {
-      console.error("Error populating update form:", error);
-    }
+  try {
+    const listing = await readListing();
+    if (!listing) throw new Error("Failed to fetch listing data.");
+
+    const titleInput = document.getElementById("listing-name");
+    const descriptionInput = document.getElementById("listing-description");
+    const categorySelect = document.getElementById("listing-category");
+    const mediaUrlInput = document.getElementById("listing-image-url");
+    const previewImage = document.getElementById("preview-image");
+
+    titleInput.value = listing.title || "";
+    mediaUrlInput.value = listing.media?.[0]?.url || "";
+    descriptionInput.value = listing.description || "";
+    setupPreview(mediaUrlInput, previewImage, titleInput.value);
+
+    const selectedTag = listing.tags?.[0];
+    let matchFound = false;
+    Array.from(categorySelect.options).forEach((option) => {
+      option.selected = option.value === selectedTag;
+      if (option.value === selectedTag) matchFound = true;
+    });
+    if (!matchFound) categorySelect.selectedIndex = 0;
+  } catch (error) {
+    console.error("Error populating update form:", error);
   }
-  
-  function setupUpdateListing() {
-    const editBtn = document.getElementById("edit-listing-btn"); // Edit button
-    const editListingContainer = document.getElementById("edit-listing-container");
-    const listingForm = document.getElementById("edit-listing-form"); // Use correct form ID
-    const cancelBtn = document.getElementById("cancel-edit-btn");
-    const overlay = document.querySelector(".overlay");
-  
-  
-    if (editBtn && editListingContainer) {
-      // Toggle the edit modal when the edit button is clicked
-      editBtn.addEventListener("click", async () => {
-        console.log("Edit button clicked");
-  
-        // Prevent multiple toggles
-        if (editListingContainer.classList.contains("hidden")) {
-          await populateUpdateForm(); // Populate the form with listing data
-          toggleContainer(editListingContainer, true); // Open the modal
-          toggleContainer(overlay, true);
-        }
-      });
-    }
-  
-    if (cancelBtn) {
-      // Close the modal and reset the form when the cancel button is clicked
-      cancelBtn.addEventListener("click", () => {
-        toggleContainer(editListingContainer, false);
-        toggleContainer(overlay, false);
-        listingForm?.reset();
-      });
-    }
-  
-    // Handle form submission
-    listingForm?.addEventListener("submit", onUpdate);
+}
+
+/**
+ * Sets up the update listing modal and form submission.
+ */
+function setupUpdateListing() {
+  const editBtn = document.getElementById("edit-listing-btn");
+  const editListingContainer = document.getElementById("edit-listing-container");
+  const listingForm = document.getElementById("edit-listing-form");
+  const cancelBtn = document.getElementById("cancel-edit-btn");
+  const overlay = document.querySelector(".overlay");
+
+  if (editBtn && editListingContainer) {
+    editBtn.addEventListener("click", async () => {
+      if (editListingContainer.classList.contains("hidden")) {
+        await populateUpdateForm();
+        toggleContainer(editListingContainer, true);
+        toggleContainer(overlay, true);
+      }
+    });
   }
 
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      toggleContainer(editListingContainer, false);
+      toggleContainer(overlay, false);
+      listingForm?.reset();
+    });
+  }
+
+  listingForm?.addEventListener("submit", onUpdate);
+}
+
+/**
+ * Sets up the delete listing modal and handles deletion.
+ */
 function deleteListing() {
   const deleteBtn = document.getElementById("delete-btn");
   const deleteModal = document.getElementById("delete-modal");
   const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
   const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
 
-  if (deleteBtn, deleteModal) {
+  if (deleteBtn && deleteModal) {
     deleteBtn.addEventListener("click", () => {
-      if (deleteModal.classList.contains("hidden")) {
-        toggleContainer(deleteModal, true);
-      }
+      if (deleteModal.classList.contains("hidden")) toggleContainer(deleteModal, true);
     });
   }
-   if (cancelDeleteBtn) {
-    cancelDeleteBtn.addEventListener("click", ()=> {
-      toggleContainer(deleteModal, false);
-    });
-   }
 
-   confirmDeleteBtn.addEventListener("click", ()=> {
-    onDelete();
-   })
-
+  cancelDeleteBtn?.addEventListener("click", () => toggleContainer(deleteModal, false));
+  confirmDeleteBtn?.addEventListener("click", onDelete);
 }
-

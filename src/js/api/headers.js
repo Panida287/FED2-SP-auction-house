@@ -1,20 +1,22 @@
 import { getKey } from "./auth/key";
 import { API_KEY } from "./constants";
+
 /**
- * Asynchronously generates and returns a Headers object for API requests.
- * 
- * The function sets custom headers for the Noroff API, including an API key and
- * an Authorization token, if they are available. The token is retrieved using the `getKey` function.
+ * Generates and returns a `Headers` object for authenticated API requests.
+ *
+ * This function includes:
+ * - The API key (`X-Noroff-API-Key`) for the Noroff API.
+ * - A JSON `Content-Type` header.
+ * - An optional `Authorization` token retrieved from the `getKey` function.
  *
  * @async
- * @function headers
- * @returns {Promise<Headers>} A promise that resolves to a Headers object with appropriate API headers.
+ * @function loggedInHeaders
+ * @returns {Promise<Headers>} A promise that resolves to a `Headers` object containing all necessary headers for authenticated requests.
  */
 export async function loggedInHeaders() {
   const token = await getKey();
-
   const headers = new Headers();
-  
+
   if (API_KEY) {
     headers.append("X-Noroff-API-Key", API_KEY);
     headers.append("Content-Type", "application/json");
@@ -23,18 +25,27 @@ export async function loggedInHeaders() {
   if (token) {
     headers.append("Authorization", `Bearer ${token}`);
   }
-  
+
   return headers;
 }
-export async function headers() {
 
+/**
+ * Generates and returns a `Headers` object for general API requests.
+ *
+ * This function includes:
+ * - The API key (`X-Noroff-API-Key`) for the Noroff API.
+ * - A JSON `Content-Type` header.
+ *
+ * @function headers
+ * @returns {Headers} A `Headers` object containing the necessary headers for non-authenticated requests.
+ */
+export function headers() {
   const headers = new Headers();
-  
+
   if (API_KEY) {
     headers.append("X-Noroff-API-Key", API_KEY);
     headers.append("Content-Type", "application/json");
   }
-  
+
   return headers;
 }
-

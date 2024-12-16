@@ -14,7 +14,7 @@ import { getIDFromURL } from "../../utilities/urlIDUtils";
  * @throws {Error} Will throw an error if the fetch operation fails or the response is not OK.
  */
 export async function readListings(tag = null, sortByBids = false, sortByEnding = false) {
-  const myHeaders = await headers();
+  const myHeaders = headers();
   const params = new URLSearchParams({
     _seller: "true",
     _bids: "true",
@@ -50,7 +50,6 @@ export async function readListings(tag = null, sortByBids = false, sortByEnding 
     return result;
 
   } catch (error) {
-    console.error("Error fetching listings:", error);
     throw error;
   }
 }
@@ -65,7 +64,7 @@ export async function readListings(tag = null, sortByBids = false, sortByEnding 
  */
 export async function readListing() {
   const listingID = getIDFromURL("listingID");
-  const myHeaders = await headers();
+  const myHeaders = headers();
 
   const requestOptions = {
     method: "GET",
@@ -85,7 +84,6 @@ export async function readListing() {
     const result = await response.json();
     return result.data;
   } catch (error) {
-    console.error("Error fetching listings:", error);
     throw error;
   }
 }
@@ -118,7 +116,6 @@ export async function readListingsByUser(limit = 12, page = 1, username) {
       throw new Error(`Failed to fetch listings: ${result.message}`);
     }
   } catch (error) {
-    console.error("Error fetching listings:", error);
     throw error;
   }
 }
@@ -161,7 +158,6 @@ export async function readUserBidsWins(type, limit = 12, page = 1, username) {
       throw new Error(`Failed to fetch ${type}: ${result.message}`);
     }
   } catch (error) {
-    console.error(`Error fetching ${type}:`, error);
     throw error;
   }
 }
@@ -214,7 +210,6 @@ export async function searchListings(query) {
 
     return { data: filteredData };
   } catch (error) {
-    console.error("Error searching listings:", error);
     throw error;
   }
 }
