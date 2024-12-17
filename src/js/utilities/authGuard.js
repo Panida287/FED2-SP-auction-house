@@ -14,7 +14,9 @@ export function authGuard() {
      if (!isAuthenticated) {
        profile.classList.remove("flex");
        profile.classList.add("hidden"); 
+       if (submitBidBtn) {
        submitBidBtn.disabled = true;
+       }
 
        if (navBar) {
           navBar.classList.add("md:hidden");
