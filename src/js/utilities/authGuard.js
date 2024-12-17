@@ -7,12 +7,14 @@ export function authGuard() {
      const navBar = document.querySelector(".nav-bar");
      const mobileNavbar = document.querySelector(".mobile-nav");
      const bidContainer = document.querySelector(".bid-container");
+     const submitBidBtn = document.getElementById("submit-bid")
    
      const isAuthenticated = localStorage.getItem("accessToken");
    
      if (!isAuthenticated) {
        profile.classList.remove("flex");
        profile.classList.add("hidden"); 
+       submitBidBtn.disabled = true;
 
        if (navBar) {
           navBar.classList.add("md:hidden");
@@ -37,7 +39,7 @@ export function authGuard() {
        if (bidContainer) {
         const loginToBid = document.createElement("div");
         loginToBid.innerHTML = `
-        <span class="login-to-bid h-full w-full bg-white/60 absolute top-0 left-0 flex gap-2 font-bold justify-center items-center backdrop-blur-md md:bg-transparent md:relative md:-translate-y-[50px] md:h-[60px] md:rounded-xl">
+        <span class="login-to-bid h-full w-full bg-white/60 absolute -translate-y-[105px] md:top-0 left-0 flex gap-2 font-bold justify-center items-center backdrop-blur-md md:bg-transparent md:relative md:-translate-y-[100px] md:h-[100px] md:rounded-xl md:text-xs lg:text-lg">
           Please
           <a href="/auth/login/"
           class="pink-buttons">
