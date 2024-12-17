@@ -30,7 +30,7 @@ export function authGuard() {
        });
    
        const loginLink = document.createElement("a");
-       loginLink.href = "auth/login/";
+       loginLink.href = "/auth/login/";
        loginLink.className = "pink-buttons z-10 mr-2";
        loginLink.textContent = "Login";
    
@@ -41,18 +41,22 @@ export function authGuard() {
        if (bidContainer) {
         const loginToBid = document.createElement("div");
         loginToBid.innerHTML = `
-        <span class="login-to-bid h-full w-full bg-white/60 absolute -translate-y-[105px] md:top-0 left-0 flex gap-2 font-bold justify-center items-center backdrop-blur-md md:bg-transparent md:relative md:-translate-y-[100px] md:h-[100px] md:rounded-xl md:text-xs lg:text-lg">
-          Please
-          <a href="/auth/login/"
-          class="pink-buttons">
-          Login
-          </a>
-          Or
-          <a href="/auth/register/"
-          class="text-accent hover:underline">
-          Register
-          </a>
-          to place bids
+        <span class="login-to-bid h-full w-full flex bg-white/60 absolute -translate-y-[105px] md:flex-col md:top-0 left-0 gap-2 font-bold justify-center items-center backdrop-blur-md md:bg-transparent md:relative md:-translate-y-[100px] md:h-[100px] md:rounded-xl md:text-xs">
+          <div>
+            Please
+            <a href="/auth/login/"
+            class="pink-buttons">
+            Login
+            </a>
+          </div>
+          <div>
+            Or
+            <a href="/auth/register/"
+            class="text-accent hover:underline">
+            Register
+            </a>
+            to place bids
+          </div>
         </span>
         `
        bidContainer.appendChild(loginToBid);
