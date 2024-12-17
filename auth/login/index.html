@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta property="og:image" content="/assets/favicon_io/apple-touch-icon.png" />
+    <meta
+      property="og:image"
+      content="/assets/favicon_io/apple-touch-icon.png"
+    />
     <link
       rel="icon"
       type="image/png"
@@ -31,7 +34,9 @@
     <title>Login</title>
   </head>
 
-  <body class="w-screen h-screen flex flex-col justify-center items-center md:flex-row">
+  <body
+    class="w-screen h-screen flex flex-col justify-center items-center md:flex-row"
+  >
     <h2 class="font-h font-bold w-1/2 mx-auto text-white text-2xl text-center">
       AUCTION HOUSE
     </h2>
@@ -68,8 +73,7 @@
         </div>
 
         <!-- Error Message -->
-        <p class="error-msg text-red-500 text-sm text-center">
-        </p>
+        <p class="error-msg text-red-500 text-sm text-center"></p>
 
         <!-- Buttons -->
         <div class="flex justify-between mt-4">
@@ -79,9 +83,21 @@
 
       <!-- Register Link -->
       <div class="text-center mt-4 text-text">
-        <p>Not registered?</p>
-        <a href="/auth/register/" class="text-accent font-semibold hover:underline">
-          Register
+        <span
+          >Not registered?
+          <a
+            href="/auth/register/"
+            class="text-accent font-semibold hover:underline"
+          >
+            Register here
+          </a>
+        </span>
+        <p>Or</p>
+        <a
+          href="/"
+          class="text-accent font-semibold hover:underline"
+        >
+          Visit as guest
         </a>
       </div>
     </div>
