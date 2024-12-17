@@ -3,7 +3,7 @@ import { updateCountdown } from "../../utilities/updateCountdown";
 import { FALLBACK_IMG } from "../../api/constants";
 import { truncateText } from "../../utilities/truncateText";
 
-export async function renderListingsByUser(username, page = 1, limit = 6) {
+export async function renderListingsByUser(username, page = 1, limit = 12) {
   const container = document.querySelector(".result-container");
   const resultTitle = document.querySelector(".result-title");
   const messageContainer = document.querySelector(".message-container");
@@ -108,7 +108,7 @@ export async function renderListingsByUser(username, page = 1, limit = 6) {
   }
 }
 
-export async function renderUserBidsListings(username, limit = 6, page = 1) {
+export async function renderUserBidsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
   const resultTitle = document.querySelector(".result-title");
   const messageContainer = document.querySelector(".message-container");
@@ -206,7 +206,7 @@ export async function renderUserBidsListings(username, limit = 6, page = 1) {
   }
 }
 
-export async function renderUserWinsListings(username, limit = 6, page = 1) {
+export async function renderUserWinsListings(username, limit = 12, page = 1) {
   const container = document.querySelector(".result-container");
   const resultTitle = document.querySelector(".result-title");
   const messageContainer = document.querySelector(".message-container");
