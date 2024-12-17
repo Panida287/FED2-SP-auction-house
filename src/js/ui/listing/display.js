@@ -268,7 +268,7 @@ export async function renderListingById() {
 
   const auctionEndedOverlay = document.createElement("div");
   auctionEndedOverlay.className =
-    "absolute top-1/2 left-0 w-full h-[35px] bg-white/70 flex justify-center items-center text-red-500 font-bold transform -rotate-12";
+    "absolute top-[110px] left-0 w-full h-[35px] bg-white/70 flex justify-center items-center text-red-500 font-bold transform -rotate-[25deg] md:top-[80px]";
 
   try {
     const listing = await readListing();
