@@ -1,4 +1,5 @@
 # Auction House
+- [Visit demo site here](https://panida287-auction-house.netlify.app/)
 
 An auction website where users can bid on items, add new listings, and manage their profiles. Built as part of **Semester Project 2** for Noroff Front-End Development.
 
@@ -70,10 +71,10 @@ npm run build
 8. **View Credit Balance** to track your available credits.
 
 ## Links
-- **Road map**: [https://github.com/users/Panida287/projects/9/views/2]
-- **Design Prototype**: [https://www.figma.com/design/AVd4tgBLBIL8pks46fZbDU/Auction-house?node-id=1-55&p=f&t=G73h9lyV41ErsGoD-0]
-- **Kanban Project Board**: [https://github.com/users/Panida287/projects/9/views/1]
-- **Hosted Demo**: [https://panida287-auction-house.netlify.app/]
+- [Road map](https://github.com/users/Panida287/projects/9/views/2)
+- [Design Prototype](https://www.figma.com/design/AVd4tgBLBIL8pks46fZbDU/Auction-house?node-id=1-55&p=f&t=G73h9lyV41ErsGoD-0)
+- [Kanban Project Board](https://github.com/users/Panida287/projects/9/views/1)
+- [Hosted Demo](https://panida287-auction-house.netlify.app/)
 
 ## Dependencies
 - TailwindCSS v3.4.15
