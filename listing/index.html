@@ -57,7 +57,10 @@
       >
         <ul class="flex gap-10 lg:gap-20">
           <li>
-            <a class="nav-link hover:text-accent font-h" href="/" aria-label="Home"
+            <a
+              class="nav-link hover:text-accent font-h"
+              href="/"
+              aria-label="Home"
               >Home</a
             >
           </li>
@@ -183,7 +186,10 @@
             <p>Credit:</p>
             <p class="credit-amount text-accent font-light pl-2"></p>
           </span>
-          <form id="bid-form" class="mt-4 flex gap-4 md:flex md:flex-col lg:flex-row">
+          <form
+            id="bid-form"
+            class="mt-4 flex gap-4 md:flex md:flex-col lg:flex-row"
+          >
             <input
               type="number"
               id="bid-amount"
@@ -200,13 +206,13 @@
     </div>
 
     <!-- Last Bids -->
-    <section
-      class="w-full flex justify-center md:mt-6"
-    >
-    <div class="w-full max-w-[800px] flex flex-col justify-center items-center p-4 bg-card backdrop-blur-md rounded-xl ">
-      <h2 class="text-lg font-bold mb-2 text-gray-300">Last Bids</h2>
-      <div id="last-bids" class="space-y-4 w-full px-10 py-5"></div>
-    </div>
+    <section class="w-full flex justify-center md:mt-6">
+      <div
+        class="w-full max-w-[800px] flex flex-col justify-center items-center p-4 bg-card backdrop-blur-md rounded-xl"
+      >
+        <h2 class="text-lg font-bold mb-2 text-gray-300">Last Bids</h2>
+        <div id="last-bids" class="space-y-4 w-full px-10 py-5"></div>
+      </div>
     </section>
 
     <!-- Pagination -->
@@ -252,6 +258,16 @@
             name="image-url"
             placeholder="Enter image URL"
             class="w-full border border-gray-300 text-text p-2 mt-2 rounded-md bg-transparent focus:ring-2 focus:ring-blue-400 outline-none"
+          />
+        </div>
+
+        <!-- Image Preview -->
+        <div id="image-preview" class="mt-4">
+          <img
+            id="preview-image"
+            src=""
+            alt="Preview of the item image"
+            class="hidden w-full h-48 object-cover border border-gray-300 rounded-md"
           />
         </div>
 
@@ -356,7 +372,7 @@
 
     <!-- Footer -->
     <footer
-    class="bg-card w-full backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:relative md:bottom-0 md:pb-8 "
+      class="bg-card w-full backdrop-blur-md text-text pt-8 mt-10 pb-[100px] md:relative md:bottom-0 md:pb-8"
     >
       <div
         class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 lg:px-10"
@@ -440,54 +456,54 @@
       </div>
     </footer>
 
-<!-- Mobile Navigation Bar -->
-<nav
-class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-1 mx-auto mt-5 bg-primaryLinear text-white text-xl rounded-t-full shadow-md md:hidden"
-role="navigation"
-aria-label="Mobile Navigation"
->
-<ul class="flex justify-evenly items-center w-full">
-  <li>
-    <a
-      href="#"
-      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      aria-label="Home"
+    <!-- Mobile Navigation Bar -->
+    <nav
+      class="mobile-nav z-20 fixed bottom-0 flex justify-evenly items-center w-full p-1 mx-auto mt-5 bg-primaryLinear text-white text-xl rounded-t-full shadow-md md:hidden"
+      role="navigation"
+      aria-label="Mobile Navigation"
     >
-      <i class="fa-solid fa-house" aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a
-      href="#"
-      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      aria-label="Messages"
-    >
-      <i class="fa-solid fa-message" aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a
-      href="#"
-      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      aria-label="Notifications"
-    >
-      <i class="fa-solid fa-bell" aria-hidden="true"></i>
-    </a>
-  </li>
-  <li>
-    <a
-      href="/profile/"
-      class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
-      aria-label="My Profile"
-    >
-      <img
-        class="profile-pic w-[50px] h-[50px] rounded-full object-cover"
-        alt="Profile Picture"
-        loading="lazy"
-      />
-    </a>
-  </li>
-</ul>
-</nav>
+      <ul class="flex justify-evenly items-center w-full">
+        <li>
+          <a
+            href="#"
+            class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="Home"
+          >
+            <i class="fa-solid fa-house" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="Messages"
+          >
+            <i class="fa-solid fa-message" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="Notifications"
+          >
+            <i class="fa-solid fa-bell" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/profile/"
+            class="flex justify-center items-center w-[50px] h-[50px] rounded-full"
+            aria-label="My Profile"
+          >
+            <img
+              class="profile-pic w-[50px] h-[50px] rounded-full object-cover"
+              alt="Profile Picture"
+              loading="lazy"
+            />
+          </a>
+        </li>
+      </ul>
+    </nav>
   </body>
 </html>
